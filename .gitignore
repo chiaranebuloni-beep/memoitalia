@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+.DS_Store
+# dati raccolti in locale (lista Founder)
+data/*.json
+# font con licenza commerciale: non va ridistribuito nel repository pubblico
+public/fonts/*.woff2
+public/fonts/*.ttf
+public/fonts/*.otf
