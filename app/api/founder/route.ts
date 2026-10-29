@@ -26,13 +26,23 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Serve il consenso per scriverti su WhatsApp." }, { status: 422 });
   if (!privacy) return NextResponse.json({ error: "Serve l'accettazione dell'informativa privacy." }, { status: 422 });
 
-  const { created } = await addFounder({
-    name,
-    email,
-    phone: phone || undefined,
-    whatsappConsent: Boolean(phone) && whatsappConsent,
-    marketingConsent: privacy,
-  });
+  let created: boolean;
+  try {
+    ({ created } = await addFounder({
+      name,
+      email,
+      phone: phone || undefined,
+      whatsappConsent: Boolean(phone) && whatsappConsent,
+      marketingConsent: privacy,
+    }));
+  } catch (err) {
+    // Senza un archivio scrivibile (es. Vercel senza database) non perdiamo dati in silenzio.
+    console.error("founder signup: store unavailable", err);
+    return NextResponse.json(
+      { error: "Le iscrizioni aprono a brevissimo: riprova tra qualche giorno!" },
+      { status: 503 }
+    );
+  }
 
   return NextResponse.json({ ok: true, alreadyIn: !created }, { status: created ? 201 : 200 });
 }

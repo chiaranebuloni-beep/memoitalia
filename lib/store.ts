@@ -33,6 +33,8 @@ export type FounderSignup = {
 };
 
 export async function addFounder(input: Omit<FounderSignup, "id" | "createdAt">) {
+  // Su Vercel il filesystem è di sola lettura: serve un database prima di accettare iscrizioni.
+  if (process.env.VERCEL) throw new Error("Archivio iscrizioni non configurato su Vercel");
   const list = await readJson<FounderSignup[]>("founders.json", []);
   const existing = list.find((f) => f.email === input.email);
   if (existing) return { signup: existing, created: false };
