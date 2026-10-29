@@ -24,7 +24,7 @@ export default function Supplement() {
           }
         );
         gsap.from(".sp-copy > *", {
-          x: -40,
+          y: 30,
           opacity: 0,
           stagger: 0.08,
           duration: 0.9,

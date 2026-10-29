@@ -53,15 +53,12 @@ export default function Footer() {
         <div className="ft-col">
           <h3>Mèmo</h3>
           <a href="#visione">La visione</a>
-          <a href="#storia">La storia</a>
-          <a href="#momenti">Momenti</a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="#founder">Lista Founder</a>
         </div>
-        <div className="ft-col">
+        <div className="ft-col ft-col--contact">
           <h3>Contatti</h3>
-          <a href="mailto:info@memoitalia.it">info@memoitalia.it</a>
-          <span>Via Tagliavini 10</span>
-          <span>Cavriago (RE)</span>
+          <a className="ft-mail" href="mailto:info@memoitalia.it">info@memoitalia.it</a>
+          <span>Via Tagliavini 10, Cavriago (RE)</span>
           <span>Rivenditori e GDO: scrivici</span>
         </div>
       </div>

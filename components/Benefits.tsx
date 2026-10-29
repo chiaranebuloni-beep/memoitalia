@@ -23,15 +23,21 @@ export default function Benefits() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".bn-card", {
-          y: 120,
-          rotate: (i) => (i % 2 ? 8 : -8),
-          opacity: 0,
-          duration: 1,
-          stagger: 0.08,
-          ease: "back.out(1.4)",
-          scrollTrigger: { trigger: ".bn-grid", start: "top 80%" },
-        });
+        if (window.matchMedia("(max-width: 720px)").matches) {
+          gsap.utils.toArray<HTMLElement>(".bn-card").forEach((card) => {
+            gsap.from(card, { y: 40, opacity: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 88%" } });
+          });
+        } else {
+          gsap.from(".bn-card", {
+            y: 120,
+            rotate: (i) => (i % 2 ? 8 : -8),
+            opacity: 0,
+            duration: 1,
+            stagger: 0.08,
+            ease: "back.out(1.4)",
+            scrollTrigger: { trigger: ".bn-grid", start: "top 80%" },
+          });
+        }
         gsap.from(".bn-title .bn-title-line", {
           yPercent: 110,
           stagger: 0.1,
@@ -48,7 +54,7 @@ export default function Benefits() {
     <section className="benefits" ref={root}>
       <div className="container">
         <div className="bn-head">
-          <span className="eyebrow eyebrow--blue">03 — Cosa la rende diversa</span>
+          <span className="eyebrow eyebrow--blue">02 — Cosa la rende diversa</span>
           <h2 className="bn-title">
             <span className="bn-title-mask"><span className="bn-title-line">Semplicità che</span></span>
             <span className="bn-title-mask"><span className="bn-title-line">si vede e si sente.</span></span>

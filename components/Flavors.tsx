@@ -23,6 +23,9 @@ export default function Flavors({ products }: { products: Product[] }) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const panels = gsap.utils.toArray<HTMLElement>(".fl-panel");
         const n = panels.length;
+        const small = window.matchMedia("(max-width: 1080px)").matches;
+        const copyOut = small ? -16 : -60;
+        const copyIn = small ? 16 : 70;
 
         gsap.set(panels.slice(1), { autoAlpha: 0 });
         gsap.set(panels.slice(1).map((p) => p.querySelector(".fl-bar")), { xPercent: 90, rotate: 35, scale: 0.7 });
@@ -47,12 +50,12 @@ export default function Flavors({ products }: { products: Product[] }) {
           const at = i - 1;
           tl.to(root.current, { backgroundColor: products[i].theme.bg, color: products[i].theme.ink, duration: 1 }, at)
             .to(prev.querySelector(".fl-bar"), { xPercent: -110, rotate: -30, scale: 0.7, duration: 1 }, at)
-            .to(prev.querySelectorAll(".fl-copy > *"), { y: -60, autoAlpha: 0, stagger: 0.04, duration: 0.5 }, at)
+            .to(prev.querySelectorAll(".fl-copy > *"), { y: copyOut, autoAlpha: 0, stagger: small ? 0 : 0.04, duration: small ? 0.3 : 0.5 }, at)
             .to(prev.querySelector(".fl-giant"), { xPercent: -30, autoAlpha: 0, duration: 1 }, at)
             .set(prev, { autoAlpha: 0 }, at + 1)
             .set(panel, { autoAlpha: 1 }, at + 0.35)
             .to(panel.querySelector(".fl-bar"), { xPercent: 0, rotate: 0, scale: 1, duration: 1 }, at)
-            .from(panel.querySelectorAll(".fl-copy > *"), { y: 70, autoAlpha: 0, stagger: 0.05, duration: 0.55 }, at + 0.45)
+            .from(panel.querySelectorAll(".fl-copy > *"), { y: copyIn, autoAlpha: 0, stagger: small ? 0.02 : 0.05, duration: 0.55 }, at + 0.55)
             .from(panel.querySelector(".fl-giant"), { xPercent: 30, autoAlpha: 0, duration: 1 }, at);
         });
 
@@ -92,7 +95,9 @@ export default function Flavors({ products }: { products: Product[] }) {
       aria-label="I quattro gusti Mèmo"
     >
       <div className="fl-head">
-        <span className="eyebrow">I gusti · 4 barrette, una sola identità</span>
+        <span className="eyebrow">
+          I gusti<span className="fl-head-more"> · 4 barrette, una sola identità</span>
+        </span>
         <span className="fl-counter">
           <b>{String(active + 1).padStart(2, "0")}</b> / {String(products.length).padStart(2, "0")}
         </span>

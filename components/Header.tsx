@@ -8,8 +8,7 @@ import { Star } from "./ui";
 const NAV = [
   { href: "#gusti", label: "Gusti" },
   { href: "#visione", label: "Visione" },
-  { href: "#momenti", label: "Momenti" },
-  { href: "#storia", label: "Storia" },
+  { href: "#founder", label: "Box Founder" },
 ];
 
 export default function Header() {
@@ -68,11 +67,6 @@ export default function Header() {
               </span>
             </a>
           ))}
-          <a href="#founder" className="header-link header-link--mobile" onClick={() => setMenu(false)}>
-            <span className="hl-mask">
-              <span data-text="Lista Founder">Lista Founder</span>
-            </span>
-          </a>
         </nav>
 
         <div className="header-actions">

@@ -11,8 +11,8 @@ gsap.registerPlugin(ScrollTrigger);
 const BARS = [
   { src: "/img/products/golosa.webp", cls: "hb-1", depth: 1.4, rot: -18 },
   { src: "/img/products/cocco.webp", cls: "hb-2", depth: 0.8, rot: 14 },
-  { src: "/img/products/arachide.webp", cls: "hb-3", depth: 1.1, rot: 22 },
-  { src: "/img/products/gianduia.webp", cls: "hb-4", depth: 0.6, rot: -9 },
+  { src: "/img/products/arachide.webp", cls: "hb-3", depth: 1.1, rot: 10 },
+  { src: "/img/products/gianduia.webp", cls: "hb-4", depth: 0.6, rot: -6 },
 ];
 
 export default function Hero() {
@@ -39,7 +39,7 @@ export default function Hero() {
 
         // Barrette che fluttuano.
         gsap.utils.toArray<HTMLElement>(".hero-bar-float").forEach((el, i) => {
-          gsap.to(el, { y: i % 2 ? 18 : -18, rotate: i % 2 ? 3 : -3, duration: 2.4 + i * 0.4, yoyo: true, repeat: -1, ease: "sine.inOut" });
+          gsap.to(el, { y: i % 2 ? 10 : -10, rotate: i % 2 ? 3 : -3, duration: 2.4 + i * 0.4, yoyo: true, repeat: -1, ease: "sine.inOut" });
         });
         gsap.to(".hero-mascot-bob", { y: -14, duration: 1.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
         gsap.to(".hero-swoosh", { rotate: 8, duration: 6, yoyo: true, repeat: -1, ease: "sine.inOut" });
@@ -54,23 +54,31 @@ export default function Hero() {
           const nx = e.clientX / window.innerWidth - 0.5;
           const ny = e.clientY / window.innerHeight - 0.5;
           movers.forEach((m, i) => {
-            m.x(nx * 60 * BARS[i].depth);
-            m.y(ny * 40 * BARS[i].depth);
+            m.x(nx * 36 * BARS[i].depth);
+            m.y(ny * 16 * BARS[i].depth);
           });
         };
         window.addEventListener("pointermove", onMove);
 
-        // All'uscita le barrette si aprono e il titolo si allontana.
+        // All'uscita le barrette si aprono e il titolo si allontana (solo da tablet in su:
+        // su telefono finirebbero sopra il testo).
+        if (!window.matchMedia("(min-width: 721px)").matches) {
+          return () => {
+            window.clearTimeout(safety);
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("memo:intro-done", start);
+          };
+        }
         const out = gsap.timeline({
           scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 },
         });
         out
           .to(".hero-title", { yPercent: -30, scale: 0.92, opacity: 0.2, ease: "none" }, 0)
-          .to(".hb-1 .hero-bar-scroll", { xPercent: -60, yPercent: -80, rotate: -40, ease: "none" }, 0)
-          .to(".hb-2 .hero-bar-scroll", { xPercent: 70, yPercent: -90, rotate: 40, ease: "none" }, 0)
-          .to(".hb-3 .hero-bar-scroll", { xPercent: -50, yPercent: 60, rotate: 60, ease: "none" }, 0)
-          .to(".hb-4 .hero-bar-scroll", { xPercent: 60, yPercent: 70, rotate: -30, ease: "none" }, 0)
-          .to(".hero-mascot", { yPercent: 40, ease: "none" }, 0);
+          // le barrette escono verso l'esterno e svaniscono, senza mai scendere sul testo
+          .to(".hb-1 .hero-bar-scroll", { xPercent: -70, yPercent: -60, rotate: -30, opacity: 0, ease: "none" }, 0)
+          .to(".hb-2 .hero-bar-scroll", { xPercent: 70, yPercent: -60, rotate: 30, opacity: 0, ease: "none" }, 0)
+          .to(".hb-3 .hero-bar-scroll", { xPercent: -90, rotate: -25, opacity: 0, ease: "none" }, 0)
+          .to(".hb-4 .hero-bar-scroll", { xPercent: 50, yPercent: -40, rotate: 20, opacity: 0, ease: "none" }, 0);
 
         return () => {
           window.clearTimeout(safety);
@@ -120,7 +128,8 @@ export default function Hero() {
 
       <div className="hero-bottom">
         <p className="hero-sub">
-          La barretta <strong>dolce per natura</strong>. Pochi ingredienti, zero edulcoranti e un gusto che ti ricordi. A scuola, in ufficio, in campo.
+          <span className="hero-sub-big">La barretta dolce per natura.</span>
+          <span className="hero-sub-small">Pochi ingredienti, zero edulcoranti. A scuola, in ufficio, in campo.</span>
         </p>
         <div className="hero-ctas">
           <a href="#gusti" className="btn btn--white" data-cursor="Scopri">
@@ -137,10 +146,6 @@ export default function Hero() {
         </ul>
       </div>
 
-      <a href="#gusti" className="hero-scroll" aria-label="Scorri ai gusti">
-        <span>Scroll</span>
-        <i />
-      </a>
     </section>
   );
 }
