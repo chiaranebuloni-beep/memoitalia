@@ -11,3 +11,5 @@ data/*.json
 public/fonts/*.woff2
 public/fonts/*.ttf
 public/fonts/*.otf
+.vercel
+.env*
