@@ -1224,6 +1224,9 @@ p {
 .bn-title-line {
   display: block;
 }
+.bn-title-hl {
+  color: #e9733f;
+}
 .bn-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
