@@ -40,13 +40,29 @@ export default function Supplement() {
     <section className="supplement" ref={root}>
       <div className="container sp-grid">
         <div className="sp-copy">
-          <span className="sp-soon">In arrivo</span>
+          <span className="sp-soon">La gamma al lancio</span>
           <h2 className="sp-title">Poca roba. Fatta bene.</h2>
           <p>
-            Dopo le barrette arriva l'<strong>integratore Mèmo</strong>: tavolette masticabili al gusto frutti di bosco, pensate per grandi e piccoli. Stessa filosofia, stessa semplicità.
+            Mèmo arriva con quattro barrette e, insieme a loro, l'<strong>integratore Mèmo</strong>: tavolette masticabili al gusto frutti di bosco, pensate per grandi e piccoli. Pochi prodotti, scelti con cura e fatti con la stessa filosofia.
           </p>
-          <a href="#founder" className="btn btn--blue" data-cursor="Avvisami">
-            Avvisami quando arriva
+          <ul className="sp-range">
+            <li>
+              <b>4</b>
+              <span>
+                barrette
+                <small>Golosa, Cocco, Arachide, Gianduia</small>
+              </span>
+            </li>
+            <li>
+              <b>1</b>
+              <span>
+                integratore
+                <small>Tavolette masticabili, frutti di bosco</small>
+              </span>
+            </li>
+          </ul>
+          <a href="#founder" className="btn btn--blue" data-cursor="Iscriviti">
+            Entra nella lista Founder
           </a>
         </div>
         <figure className="sp-photo">

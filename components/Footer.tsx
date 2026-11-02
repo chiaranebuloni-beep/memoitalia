@@ -14,17 +14,13 @@ export default function Footer() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".ft-logo", {
-          yPercent: 60,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom bottom", scrub: true },
-        });
-        gsap.from(".ft-mascot", {
-          yPercent: 100,
-          rotate: -15,
-          ease: "back.out(1.6)",
-          duration: 1,
-          scrollTrigger: { trigger: ".ft-logo-wrap", start: "top 95%" },
+        gsap.from(".ft-cols > *", {
+          y: 30,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: root.current, start: "top 85%" },
         });
       });
     },
@@ -37,6 +33,7 @@ export default function Footer() {
     <footer className="footer" ref={root}>
       <div className="container ft-cols">
         <div className="ft-col ft-col--wide">
+          <img className="ft-brand" src="/img/brand/logo-white.png" alt="Mèmo, il buono memorabile" width={180} height={50} loading="lazy" />
           <p className="ft-claim">Ciò che è buono davvero si ricorda.</p>
           <p className="ft-retail">
             Ci trovi anche da <strong>Conad Cavriago</strong> e <strong>Conad Reggio Emilia</strong>, e negli espositori dei centri padel.
@@ -63,10 +60,6 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="ft-logo-wrap">
-        <img className="ft-mascot" src="/img/brand/mascot.webp" alt="" width={420} height={452} loading="lazy" />
-        <img className="ft-logo" src="/img/brand/logo-white.png" alt="Mèmo, il buono memorabile" width={1200} height={330} loading="lazy" />
-      </div>
 
       <div className="container ft-legal">
         <span>© {year} MÈMO ITALIA SRLS · P.IVA 03151990359</span>
