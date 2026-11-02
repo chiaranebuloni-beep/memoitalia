@@ -1308,98 +1308,206 @@ p {
 }
 
 /* ==========================================================================
-   Supplement
+   Gamma (carosello prodotti)
    ========================================================================== */
 
-.supplement {
-  padding: clamp(70px, 8vw, 120px) 0;
+.range {
+  padding: clamp(80px, 10vw, 140px) 0;
   background: var(--sky-soft);
 }
-.sp-grid {
+.rg-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-  gap: clamp(30px, 6vw, 90px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(36px, 6vw, 96px);
   align-items: center;
 }
-.sp-copy {
+.rg-copy {
   display: grid;
   justify-items: start;
-  gap: 20px;
+  gap: 22px;
 }
-.sp-soon {
+.rg-badge {
   padding: 7px 14px;
   border-radius: 999px;
-  background: var(--rust);
+  background: var(--blue);
   color: var(--white);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  rotate: -3deg;
 }
-.sp-title {
+.rg-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(46px, 6vw, 96px);
-  line-height: 0.92;
+  font-size: clamp(42px, 5.2vw, 84px);
+  line-height: 0.95;
   text-transform: uppercase;
   color: var(--blue);
 }
-.sp-copy p {
-  max-width: 520px;
+.rg-title span {
+  color: #e9733f;
+}
+.rg-copy p {
+  max-width: 500px;
   font-size: 18px;
 }
-.sp-range {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  width: 100%;
-  max-width: 520px;
-  margin: 4px 0 6px;
-  padding: 0;
-  list-style: none;
-}
-.sp-range li {
+
+.rg-card {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 20px;
-  background: var(--white);
-  box-shadow: 0 12px 30px rgba(7, 50, 111, 0.08);
+  flex-direction: column;
+  height: clamp(460px, 44vw, 600px);
+  padding: 26px 28px;
+  border-radius: 32px;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  box-shadow: 0 30px 60px rgba(7, 50, 111, 0.18);
 }
-.sp-range b {
+.rg-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rg-count {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+.rg-kind {
+  padding: 6px 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rg-slides {
+  position: relative;
+  flex: 1;
+}
+.rg-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+.rg-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 10px 0 16px;
+}
+.rg-product {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4% 6%;
+  rotate: -8deg;
+  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+}
+.is-bottle .rg-product {
+  padding: 0;
+  rotate: 0deg;
+}
+.rg-caption h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 48px;
-  line-height: 1;
-  color: var(--blue);
-}
-.sp-range span {
-  display: grid;
-  font-family: var(--font-display);
-  font-size: 22px;
+  font-size: clamp(34px, 3.4vw, 52px);
   line-height: 1;
   text-transform: uppercase;
-  color: var(--blue);
 }
-.sp-range small {
+.rg-caption p {
   margin-top: 6px;
-  font-family: var(--font-body), sans-serif;
-  font-size: 13px;
-  line-height: 1.35;
-  text-transform: none;
-  color: rgba(17, 26, 51, 0.65);
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0.85;
 }
-.sp-photo {
-  margin: 0;
+.rg-controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+}
+.rg-dots {
+  display: flex;
+  gap: 8px;
+}
+.rg-dots button {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  padding: 0;
   overflow: hidden;
-  border-radius: var(--radius);
+  border: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.35;
+  cursor: pointer;
+  transition: width 0.4s var(--ease-out), opacity 0.3s;
 }
-.sp-photo img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+.rg-dots button.is-active {
+  width: 40px;
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 35%, transparent);
+}
+.rg-dots button.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+}
+.rg-dots button i {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: currentColor;
+  transform-origin: left center;
+  animation: rg-progress linear forwards;
+}
+.rg-dots button.is-active:has(i)::before {
+  opacity: 0;
+}
+@keyframes rg-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.rg-arrows {
+  display: flex;
+  gap: 8px;
+}
+.rg-arrows button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s var(--ease-out);
+}
+.rg-arrows button:hover {
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  transform: scale(1.06);
+}
+.rg-arrow {
+  width: 20px;
+  height: 20px;
+}
+.rg-arrow--prev {
+  rotate: 180deg;
 }
 
 /* ==========================================================================
@@ -1781,7 +1889,7 @@ p {
 
   .mf-grid,
   .fb-grid,
-  .sp-grid {
+  .rg-grid {
     grid-template-columns: 1fr;
   }
   .mf-photo {
@@ -1902,8 +2010,14 @@ p {
   .bn-grid {
     grid-template-columns: 1fr;
   }
-  .sp-range {
-    grid-template-columns: 1fr;
+  .rg-card {
+    height: 470px;
+    padding: 22px 20px;
+    border-radius: 26px;
+  }
+  .rg-arrows button {
+    width: 44px;
+    height: 44px;
   }
   .bn-card {
     min-height: 220px;

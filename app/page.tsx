@@ -7,7 +7,7 @@ import Flavors from "@/components/Flavors";
 import Manifesto from "@/components/Manifesto";
 import Benefits from "@/components/Benefits";
 import FounderBox from "@/components/FounderBox";
-import Supplement from "@/components/Supplement";
+import Range from "@/components/Range";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import Cursor from "@/components/Cursor";
@@ -25,7 +25,7 @@ export default function Home() {
         <Manifesto />
         <Benefits />
         <FounderBox />
-        <Supplement />
+        <Range />
       </main>
       <Footer />
       <CartDrawer />
