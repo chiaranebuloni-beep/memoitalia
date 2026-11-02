@@ -539,7 +539,7 @@ p {
 }
 .hero-line {
   display: block;
-  overflow: hidden;
+  clip-path: inset(-0.6em -0.3em 0 -0.3em);
   padding: 0.12em 0.04em 0.02em 0;
   font-size: clamp(30px, 3.8vw, 64px);
   color: var(--sky);
@@ -1041,11 +1041,10 @@ p {
   text-transform: uppercase;
   color: var(--blue);
 }
+/* taglia solo sotto (per l'entrata dal basso), così gli accenti delle maiuscole restano visibili */
 .bn-title-mask {
   display: block;
-  overflow: hidden;
-  padding-top: 0.24em;
-  margin-top: -0.14em;
+  clip-path: inset(-0.6em -0.3em 0 -0.3em);
 }
 .bn-title-line {
   display: block;
@@ -1339,8 +1338,8 @@ p {
 .rg-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(42px, 5.2vw, 84px);
-  line-height: 0.95;
+  font-size: clamp(38px, 4.4vw, 70px);
+  line-height: 0.98;
   text-transform: uppercase;
   color: var(--blue);
 }

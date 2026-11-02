@@ -142,14 +142,14 @@ export default function Range() {
     <section className="range" id="gamma" ref={root}>
       <div className="container rg-grid">
         <div className="rg-copy">
-          <span className="rg-badge">Dal giorno del lancio</span>
+          <span className="rg-badge">La gamma Mèmo</span>
           <h2 className="rg-title">
-            Quattro barrette.
+            Tutti i giorni,
             <br />
-            <span>Un integratore.</span>
+            <span>una buona abitudine.</span>
           </h2>
           <p>
-            La gamma Mèmo arriva tutta insieme: le barrette per lo spuntino di tutti i giorni e l'<strong>integratore Mèmo</strong>, in compresse masticabili alle vitamine C, D e K, gusto frutti rossi.
+            Quattro barrette per lo spuntino di ogni giorno e l'<strong>integratore Mèmo</strong>, in compresse masticabili gusto frutti rossi. Pochi prodotti, una sola idea: il buono che si ricorda.
           </p>
           <a href="#founder" className="btn btn--blue" data-cursor="Iscriviti">
             Entra nella lista Founder <Arrow className="btn-arrow" />
