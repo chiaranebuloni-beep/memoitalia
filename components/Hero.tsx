@@ -4,7 +4,10 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { launchDateLabel } from "@/lib/launch";
 import { SplitChars, Swoosh, Arrow, Star } from "./ui";
+import Countdown from "./Countdown";
+import HeroSignup from "./HeroSignup";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,11 +21,9 @@ const BARS = [
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
-
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const intro = gsap.timeline({ paused: true, defaults: { ease: "power4.out" } });
         intro
@@ -30,49 +31,41 @@ export default function Hero() {
           .from(".hero-kicker", { y: 20, opacity: 0, duration: 0.6 }, 0)
           .from(".hero-title .split-char", { yPercent: 115, duration: 0.9, stagger: 0.022 }, 0.05)
           .from(".hero-bar", { xPercent: 70, opacity: 0, duration: 1.1, stagger: 0.09, ease: "expo.out" }, 0.2)
-          .from(".hero-sub > *, .hero-ctas > *, .hero-tags li", { y: 24, opacity: 0, duration: 0.7, stagger: 0.05 }, 0.45);
+          .from(".hero-launch > *", { y: 24, opacity: 0, duration: 0.7, stagger: 0.07 }, 0.4)
+          .from(".cd-unit", { y: 40, rotateX: -60, opacity: 0, duration: 0.7, stagger: 0.08, ease: "back.out(1.6)" }, 0.5);
 
         const start = () => intro.play();
         if (window.__memoIntroDone) start();
         else window.addEventListener("memo:intro-done", start, { once: true });
-        // Rete di sicurezza: se l'evento non arriva, l'intro parte comunque.
         const safety = window.setTimeout(start, 4500);
 
-        // Il mazzo di barrette ondeggia piano, tutto insieme.
         gsap.to(".hero-stack-float", { y: -12, duration: 2.8, yoyo: true, repeat: -1, ease: "sine.inOut" });
         gsap.to(".hero-swoosh", { rotate: 6, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
 
-        // Su desktop: leggero effetto profondità col mouse e il mazzo che si apre scorrendo.
-        if (!window.matchMedia("(min-width: 1081px)").matches) {
-          return () => {
-            window.clearTimeout(safety);
-            window.removeEventListener("memo:intro-done", start);
+        let onMove: ((e: PointerEvent) => void) | null = null;
+        if (window.matchMedia("(min-width: 1081px)").matches) {
+          const movers = gsap.utils.toArray<HTMLElement>(".hero-bar-move").map((el) => ({
+            x: gsap.quickTo(el, "x", { duration: 1, ease: "power3.out" }),
+            y: gsap.quickTo(el, "y", { duration: 1, ease: "power3.out" }),
+          }));
+          onMove = (e: PointerEvent) => {
+            const nx = e.clientX / window.innerWidth - 0.5;
+            const ny = e.clientY / window.innerHeight - 0.5;
+            movers.forEach((m, i) => {
+              m.x(nx * (8 + i * 6));
+              m.y(ny * (6 + i * 4));
+            });
           };
+          window.addEventListener("pointermove", onMove);
+          gsap
+            .timeline({ scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 } })
+            .to(".hero-bar-scroll", { xPercent: (i) => -6 - i * 10, yPercent: (i) => (i - 1.5) * 18, ease: "none" }, 0)
+            .to(".hero-copy", { yPercent: -12, opacity: 0.3, ease: "none" }, 0);
         }
-
-        const bars = gsap.utils.toArray<HTMLElement>(".hero-bar-move");
-        const movers = bars.map((el) => ({
-          x: gsap.quickTo(el, "x", { duration: 1, ease: "power3.out" }),
-          y: gsap.quickTo(el, "y", { duration: 1, ease: "power3.out" }),
-        }));
-        const onMove = (e: PointerEvent) => {
-          const nx = e.clientX / window.innerWidth - 0.5;
-          const ny = e.clientY / window.innerHeight - 0.5;
-          movers.forEach((m, i) => {
-            m.x(nx * (8 + i * 6));
-            m.y(ny * (6 + i * 4));
-          });
-        };
-        window.addEventListener("pointermove", onMove);
-
-        gsap
-          .timeline({ scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 } })
-          .to(".hero-bar-scroll", { xPercent: (i) => 6 + i * 10, yPercent: (i) => (i - 1.5) * 18, ease: "none" }, 0)
-          .to(".hero-copy", { yPercent: -12, opacity: 0.3, ease: "none" }, 0);
 
         return () => {
           window.clearTimeout(safety);
-          window.removeEventListener("pointermove", onMove);
+          if (onMove) window.removeEventListener("pointermove", onMove);
           window.removeEventListener("memo:intro-done", start);
         };
       });
@@ -90,7 +83,7 @@ export default function Hero() {
 
       <div className="hero-grid">
         <div className="hero-copy hero-head">
-          <span className="hero-kicker">Barrette dolci per natura · Made in Italy</span>
+          <span className="hero-kicker"><span className="hk-more">Lista Founder aperta · </span>Lo shop apre il {launchDateLabel}</span>
           <h1 className="hero-title">
             <span className="hero-line">
               <SplitChars text="Il buono" />
@@ -117,26 +110,22 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-copy hero-body">
-          <p className="hero-sub">
-            <span className="hero-sub-big">Pochi ingredienti. Zero edulcoranti.</span>
-            <span className="hero-sub-small">
-              Quattro gusti per lo spuntino di tutti i giorni: a scuola, in ufficio, in campo.
-            </span>
+        <div className="hero-copy hero-body hero-launch">
+          <p className="hero-launch-title">Lo shop apre tra</p>
+          <Countdown />
+          <p className="hero-launch-text">
+            Entra nella lista Founder: <strong>prezzo riservato</strong> e <strong>box con tutti e 4 i gusti</strong>. Il giorno del lancio ti scriviamo noi.
           </p>
-          <div className="hero-ctas">
-            <a href="#gusti" className="btn btn--white" data-cursor="Scopri">
-              Scegli il tuo gusto <Arrow className="btn-arrow" />
+          <HeroSignup />
+          <div className="hero-launch-foot">
+            <a href="#gusti" className="hero-link" data-cursor="Scopri">
+              Intanto scopri i gusti <Arrow className="btn-arrow" />
             </a>
-            <a href="#founder" className="btn btn--ghost" data-cursor="Iscriviti">
-              Entra nella lista Founder
-            </a>
+            <ul className="hero-tags">
+              <li><Star className="tag-star" /> Senza glutine</li>
+              <li><Star className="tag-star" /> Senza lattosio</li>
+            </ul>
           </div>
-          <ul className="hero-tags">
-            <li><Star className="tag-star" /> Senza glutine</li>
-            <li><Star className="tag-star" /> Senza lattosio</li>
-            <li><Star className="tag-star" /> Senza derivati animali</li>
-          </ul>
         </div>
       </div>
     </section>

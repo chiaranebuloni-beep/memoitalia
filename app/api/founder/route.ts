@@ -18,7 +18,8 @@ export async function POST(req: Request) {
   const whatsappConsent = body.whatsappConsent === true;
   const privacy = body.privacy === true;
 
-  if (!name) return NextResponse.json({ error: "Come ti chiami?" }, { status: 422 });
+  // Il nome serve nel form completo; dall'iscrizione veloce della hero arriva solo l'email.
+  if (!name && body.source !== "hero") return NextResponse.json({ error: "Come ti chiami?" }, { status: 422 });
   if (!EMAIL_RE.test(email)) return NextResponse.json({ error: "Controlla l'email." }, { status: 422 });
   if (phone && !PHONE_RE.test(phone))
     return NextResponse.json({ error: "Il numero WhatsApp non sembra corretto." }, { status: 422 });
