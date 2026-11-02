@@ -1228,6 +1228,7 @@ p {
 }
 .bn-title-line {
   display: block;
+  white-space: nowrap;
 }
 .bn-title-hl {
   color: #e9733f;
@@ -2199,6 +2200,9 @@ p {
   }
   .tg-title {
     font-size: 9.4vw;
+  }
+  .bn-title {
+    font-size: 8.6vw;
   }
   .tg-nav {
     display: none;

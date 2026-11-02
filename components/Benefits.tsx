@@ -56,8 +56,8 @@ export default function Benefits() {
         <div className="bn-head">
           <span className="eyebrow eyebrow--blue">03 — Cosa la rende diversa</span>
           <h2 className="bn-title">
-            <span className="bn-title-mask"><span className="bn-title-line">Niente di superfluo.</span></span>
-            <span className="bn-title-mask"><span className="bn-title-line bn-title-hl">Tutto il gusto.</span></span>
+            <span className="bn-title-mask"><span className="bn-title-line">Pochi ingredienti.</span></span>
+            <span className="bn-title-mask"><span className="bn-title-line bn-title-hl">Nessun compromesso.</span></span>
           </h2>
         </div>
         <ul className="bn-grid">
