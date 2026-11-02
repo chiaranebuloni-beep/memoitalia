@@ -1537,8 +1537,42 @@ p {
   font-size: 18px;
 }
 
+.rg-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rg-facts li {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(7, 50, 111, 0.08);
+}
+.rg-copy .rg-price {
+  font-size: 16px;
+  color: rgba(17, 26, 51, 0.75);
+}
+.rg-price strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--blue);
+}
+.rg-copy .rg-legal {
+  max-width: 460px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(17, 26, 51, 0.55);
+}
 .rg-card {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   height: clamp(460px, 44vw, 600px);
@@ -1596,9 +1630,33 @@ p {
   filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.22));
   pointer-events: none;
 }
-.is-bottle .rg-product {
-  padding: 0;
+.rg-product {
   rotate: 0deg;
+  padding: 0;
+}
+/* slide con foto: l'immagine riempie tutta la card */
+.rg-slide.is-photo .rg-stage {
+  position: absolute;
+  inset: -76px -28px -96px;
+  margin: 0;
+  z-index: -1;
+}
+.rg-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.rg-slide.is-photo .rg-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4, 22, 52, 0.35), transparent 30%, transparent 50%, rgba(4, 22, 52, 0.85));
+}
+.rg-slide.is-photo .rg-caption {
+  margin-top: auto;
 }
 .rg-caption h3 {
   font-family: var(--font-display);

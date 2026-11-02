@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { products } from "@/lib/catalog";
 import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,30 +16,48 @@ type Slide = {
   img: string;
   bg: string;
   ink: string;
-  bottle?: boolean;
+  photo?: boolean;
 };
 
-// La gamma al lancio: l'integratore e le quattro barrette.
+// Solo l'integratore: confezione, foto in campo e caratteristiche.
 const SLIDES: Slide[] = [
   {
-    id: "integratore",
-    kind: "Integratore",
+    id: "vitamine",
+    kind: "Integratore alimentare",
     name: "Vitamine C, D, K",
-    line: "60 compresse masticabili · gusto frutti rossi",
+    line: "Compresse masticabili a base di vitamine C, D e K.",
     img: "/img/products/integratore.webp",
     bg: "#f39a62",
     ink: "#0b2e6b",
-    bottle: true,
   },
-  ...products.map((p) => ({
-    id: p.id,
-    kind: "Barretta",
-    name: p.name,
-    line: p.ingredients,
-    img: p.image,
-    bg: p.theme.bg,
-    ink: p.theme.ink,
-  })),
+  {
+    id: "campo",
+    kind: "Sempre con te",
+    name: "In borsa, in tribuna",
+    line: "Piccolo, pratico, da portare ovunque.",
+    img: "/img/photos/sport-tribuna-integratore.webp",
+    bg: "#0b4ea2",
+    ink: "#ffffff",
+    photo: true,
+  },
+  {
+    id: "masticabili",
+    kind: "60 compresse",
+    name: "Masticabili",
+    line: "Compresse da 1000 mg, da masticare.",
+    img: "/img/products/integratore.webp",
+    bg: "#2f6cf0",
+    ink: "#ffffff",
+  },
+  {
+    id: "gusto",
+    kind: "Gusto",
+    name: "Frutti rossi",
+    line: "Un gusto che piace a grandi e piccoli.",
+    img: "/img/products/integratore.webp",
+    bg: "#c7354a",
+    ink: "#fff3e4",
+  },
 ];
 
 const AUTOPLAY_MS = 4200;
@@ -102,13 +119,13 @@ export default function Range() {
     busy.current = true;
     const tl = gsap.timeline({ defaults: { ease: "power3.inOut" }, onComplete: () => (busy.current = false) });
     tl.to(".rg-card", { backgroundColor: SLIDES[next].bg, color: SLIDES[next].ink, duration: 0.7 }, 0)
-      .to(out.querySelector(".rg-product"), { xPercent: -70 * dir, rotate: -18 * dir, opacity: 0, duration: 0.55 }, 0)
+      .to(out.querySelector(".rg-media"), { xPercent: -70 * dir, rotate: -12 * dir, opacity: 0, duration: 0.55 }, 0)
       .to(out.querySelectorAll(".rg-caption > *"), { y: -16, opacity: 0, duration: 0.3, stagger: 0.03 }, 0)
       .set(out, { autoAlpha: 0 }, 0.55)
       .set(inn, { autoAlpha: 1 }, 0.2)
       .fromTo(
-        inn.querySelector(".rg-product"),
-        { xPercent: 70 * dir, rotate: 18 * dir, opacity: 0 },
+        inn.querySelector(".rg-media"),
+        { xPercent: 70 * dir, rotate: 12 * dir, opacity: 0 },
         { xPercent: 0, rotate: 0, opacity: 1, duration: 0.75, ease: "expo.out" },
         0.25
       )
@@ -139,21 +156,32 @@ export default function Range() {
   const slide = SLIDES[index];
 
   return (
-    <section className="range" id="gamma" ref={root}>
+    <section className="range" id="integratore" ref={root}>
       <div className="container rg-grid">
         <div className="rg-copy">
-          <span className="rg-badge">La gamma Mèmo</span>
+          <span className="rg-badge">Novità · Integratore Mèmo</span>
           <h2 className="rg-title">
             Tutti i giorni,
             <br />
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Quattro barrette per lo spuntino di ogni giorno e l'<strong>integratore Mèmo</strong>, in compresse masticabili gusto frutti rossi. Pochi prodotti, una sola idea: il buono che si ricorda.
+            Accanto alle barrette arriva l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
+          </p>
+          <ul className="rg-facts">
+            <li>Vitamine C, D, K</li>
+            <li>60 compresse masticabili</li>
+            <li>Gusto frutti rossi</li>
+          </ul>
+          <p className="rg-price">
+            Prezzo consigliato <strong>17,90 €</strong>
           </p>
           <a href="#founder" className="btn btn--blue" data-cursor="Iscriviti">
             Entra nella lista Founder <Arrow className="btn-arrow" />
           </a>
+          <p className="rg-legal">
+            Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
+          </p>
         </div>
 
         <div
@@ -172,7 +200,7 @@ export default function Range() {
           }}
           role="region"
           aria-roledescription="carosello"
-          aria-label="La gamma Mèmo"
+          aria-label="Integratore Mèmo"
         >
           <div className="rg-top">
             <span className="rg-count">
@@ -183,9 +211,17 @@ export default function Range() {
 
           <div className="rg-slides" aria-live="polite">
             {SLIDES.map((s, i) => (
-              <div className={`rg-slide ${s.bottle ? "is-bottle" : ""}`} key={s.id} aria-hidden={i !== index}>
+              <div className={`rg-slide ${s.photo ? "is-photo" : ""}`} key={s.id} aria-hidden={i !== index}>
                 <div className="rg-stage">
-                  <img className="rg-product" src={s.img} alt={`Mèmo ${s.name}`} width={s.bottle ? 544 : 820} height={s.bottle ? 900 : 262} loading="lazy" draggable={false} />
+                  <img
+                    className={`rg-media ${s.photo ? "rg-photo" : "rg-product"}`}
+                    src={s.img}
+                    alt={s.photo ? "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis" : "Integratore Mèmo vitamine C, D, K"}
+                    width={s.photo ? 1080 : 544}
+                    height={s.photo ? 1350 : 900}
+                    loading="lazy"
+                    draggable={false}
+                  />
                 </div>
                 <div className="rg-caption">
                   <h3>{s.name}</h3>
