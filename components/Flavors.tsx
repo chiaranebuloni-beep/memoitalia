@@ -16,6 +16,8 @@ export default function Flavors({ products }: { products: Product[] }) {
   const [added, setAdded] = useState<string | null>(null);
   const { add } = useCart();
   const stRef = useRef<ScrollTrigger | null>(null);
+  // salto diretto a un gusto dai bottoni: durante il salto l'aggancio automatico è sospeso
+  const jumpRef = useRef({ start: () => {}, end: (_i: number) => {} });
 
   useGSAP(
     () => {
@@ -27,13 +29,22 @@ export default function Flavors({ products }: { products: Product[] }) {
         const copyOut = small ? -16 : -60;
         const copyIn = small ? 16 : 70;
 
-        // Tutti i pannelli restano visibili: entrano ed escono solo barretta, testi e scritta gigante,
-        // così non ci sono scatti quando un pannello compare o sparisce.
+        // Una barretta alla volta: la vecchia esce del tutto a sinistra, poi la nuova entra da destra.
+        // Niente dissolvenze incrociate, quindi le due barrette non si sovrappongono mai.
         panels.slice(1).forEach((p) => {
-          gsap.set(p.querySelector(".fl-bar"), { xPercent: 80, rotate: 22, scale: 0.78, autoAlpha: 0 });
+          gsap.set(p.querySelector(".fl-bar"), { xPercent: 150, rotate: 16, autoAlpha: 0 });
           gsap.set(p.querySelectorAll(".fl-copy > *"), { y: copyIn, autoAlpha: 0 });
           gsap.set(p.querySelector(".fl-giant"), { xPercent: 25, autoAlpha: 0 });
         });
+
+        // Gusto su cui ci si è fermati: ogni gesto di scroll porta solo al gusto accanto.
+        let idx = 0;
+        let jumping = false;
+        const step = 1 / (n - 1);
+        // quanto bisogna scorrere prima di cambiare gusto: di più col dito, così un tocco leggero
+        // o uno scroll accidentale riporta al gusto attuale invece di passare al successivo
+        const touch = window.matchMedia("(pointer: coarse)").matches;
+        const threshold = step * (touch ? 0.3 : 0.2);
 
         const tl = gsap.timeline({
           defaults: { ease: "sine.inOut" },
@@ -42,25 +53,62 @@ export default function Flavors({ products }: { products: Product[] }) {
             start: "top top",
             end: () => `+=${window.innerHeight * (n - 1) * 1.1}`,
             pin: true,
-            scrub: 1.1,
-            snap: { snapTo: 1 / (n - 1), duration: { min: 0.45, max: 0.9 }, ease: "power1.inOut", delay: 0.12 },
+            scrub: 0.5,
+            // basta un colpo di rotellina: lo scroll va da solo al gusto successivo (o precedente),
+            // con barretta e testi già al loro posto
+            snap: {
+              snapTo: (v: number) => {
+                if (jumping) return v;
+                const d = v - idx * step;
+                if (Math.abs(d) < threshold) return idx * step;
+                return Math.max(0, Math.min(n - 1, idx + Math.sign(d))) * step;
+              },
+              duration: { min: 0.6, max: 0.9 },
+              ease: "power2.inOut",
+              delay: touch ? 0.18 : 0.1,
+              inertia: false,
+              onComplete: (self) => {
+                idx = Math.round(self.progress * (n - 1));
+              },
+            },
+            onEnter: () => (idx = 0),
+            onEnterBack: () => (idx = n - 1),
             onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
           },
         });
         stRef.current = tl.scrollTrigger ?? null;
+        jumpRef.current = {
+          start: () => (jumping = true),
+          end: (i: number) => {
+            if (!jumping) return;
+            idx = i;
+            jumping = false;
+          },
+        };
 
         panels.forEach((panel, i) => {
           if (i === 0) return;
           const prev = panels[i - 1];
           const at = i - 1;
-          tl.to(root.current, { backgroundColor: products[i].theme.bg, color: products[i].theme.ink, duration: 1, ease: "none" }, at)
-            .to(prev.querySelector(".fl-bar"), { xPercent: -80, rotate: -22, scale: 0.78, autoAlpha: 0, duration: 1 }, at)
-            .to(prev.querySelectorAll(".fl-copy > *"), { y: copyOut, autoAlpha: 0, stagger: 0.03, duration: 0.45 }, at)
-            .to(prev.querySelector(".fl-giant"), { xPercent: -25, autoAlpha: 0, duration: 1 }, at)
-            .to(panel.querySelector(".fl-bar"), { xPercent: 0, rotate: 0, scale: 1, autoAlpha: 1, duration: 1 }, at)
-            .to(panel.querySelectorAll(".fl-copy > *"), { y: 0, autoAlpha: 1, stagger: 0.04, duration: 0.5 }, at + 0.5)
-            .to(panel.querySelector(".fl-giant"), { xPercent: 0, autoAlpha: 0.16, duration: 1 }, at);
+          const prevBar = prev.querySelector(".fl-bar");
+          const bar = panel.querySelector(".fl-bar");
+          tl
+            // esce il gusto precedente
+            .to(prevBar, { xPercent: -150, rotate: -16, duration: 0.5, ease: "power2.in" }, at)
+            .set(prevBar, { autoAlpha: 0 }, at + 0.5)
+            .to(prev.querySelectorAll(".fl-copy > *"), { y: copyOut, autoAlpha: 0, stagger: 0.03, duration: 0.35, ease: "power2.in" }, at)
+            .to(prev.querySelector(".fl-giant"), { xPercent: -25, autoAlpha: 0, duration: 0.5 }, at)
+            // il colore cambia nel momento in cui la scena è vuota
+            .to(root.current, { backgroundColor: products[i].theme.bg, color: products[i].theme.ink, duration: 0.4, ease: "none" }, at + 0.3)
+            // entra il gusto nuovo
+            .set(bar, { autoAlpha: 1 }, at + 0.45)
+            .to(bar, { xPercent: 0, rotate: 0, duration: 0.55, ease: "power2.out" }, at + 0.45)
+            .to(panel.querySelector(".fl-giant"), { xPercent: 0, autoAlpha: 0.16, duration: 0.5 }, at + 0.5)
+            .to(panel.querySelectorAll(".fl-copy > *"), { y: 0, autoAlpha: 1, stagger: 0.02, duration: 0.3, ease: "power2.out" }, at + 0.55);
         });
+
+        // la durata totale coincide con il numero di passaggi, così ogni gusto sta esattamente a 1/(n-1)
+        tl.set({}, {}, n - 1);
 
         // Movimento continuo della barretta attiva.
         gsap.utils.toArray<HTMLElement>(".fl-bar-inner").forEach((el) => {
@@ -79,6 +127,9 @@ export default function Flavors({ products }: { products: Product[] }) {
     const st = stRef.current;
     if (!st) return;
     const y = st.start + (st.end - st.start) * (i / (products.length - 1));
+    jumpRef.current.start();
+    // il blocco si toglie sempre, anche se il salto viene interrotto da un altro scroll
+    window.setTimeout(() => jumpRef.current.end(i), 1300);
     if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.2 });
     else window.scrollTo({ top: y, behavior: "smooth" });
   };
