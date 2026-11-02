@@ -19,6 +19,8 @@
   --font-display: "Bomega", system-ui, sans-serif;
   --gutter: clamp(16px, 4vw, 56px);
   --radius: 28px;
+  /* bordo sinistro/destro del contenuto, uguale per tutte le sezioni (come .container) */
+  --edge: max(var(--gutter), calc((100vw - 1360px) / 2 + var(--gutter)));
   --topbar: 34px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -333,7 +335,8 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  width: min(1320px, calc(100% - 2 * var(--gutter)));
+  /* stessi bordi del contenuto della pagina */
+  width: calc(100% - 2 * var(--edge));
   padding: 10px 10px 10px 22px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
@@ -515,7 +518,7 @@ p {
   column-gap: clamp(30px, 4vw, 72px);
   row-gap: 30px;
   width: 100%;
-  max-width: 1360px;
+  max-width: calc(1360px - 2 * var(--gutter));
   margin: 0 auto;
 }
 .hero-head {
@@ -933,8 +936,8 @@ p {
   position: absolute;
   z-index: 5;
   top: 104px;
-  left: var(--gutter);
-  right: var(--gutter);
+  left: var(--edge);
+  right: var(--edge);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -989,7 +992,7 @@ p {
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   align-items: center;
   gap: 40px;
-  padding: 150px var(--gutter) 90px;
+  padding: 150px var(--edge) 90px;
   pointer-events: none;
 }
 .fl-panel.is-active {
@@ -1105,7 +1108,7 @@ p {
 .fl-dots {
   position: absolute;
   z-index: 5;
-  right: var(--gutter);
+  right: var(--edge);
   bottom: 34px;
   display: flex;
   gap: 8px;
@@ -1302,7 +1305,6 @@ p {
    ========================================================================== */
 
 .target {
-  --edge: max(var(--gutter), calc((100vw - 1360px) / 2 + var(--gutter)));
   padding: clamp(80px, 10vw, 140px) 0 clamp(70px, 8vw, 110px);
   background: var(--blue-deep);
   color: var(--white);

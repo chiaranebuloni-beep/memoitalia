@@ -62,7 +62,7 @@ export default function Benefits() {
         </div>
         <ul className="bn-grid">
           {ITEMS.map((it) => (
-            <li className={`bn-card bn-card--${it.color}`} key={it.small} data-cursor="Buona">
+            <li className={`bn-card bn-card--${it.color}`} key={it.small}>
               <span className="bn-big">{it.big}</span>
               <span className="bn-small">{it.small}</span>
               <p>{it.text}</p>
