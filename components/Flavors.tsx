@@ -27,18 +27,23 @@ export default function Flavors({ products }: { products: Product[] }) {
         const copyOut = small ? -16 : -60;
         const copyIn = small ? 16 : 70;
 
-        gsap.set(panels.slice(1), { autoAlpha: 0 });
-        gsap.set(panels.slice(1).map((p) => p.querySelector(".fl-bar")), { xPercent: 90, rotate: 35, scale: 0.7 });
+        // Tutti i pannelli restano visibili: entrano ed escono solo barretta, testi e scritta gigante,
+        // così non ci sono scatti quando un pannello compare o sparisce.
+        panels.slice(1).forEach((p) => {
+          gsap.set(p.querySelector(".fl-bar"), { xPercent: 80, rotate: 22, scale: 0.78, autoAlpha: 0 });
+          gsap.set(p.querySelectorAll(".fl-copy > *"), { y: copyIn, autoAlpha: 0 });
+          gsap.set(p.querySelector(".fl-giant"), { xPercent: 25, autoAlpha: 0 });
+        });
 
         const tl = gsap.timeline({
-          defaults: { ease: "power3.inOut" },
+          defaults: { ease: "sine.inOut" },
           scrollTrigger: {
             trigger: root.current,
             start: "top top",
-            end: () => `+=${window.innerHeight * (n - 0.3)}`,
+            end: () => `+=${window.innerHeight * (n - 1) * 1.1}`,
             pin: true,
-            scrub: 0.8,
-            snap: { snapTo: 1 / (n - 1), duration: { min: 0.2, max: 0.6 }, ease: "power2.inOut", delay: 0.05 },
+            scrub: 1.1,
+            snap: { snapTo: 1 / (n - 1), duration: { min: 0.45, max: 0.9 }, ease: "power1.inOut", delay: 0.12 },
             onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
           },
         });
@@ -48,15 +53,13 @@ export default function Flavors({ products }: { products: Product[] }) {
           if (i === 0) return;
           const prev = panels[i - 1];
           const at = i - 1;
-          tl.to(root.current, { backgroundColor: products[i].theme.bg, color: products[i].theme.ink, duration: 1 }, at)
-            .to(prev.querySelector(".fl-bar"), { xPercent: -110, rotate: -30, scale: 0.7, duration: 1 }, at)
-            .to(prev.querySelectorAll(".fl-copy > *"), { y: copyOut, autoAlpha: 0, stagger: small ? 0 : 0.04, duration: small ? 0.3 : 0.5 }, at)
-            .to(prev.querySelector(".fl-giant"), { xPercent: -30, autoAlpha: 0, duration: 1 }, at)
-            .set(prev, { autoAlpha: 0 }, at + 1)
-            .set(panel, { autoAlpha: 1 }, at + 0.35)
-            .to(panel.querySelector(".fl-bar"), { xPercent: 0, rotate: 0, scale: 1, duration: 1 }, at)
-            .from(panel.querySelectorAll(".fl-copy > *"), { y: copyIn, autoAlpha: 0, stagger: small ? 0.02 : 0.05, duration: 0.55 }, at + 0.55)
-            .from(panel.querySelector(".fl-giant"), { xPercent: 30, autoAlpha: 0, duration: 1 }, at);
+          tl.to(root.current, { backgroundColor: products[i].theme.bg, color: products[i].theme.ink, duration: 1, ease: "none" }, at)
+            .to(prev.querySelector(".fl-bar"), { xPercent: -80, rotate: -22, scale: 0.78, autoAlpha: 0, duration: 1 }, at)
+            .to(prev.querySelectorAll(".fl-copy > *"), { y: copyOut, autoAlpha: 0, stagger: 0.03, duration: 0.45 }, at)
+            .to(prev.querySelector(".fl-giant"), { xPercent: -25, autoAlpha: 0, duration: 1 }, at)
+            .to(panel.querySelector(".fl-bar"), { xPercent: 0, rotate: 0, scale: 1, autoAlpha: 1, duration: 1 }, at)
+            .to(panel.querySelectorAll(".fl-copy > *"), { y: 0, autoAlpha: 1, stagger: 0.04, duration: 0.5 }, at + 0.5)
+            .to(panel.querySelector(".fl-giant"), { xPercent: 0, autoAlpha: 0.16, duration: 1 }, at);
         });
 
         // Movimento continuo della barretta attiva.
