@@ -1040,7 +1040,6 @@ p {
 .tg-copy {
   display: grid;
   gap: 20px;
-  max-width: 720px;
 }
 .tg-title {
   font-family: var(--font-display);
@@ -1049,7 +1048,12 @@ p {
   line-height: 0.95;
   text-transform: uppercase;
 }
-.tg-title span {
+/* ogni frase su una riga sola: "Nata per lo sport." non va mai a capo */
+.tg-title-line {
+  display: block;
+  white-space: nowrap;
+}
+.tg-title-hl {
   color: var(--sand);
 }
 .tg-copy p {
@@ -2192,6 +2196,9 @@ p {
   }
   .tg-head {
     display: block;
+  }
+  .tg-title {
+    font-size: 9.4vw;
   }
   .tg-nav {
     display: none;

@@ -100,9 +100,8 @@ export default function Target() {
         <div className="tg-copy">
           <span className="eyebrow eyebrow--light">02 — Per chi è Mèmo</span>
           <h2 className="tg-title">
-            Nata per lo sport.
-            <br />
-            <span>Buona a ogni età.</span>
+            <span className="tg-title-line">Nata per lo sport.</span>
+            <span className="tg-title-line tg-title-hl">Buona a ogni età.</span>
           </h2>
           <p>
             Tra un set e l'altro, prima della partita o dopo l'allenamento: Mèmo sta in borsa accanto alla borraccia. E siccome prima di tutto è buona, piace anche fuori dal campo, a scuola, in ufficio, ai grandi e ai piccoli.
