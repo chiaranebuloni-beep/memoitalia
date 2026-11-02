@@ -87,7 +87,6 @@ export const products: Product[] = [
     priceCents: 1790,
     image: "/img/products/integratore.webp",
     theme: { bg: "#0b4ea2", ink: "#ffffff", accent: "#eaa65f" },
-    badge: "Novità",
   },
 ];
 

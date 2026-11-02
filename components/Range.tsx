@@ -154,14 +154,14 @@ export default function Range() {
     <section className="range" id="integratore" ref={root}>
       <div className="container rg-grid">
         <div className="rg-copy">
-          <span className="rg-badge">Novità · Integratore Mèmo</span>
+          <span className="rg-badge">Integratore Mèmo</span>
           <h2 className="rg-title">
             Tutti i giorni,
             <br />
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette arriva l'<strong>integratore Mèmo</strong>: 60 compresse a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
+            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
           </p>
           <ul className="rg-facts">
             <li>Vitamine C, D, K</li>

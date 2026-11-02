@@ -588,8 +588,8 @@ p {
   bottom: 2%;
   height: 7%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(3, 20, 60, 0.45), transparent);
-  filter: blur(6px);
+  background: radial-gradient(closest-side, rgba(3, 20, 60, 0.3), transparent);
+  filter: blur(8px);
   z-index: 0;
 }
 .hero-bar {
@@ -604,7 +604,7 @@ p {
 .hero-bar img {
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 10px 12px rgba(3, 20, 60, 0.28));
+  filter: drop-shadow(0 5px 6px rgba(3, 20, 60, 0.16)) drop-shadow(0 1px 2px rgba(3, 20, 60, 0.14));
 }
 
 /* Lancio: conto alla rovescia + iscrizione veloce */
@@ -1027,7 +1027,7 @@ p {
   position: relative;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 24px 26px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.18)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
   rotate: -8deg;
 }
 .fl-bar-swoosh {
@@ -1719,16 +1719,16 @@ p {
 /* un'unica ombra morbida sotto tutto il ventaglio: niente ombre scure che si sovrappongono */
 .fb-fan {
   position: relative;
-  filter: drop-shadow(0 28px 30px rgba(3, 20, 60, 0.28));
   width: min(100%, 540px);
   aspect-ratio: 820 / 262;
 }
+/* ogni barretta ha la sua ombra (non il contenitore: su iPhone diventerebbe un riquadro grigio) */
 .fb-fan-bar {
   position: absolute;
   inset: 0;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 2px 3px rgba(3, 20, 60, 0.22));
+  filter: drop-shadow(0 10px 10px rgba(3, 20, 60, 0.16)) drop-shadow(0 2px 3px rgba(3, 20, 60, 0.16));
 }
 .fb-box-label {
   position: absolute;
@@ -1943,7 +1943,7 @@ p {
   object-fit: contain;
   padding: 4% 6%;
   rotate: -8deg;
-  filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.22));
+  filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.18)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
   pointer-events: none;
 }
 .rg-product {
@@ -2112,11 +2112,12 @@ p {
   background: var(--white);
   color: var(--blue-deep);
   text-decoration: none;
-  transition: transform 0.4s var(--ease-out), background 0.3s;
+  /* "translate" e non "transform": il transform lo usa l'animazione di entrata (GSAP) */
+  transition: translate 0.4s var(--ease-out), background 0.3s;
 }
 .ft-ig:hover {
   background: var(--sand);
-  transform: translateY(-3px);
+  translate: 0 -3px;
 }
 .ft-ig-icon {
   display: grid;
@@ -2994,7 +2995,7 @@ p {
 .sh-title {
   display: flex;
   flex-direction: column;
-  margin: 18px 0 0;
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(56px, 8.4vw, 140px);
@@ -3050,7 +3051,6 @@ p {
 .sh-hero-visual {
   position: relative;
   aspect-ratio: 1 / 0.78;
-  filter: drop-shadow(0 24px 26px rgba(3, 20, 60, 0.3));
 }
 .sh-hero-bar {
   position: absolute;
@@ -3060,7 +3060,7 @@ p {
   height: auto;
   transform: rotate(-12deg);
   z-index: calc(var(--i) + 1);
-  filter: drop-shadow(0 6px 8px rgba(3, 20, 60, 0.25));
+  filter: drop-shadow(0 8px 8px rgba(3, 20, 60, 0.2)) drop-shadow(0 1px 2px rgba(3, 20, 60, 0.14));
 }
 
 /* barra dei filtri */
@@ -3184,7 +3184,7 @@ p {
   width: 100%;
   height: auto;
   rotate: -8deg;
-  filter: drop-shadow(0 22px 22px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.18)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
   transition: scale 0.6s var(--ease-out), rotate 0.6s var(--ease-out);
 }
 .sh-card:hover .sh-product-img {
@@ -3430,7 +3430,6 @@ p {
   position: relative;
   width: min(100%, 520px);
   aspect-ratio: 820 / 262;
-  filter: drop-shadow(0 28px 30px rgba(3, 20, 60, 0.25));
 }
 .sh-fan-bar {
   position: absolute;
@@ -3438,7 +3437,7 @@ p {
   width: 100%;
   height: auto;
   transform-origin: 30% 50%;
-  filter: drop-shadow(0 2px 3px rgba(3, 20, 60, 0.22));
+  filter: drop-shadow(0 10px 10px rgba(3, 20, 60, 0.16)) drop-shadow(0 2px 3px rgba(3, 20, 60, 0.16));
 }
 
 /* fascia lista Founder */
@@ -3626,23 +3625,77 @@ p {
   }
 }
 
-/* aree da toccare di almeno 44px su telefono */
+/* footer compatto su telefono: logo e Instagram sulla stessa riga, link più piccoli */
 @media (max-width: 720px) {
+  .footer {
+    padding-top: 36px;
+  }
+  .ft-top {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 22px;
+  }
+  .ft-logo img {
+    width: 112px;
+  }
+  .ft-ig {
+    width: auto;
+    gap: 8px;
+    padding: 5px 14px 5px 5px;
+  }
+  .ft-ig-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .ft-ig-text small,
+  .ft-ig-arrow {
+    display: none;
+  }
+  .ft-ig-text b {
+    font-size: 13px;
+  }
+  .ft-nav {
+    gap: 22px 16px;
+    padding-top: 22px;
+  }
   .ft-col {
     gap: 0;
+  }
+  .ft-col h3 {
+    margin-bottom: 4px;
+    font-size: 11px;
   }
   .ft-col > a {
     display: flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 34px;
+    font-size: 17px;
   }
   .ft-col--contact .ft-mail {
-    min-height: 44px;
+    font-size: 15px;
+  }
+  .ft-col--contact p,
+  .ft-note {
+    margin: 2px 0 0;
+    font-size: 13px;
+  }
+  .ft-legal {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px 16px;
+    margin-top: 24px;
+    padding-top: 12px;
+    padding-bottom: 14px;
+    font-size: 12px;
+  }
+  .ft-legal > span:first-child {
+    flex-basis: 100%;
   }
   .ft-legal a {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 34px;
   }
   .rg-dots {
     margin-left: -17px;
@@ -3655,5 +3708,58 @@ p {
   .fl-shop {
     padding: 0 14px;
     font-size: 12px;
+  }
+}
+
+/* Gusti su telefono: la barretta non deve mai salire sopra intestazione e testi.
+   Il contenuto parte sotto l'intestazione (92px + pulsante da 44px + margine per il movimento
+   della barretta); se lo spazio non basta, avanza verso il basso ("safe") invece che verso l'alto. */
+@media (max-width: 720px) {
+  .fl-panel {
+    align-content: safe center;
+    padding-top: 168px;
+  }
+  /* l'onda colorata dietro la barretta su schermo piccolo sembrava una macchia d'ombra */
+  .fl-bar-swoosh {
+    display: none;
+  }
+  .fl-bar img {
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.14));
+  }
+}
+/* telefoni con schermo basso (o con le barre del browser visibili) */
+@media (max-width: 720px) and (max-height: 800px) {
+  .fl-panel {
+    gap: 8px;
+    padding-bottom: 82px;
+  }
+  .fl-bar {
+    width: 72%;
+    margin-bottom: 30px;
+  }
+  .fl-badge,
+  .fl-chips {
+    display: none;
+  }
+  .fl-name {
+    font-size: 54px;
+  }
+  .fl-buy {
+    margin-top: 14px;
+  }
+}
+@media (max-width: 720px) and (max-height: 620px) {
+  .fl-panel {
+    padding-top: 160px;
+  }
+  .fl-bar {
+    width: 58%;
+    margin-bottom: 22px;
+  }
+  .fl-name {
+    font-size: 46px;
+  }
+  .fl-tagline {
+    font-size: 13px;
   }
 }

@@ -192,7 +192,6 @@ export default function Shop({ products }: { products: Product[] }) {
         </div>
         <div className="container sh-hero-grid">
           <div className="sh-hero-copy">
-            <span className="eyebrow eyebrow--light sh-hero-anim">Shop Mèmo</span>
             <h1 className="sh-title">
               <span className="sh-title-line">
                 <SplitChars text="Fai scorta" />
