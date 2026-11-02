@@ -30,8 +30,8 @@ export default function CartDrawer() {
           <div className="drawer-empty">
             <img src="/img/brand/mascot.webp" alt="" width={160} height={172} />
             <p>Il carrello è vuoto. Mèmo ha un po' fame…</p>
-            <a href="#gusti" className="btn btn--blue" onClick={() => setOpen(false)}>
-              Scegli un gusto
+            <a href="/shop" className="btn btn--blue" onClick={() => setOpen(false)}>
+              Vai allo shop
             </a>
           </div>
         ) : (
@@ -42,7 +42,7 @@ export default function CartDrawer() {
                 if (!p) return null;
                 return (
                   <li key={l.id} className="drawer-line">
-                    <div className="drawer-thumb" style={{ background: p.theme.bg }}>
+                    <div className={`drawer-thumb drawer-thumb--${p.kind}`} style={{ background: p.theme.bg }}>
                       <img src={p.image} alt="" width={160} height={52} />
                     </div>
                     <div className="drawer-info">
@@ -60,14 +60,14 @@ export default function CartDrawer() {
             </ul>
             <div className="drawer-foot">
               <div className="drawer-total">
-                <span>Totale · {count} {count === 1 ? "barretta" : "barrette"}</span>
+                <span>Totale · {count} {count === 1 ? "articolo" : "articoli"}</span>
                 <strong>{formatPrice(totalCents)}</strong>
               </div>
               <button className="btn btn--blue btn--lg btn--full" disabled>
                 Checkout in arrivo
               </button>
               <p className="drawer-note">
-                Lo shop apre a breve. <a href="#founder" onClick={() => setOpen(false)}>Entra nella lista Founder</a> per il prezzo riservato.
+                Lo shop apre a breve. <a href="/#founder" onClick={() => setOpen(false)}>Entra nella lista Founder</a> per il prezzo riservato.
               </p>
             </div>
           </>

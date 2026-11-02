@@ -1,9 +1,11 @@
 // Catalogo prodotti: per ora in codice, in seguito verrà spostato su database / CMS.
 
 export type FlavorId = "golosa" | "cocco" | "arachide" | "gianduia";
+export type ProductId = FlavorId | "integratore";
 
 export type Product = {
-  id: FlavorId;
+  id: ProductId;
+  kind: "barretta" | "integratore";
   sku: string;
   name: string;
   tagline: string;
@@ -22,6 +24,7 @@ export type Product = {
 export const products: Product[] = [
   {
     id: "golosa",
+    kind: "barretta",
     sku: "MEMO-BAR-GOL",
     name: "Golosa",
     tagline: "La barretta ricoperta di cioccolato",
@@ -35,6 +38,7 @@ export const products: Product[] = [
   },
   {
     id: "cocco",
+    kind: "barretta",
     sku: "MEMO-BAR-COC",
     name: "Cocco",
     tagline: "La barretta al cocco e mandorle",
@@ -47,6 +51,7 @@ export const products: Product[] = [
   },
   {
     id: "arachide",
+    kind: "barretta",
     sku: "MEMO-BAR-ARA",
     name: "Arachide",
     tagline: "La barretta agli arachidi",
@@ -59,6 +64,7 @@ export const products: Product[] = [
   },
   {
     id: "gianduia",
+    kind: "barretta",
     sku: "MEMO-BAR-GIA",
     name: "Gianduia",
     tagline: "La barretta al cacao e nocciole",
@@ -69,7 +75,23 @@ export const products: Product[] = [
     image: "/img/products/gianduia.webp",
     theme: { bg: "#76291b", ink: "#fff3e4", accent: "#f7b98b" },
   },
+  {
+    id: "integratore",
+    kind: "integratore",
+    sku: "MEMO-INT-VIT",
+    name: "Integratore",
+    tagline: "Vitamine C, D e K, gusto frutti rossi",
+    ingredients: "60 compresse",
+    description:
+      "La buona abitudine di tutti i giorni: vitamine C, D e K in una compressa al gusto frutti rossi. Per grandi e piccoli, da tenere in borsa o in tribuna.",
+    priceCents: 1790,
+    image: "/img/products/integratore.webp",
+    theme: { bg: "#0b4ea2", ink: "#ffffff", accent: "#eaa65f" },
+    badge: "Novità",
+  },
 ];
+
+export const bars = products.filter((p) => p.kind === "barretta");
 
 export const formatPrice = (cents: number) =>
   new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" }).format(cents / 100);

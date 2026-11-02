@@ -1,4 +1,4 @@
-import { products } from "@/lib/catalog";
+import { bars } from "@/lib/catalog";
 import Preloader from "@/components/Preloader";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -22,7 +22,7 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee />
-        <Flavors products={products} />
+        <Flavors products={bars} />
         <Manifesto />
         <Target />
         <Benefits />

@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { products, type FlavorId } from "@/lib/catalog";
+import { products, type ProductId } from "@/lib/catalog";
 
-type Line = { id: FlavorId; qty: number };
+type Line = { id: ProductId; qty: number };
 
 type CartCtx = {
   lines: Line[];
@@ -11,8 +11,8 @@ type CartCtx = {
   totalCents: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  add: (id: FlavorId, qty?: number) => void;
-  setQty: (id: FlavorId, qty: number) => void;
+  add: (id: ProductId, qty?: number) => void;
+  setQty: (id: ProductId, qty: number) => void;
   bump: number;
 };
 
@@ -37,7 +37,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [lines]);
 
-  const add = useCallback((id: FlavorId, qty = 1) => {
+  const add = useCallback((id: ProductId, qty = 1) => {
     setLines((prev) => {
       const found = prev.find((l) => l.id === id);
       if (found) return prev.map((l) => (l.id === id ? { ...l, qty: l.qty + qty } : l));
@@ -46,7 +46,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setBump((b) => b + 1);
   }, []);
 
-  const setQty = useCallback((id: FlavorId, qty: number) => {
+  const setQty = useCallback((id: ProductId, qty: number) => {
     setLines((prev) => (qty <= 0 ? prev.filter((l) => l.id !== id) : prev.map((l) => (l.id === id ? { ...l, qty } : l))));
   }, []);
 

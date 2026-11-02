@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useCart } from "./CartProvider";
 import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,9 +26,9 @@ const SLIDES: Slide[] = [
     id: "vitamine",
     kind: "Integratore alimentare",
     name: "Vitamine C, D, K",
-    line: "Compresse masticabili a base di vitamine C, D e K.",
+    line: "Compresse a base di vitamine C, D e K.",
     img: "/img/products/integratore.webp",
-    bg: "#d42a3a",
+    bg: "#0b4ea2",
     ink: "#ffffff",
   },
   {
@@ -44,9 +45,9 @@ const SLIDES: Slide[] = [
     id: "gusto",
     kind: "Gusto",
     name: "Frutti rossi",
-    line: "Compresse da masticare, con un gusto che piace a grandi e piccoli.",
+    line: "Un gusto che piace a grandi e piccoli.",
     img: "/img/photos/frutti-rossi-card.webp",
-    bg: "#9c1626",
+    bg: "#07326f",
     ink: "#ffffff",
     photo: true,
   },
@@ -63,6 +64,8 @@ export default function Range() {
   const current = useRef(0);
   const busy = useRef(false);
   const touchX = useRef<number | null>(null);
+  const { add } = useCart();
+  const [added, setAdded] = useState(false);
 
   const { contextSafe } = useGSAP(
     () => {
@@ -158,19 +161,32 @@ export default function Range() {
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette arriva l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
+            Accanto alle barrette arriva l'<strong>integratore Mèmo</strong>: 60 compresse a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
           </p>
           <ul className="rg-facts">
             <li>Vitamine C, D, K</li>
-            <li>60 compresse masticabili</li>
+            <li>60 compresse</li>
             <li>Gusto frutti rossi</li>
           </ul>
           <p className="rg-price">
             Prezzo <strong>17,90 €</strong>
           </p>
-          <a href="#founder" className="btn btn--blue" data-cursor="Iscriviti">
-            Entra nella lista Founder <Arrow className="btn-arrow" />
-          </a>
+          <div className="rg-actions">
+            <button
+              className={`btn btn--blue ${added ? "is-added" : ""}`}
+              onClick={() => {
+                add("integratore");
+                setAdded(true);
+                window.setTimeout(() => setAdded(false), 1600);
+              }}
+              data-cursor="Aggiungi"
+            >
+              {added ? "Aggiunto!" : "Aggiungi al carrello"}
+            </button>
+            <a href="/shop#integratore" className="rg-shop" data-cursor="Shop">
+              Vai allo shop <Arrow className="btn-arrow" />
+            </a>
+          </div>
           <p className="rg-legal">
             Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
           </p>
@@ -233,7 +249,9 @@ export default function Range() {
                   aria-label={`Mostra ${s.name}`}
                   aria-current={i === index}
                 >
-                  {i === index && autoplay && <i style={{ animationDuration: `${AUTOPLAY_MS}ms` }} key={index} />}
+                  <span className="rg-dot">
+                    {i === index && autoplay && <i style={{ animationDuration: `${AUTOPLAY_MS}ms` }} key={index} />}
+                  </span>
                 </button>
               ))}
             </div>

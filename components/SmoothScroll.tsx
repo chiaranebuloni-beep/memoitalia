@@ -25,19 +25,33 @@ export default function SmoothScroll() {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    // "#id" e "/pagina#id" quando si è già su quella pagina: scorrimento morbido invece del salto.
     const onClick = (e: MouseEvent) => {
-      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href*="#"]');
       if (!a) return;
-      const id = a.getAttribute("href")!;
-      if (id.length < 2) return;
-      const el = document.querySelector(id);
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname || url.hash.length < 2) return;
+      const el = document.getElementById(decodeURIComponent(url.hash.slice(1)));
       if (!el) return;
       e.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -60, duration: 1.4 });
+      lenis.scrollTo(el, { offset: -60, duration: 1.4 });
     };
     document.addEventListener("click", onClick);
 
+    // Arrivando da un'altra pagina con un #id: il salto nativo avviene prima che le sezioni
+    // fissate (pin) occupino il loro spazio, quindi si riposiziona quando il layout è pronto.
+    let hashTimer = 0;
+    if (location.hash.length > 1) {
+      hashTimer = window.setTimeout(() => {
+        const el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (!el) return;
+        ScrollTrigger.refresh();
+        lenis.scrollTo(el, { offset: -60, immediate: true, force: true });
+      }, 450);
+    }
+
     return () => {
+      window.clearTimeout(hashTimer);
       document.removeEventListener("click", onClick);
       gsap.ticker.remove(tick);
       lenis.destroy();

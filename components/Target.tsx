@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SHOTS = [
   { img: "sport-campo-gianduia", tag: "Sport", title: "In campo", text: "Tra un set e l'altro." },
   { img: "sport-borsa-gianduia", tag: "Sport", title: "In borsa", text: "Accanto alla borraccia, sempre." },
-  { img: "sport-tribuna-integratore", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
+  { img: "sport-tribuna-integratore-sm", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
   { img: "tennis-cocco", tag: "Sport", title: "Dopo l'allenamento", text: "Il premio dopo la fatica." },
   { img: "amici-gianduia", tag: "Ogni età", title: "Con gli amici", text: "Ovunque si vada." },
   { img: "mamma-figlio", tag: "Ogni età", title: "In famiglia", text: "La merenda che mette d'accordo tutti." },

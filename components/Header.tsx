@@ -5,12 +5,8 @@ import { gsap } from "gsap";
 import { useCart } from "./CartProvider";
 import { Star } from "./ui";
 
-const NAV = [
-  { href: "#gusti", label: "Gusti" },
-  { href: "#visione", label: "Visione" },
-  { href: "#per-chi", label: "Per chi" },
-  { href: "#founder", label: "Box Founder" },
-];
+// Nel menu solo lo shop: la lista Founder ha già il suo pulsante a destra.
+const NAV = [{ href: "/shop", label: "Shop" }];
 
 export default function Header() {
   const { count, setOpen, bump } = useCart();
@@ -48,15 +44,13 @@ export default function Header() {
               <Star className="topbar-star" />
               <span>Spedizioni in tutta Italia</span>
               <Star className="topbar-star" />
-              <span>Ci trovi anche da Conad Cavriago e Reggio Emilia</span>
-              <Star className="topbar-star" />
             </div>
           ))}
         </div>
       </div>
 
       <header className={`header ${scrolled ? "is-scrolled" : ""} ${hidden && !menu ? "is-hidden" : ""}`}>
-        <a href="#top" className="header-logo" aria-label="Mèmo, torna all'inizio">
+        <a href="/#top" className="header-logo" aria-label="Mèmo, torna all'inizio">
           <img src="/img/brand/logo.png" alt="Mèmo, il buono memorabile" width={190} height={52} />
         </a>
 
@@ -71,7 +65,7 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <a href="#founder" className="btn btn--blue btn--sm header-cta" data-cursor="Iscriviti">
+          <a href="/#founder" className="btn btn--blue btn--sm header-cta" data-cursor="Iscriviti">
             Lista Founder
           </a>
           <button className="cart-btn" onClick={() => setOpen(true)} aria-label={`Apri il carrello, ${count} articoli`} data-cursor="Carrello">

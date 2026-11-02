@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { formatPrice, type Product } from "@/lib/catalog";
 import { useCart } from "./CartProvider";
-import { Swoosh } from "./ui";
+import { Arrow, Swoosh } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,13 +152,18 @@ export default function Flavors({ products }: { products: Product[] }) {
         <span className="eyebrow">
           I gusti<span className="fl-head-more"> · 4 barrette, una sola identità</span>
         </span>
-        <span className="fl-counter">
-          <b>{String(active + 1).padStart(2, "0")}</b> / {String(products.length).padStart(2, "0")}
+        <span className="fl-head-right">
+          <a href="/shop" className="fl-shop" data-cursor="Shop">
+            Vai allo shop <Arrow className="btn-arrow" />
+          </a>
+          <span className="fl-counter">
+            <b>{String(active + 1).padStart(2, "0")}</b> / {String(products.length).padStart(2, "0")}
+          </span>
         </span>
       </div>
 
       {products.map((p, i) => (
-        <article className={`fl-panel ${active === i ? "is-active" : ""}`} key={p.id} aria-hidden={active !== i} style={{ "--accent": p.theme.accent } as React.CSSProperties}>
+        <article className={`fl-panel ${active === i ? "is-active" : ""}`} data-flavor={p.id} key={p.id} aria-hidden={active !== i} style={{ "--accent": p.theme.accent } as React.CSSProperties}>
           <div className="fl-giant" aria-hidden>
             {p.name}
           </div>

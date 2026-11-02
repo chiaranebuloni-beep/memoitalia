@@ -18,11 +18,23 @@ const archivo = Archivo({
   display: "swap",
 });
 
+const DESCRIPTION =
+  "Mèmo, la barretta buona per natura: pochi ingredienti, senza edulcoranti, senza glutine e senza lattosio. Golosa, Cocco, Arachide e Gianduia.";
+
 export const metadata: Metadata = {
+  // indirizzo pubblico: serve per gli URL assoluti dell'immagine di anteprima (app/opengraph-image.jpg)
+  metadataBase: new URL("https://memoitalia.vercel.app"),
   title: "Mèmo · Il buono memorabile",
-  description:
-    "Mèmo, la barretta buona per natura: pochi ingredienti, senza edulcoranti, senza glutine e senza lattosio. Golosa, Cocco, Arachide e Gianduia.",
+  description: DESCRIPTION,
   icons: { icon: "/img/brand/monogram.png" },
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    siteName: "Mèmo",
+    title: "Mèmo · Il buono memorabile",
+    description: DESCRIPTION,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
