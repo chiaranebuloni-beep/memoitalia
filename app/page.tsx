@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Flavors from "@/components/Flavors";
 import Manifesto from "@/components/Manifesto";
+import Target from "@/components/Target";
 import Benefits from "@/components/Benefits";
 import FounderBox from "@/components/FounderBox";
 import Range from "@/components/Range";
@@ -23,6 +24,7 @@ export default function Home() {
         <Marquee />
         <Flavors products={products} />
         <Manifesto />
+        <Target />
         <Benefits />
         <FounderBox />
         <Range />

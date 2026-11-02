@@ -1020,6 +1020,181 @@ p {
 }
 
 /* ==========================================================================
+   Per chi è (carosello foto)
+   ========================================================================== */
+
+.target {
+  --edge: max(var(--gutter), calc((100vw - 1360px) / 2 + var(--gutter)));
+  padding: clamp(80px, 10vw, 140px) 0 clamp(70px, 8vw, 110px);
+  background: var(--blue-deep);
+  color: var(--white);
+  overflow: hidden;
+}
+.tg-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+}
+.tg-copy {
+  display: grid;
+  gap: 20px;
+  max-width: 720px;
+}
+.tg-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(42px, 5.6vw, 92px);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.tg-title span {
+  color: var(--sand);
+}
+.tg-copy p {
+  max-width: 600px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.82);
+}
+.tg-nav {
+  display: flex;
+  gap: 10px;
+  flex: none;
+}
+.tg-nav button {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, opacity 0.3s, transform 0.3s var(--ease-out);
+}
+.tg-nav button:hover:not(:disabled) {
+  background: var(--white);
+  color: var(--blue-deep);
+  transform: scale(1.06);
+}
+.tg-nav button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.tg-arrow {
+  width: 22px;
+  height: 22px;
+}
+.tg-arrow--prev {
+  rotate: 180deg;
+}
+.tg-track {
+  display: flex;
+  gap: 18px;
+  margin-top: clamp(36px, 4vw, 56px);
+  padding: 0 var(--edge);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--edge);
+  scrollbar-width: none;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+}
+.tg-track::-webkit-scrollbar {
+  display: none;
+}
+.tg-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+.tg-track.is-dragging .tg-card {
+  pointer-events: none;
+}
+.tg-card {
+  position: relative;
+  flex: none;
+  width: clamp(260px, 28vw, 400px);
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 26px;
+  scroll-snap-align: start;
+  background: var(--blue);
+}
+.tg-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+  user-select: none;
+}
+.tg-card:hover img {
+  transform: scale(1.05);
+}
+.tg-card::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(4, 22, 52, 0.85));
+  pointer-events: none;
+}
+.tg-card figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+}
+.tg-tag {
+  margin-bottom: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--blue-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tg-tag.is-sport {
+  background: var(--sand);
+  color: var(--choco);
+}
+.tg-card strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 2.4vw, 38px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.tg-line {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.tg-spacer {
+  flex: none;
+  width: 1px;
+}
+.tg-progress {
+  height: 3px;
+  margin-top: 30px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+.tg-progress i {
+  display: block;
+  height: 100%;
+  background: var(--sand);
+  transform-origin: left center;
+  transition: transform 0.25s linear;
+}
+
+/* ==========================================================================
    Benefits
    ========================================================================== */
 
@@ -2008,6 +2183,18 @@ p {
   }
   .bn-grid {
     grid-template-columns: 1fr;
+  }
+  .tg-head {
+    display: block;
+  }
+  .tg-nav {
+    display: none;
+  }
+  .tg-card {
+    width: 78vw;
+  }
+  .tg-track {
+    gap: 12px;
   }
   .rg-card {
     height: 470px;

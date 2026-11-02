@@ -54,7 +54,7 @@ export default function Benefits() {
     <section className="benefits" ref={root}>
       <div className="container">
         <div className="bn-head">
-          <span className="eyebrow eyebrow--blue">02 — Cosa la rende diversa</span>
+          <span className="eyebrow eyebrow--blue">03 — Cosa la rende diversa</span>
           <h2 className="bn-title">
             <span className="bn-title-mask"><span className="bn-title-line">Semplicità che</span></span>
             <span className="bn-title-mask"><span className="bn-title-line">si vede e si sente.</span></span>

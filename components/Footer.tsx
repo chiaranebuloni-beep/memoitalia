@@ -50,6 +50,7 @@ export default function Footer() {
         <div className="ft-col">
           <h3>Mèmo</h3>
           <a href="#visione">La visione</a>
+          <a href="#per-chi">Per chi è</a>
           <a href="#founder">Lista Founder</a>
         </div>
         <div className="ft-col ft-col--contact">

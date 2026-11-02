@@ -8,6 +8,7 @@ import { Star } from "./ui";
 const NAV = [
   { href: "#gusti", label: "Gusti" },
   { href: "#visione", label: "Visione" },
+  { href: "#per-chi", label: "Per chi" },
   { href: "#founder", label: "Box Founder" },
 ];
 
