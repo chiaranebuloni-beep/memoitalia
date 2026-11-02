@@ -11,19 +11,13 @@ const NAV = [{ href: "/shop", label: "Shop" }];
 export default function Header() {
   const { count, setOpen, bump } = useCart();
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menu, setMenu] = useState(false);
   const badge = useRef<HTMLSpanElement>(null);
 
+  // L'header resta sempre visibile, anche scorrendo verso il basso (scelta del cliente):
+  // allo scroll cambia solo aspetto (più in alto e con più ombra).
   useEffect(() => {
-    let last = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 40);
-      setHidden(y > 400 && y > last + 2);
-      if (y < last - 2) setHidden(false);
-      last = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -49,7 +43,7 @@ export default function Header() {
         </div>
       </div>
 
-      <header className={`header ${scrolled ? "is-scrolled" : ""} ${hidden && !menu ? "is-hidden" : ""}`}>
+      <header className={`header ${scrolled ? "is-scrolled" : ""}`}>
         <a href="/#top" className="header-logo" aria-label="Mèmo, torna all'inizio">
           <img src="/img/brand/logo.png" alt="Mèmo, il buono memorabile" width={190} height={52} />
         </a>

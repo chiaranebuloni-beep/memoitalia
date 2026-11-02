@@ -347,9 +347,6 @@ p {
   top: 12px;
   box-shadow: 0 12px 40px rgba(7, 50, 111, 0.2);
 }
-.header.is-hidden {
-  transform: translate(-50%, -150%);
-}
 .header-logo img {
   width: clamp(110px, 12vw, 150px);
   height: auto;
