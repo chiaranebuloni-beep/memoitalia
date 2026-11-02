@@ -39,8 +39,6 @@ export default function Preloader() {
       }
 
       window.__lenis?.stop();
-      const counter = { v: 0 };
-      const num = root.current!.querySelector<HTMLElement>(".pre-count");
       const tl = gsap.timeline({
         onComplete: () => {
           window.__lenis?.start();
@@ -48,16 +46,11 @@ export default function Preloader() {
         },
       });
       tl.from(".pre-logo", { yPercent: 110, duration: 0.8, ease: "power4.out" })
-        .to(counter, {
-          v: 100,
-          duration: 0.9,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            if (num) num.textContent = String(Math.round(counter.v)).padStart(3, "0");
-          },
-        }, 0.2)
-        .to(".pre-inner", { yPercent: -30, opacity: 0, duration: 0.6, ease: "power3.in" }, "+=0.1")
-        .to(root.current, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, "-=0.25");
+        // barra di caricamento sotto il logo, larga quanto il logo: niente numeri che possano finirci sopra
+        .from(".pre-bar i", { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, 0.2)
+        .to(".pre-inner", { yPercent: -30, opacity: 0, duration: 0.5, ease: "power3.in" }, "+=0.1")
+        // il blu si apre in quattro colonne, una per gusto, che salgono una dopo l'altra
+        .to(".pre-col", { yPercent: -100, duration: 0.8, stagger: 0.07, ease: "expo.inOut" }, "-=0.2");
     },
     { scope: root }
   );
@@ -66,11 +59,18 @@ export default function Preloader() {
 
   return (
     <div className="preloader" ref={root} aria-hidden>
+      <div className="pre-cols">
+        {[0, 1, 2, 3].map((i) => (
+          <span className="pre-col" key={i} style={{ "--c": i } as React.CSSProperties} />
+        ))}
+      </div>
       <div className="pre-inner">
         <div className="pre-logo-mask">
           <img className="pre-logo" src="/img/brand/logo-white.png" alt="" width={420} height={120} />
         </div>
-        <span className="pre-count">000</span>
+        <span className="pre-bar">
+          <i />
+        </span>
       </div>
     </div>
   );

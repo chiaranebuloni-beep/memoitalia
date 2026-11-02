@@ -38,13 +38,15 @@ export default function Target() {
           ease: "power3.out",
           scrollTrigger: { trigger: root.current, start: "top 72%", once: true },
         });
+        // Le foto si scoprono dal basso come una tendina: niente dissolvenze né spostamenti,
+        // così non restano mai a metà trasparenti mentre il carosello scorre.
         gsap.from(".tg-card", {
-          x: 80,
-          opacity: 0,
-          stagger: 0.08,
+          clipPath: "inset(100% 0% 0% 0% round 26px)",
+          stagger: 0.09,
           duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".tg-track", start: "top 80%", once: true },
+          ease: "power3.inOut",
+          clearProps: "clipPath",
+          scrollTrigger: { trigger: ".tg-track", start: "top 85%", once: true },
         });
       });
     },
@@ -129,9 +131,9 @@ export default function Target() {
         aria-label="Mèmo nello sport e a ogni età"
         tabIndex={0}
       >
-        {SHOTS.map((s) => (
+        {SHOTS.map((s, i) => (
           <figure className="tg-card" key={s.img}>
-            <img src={`/img/photos/${s.img}.webp`} alt={`${s.title}: ${s.text}`} width={1080} height={1350} loading="lazy" draggable={false} />
+            <img src={`/img/photos/${s.img}.webp`} alt={`${s.title}: ${s.text}`} width={1080} height={1350} loading={i < 4 ? "eager" : "lazy"} draggable={false} />
             <figcaption>
               <span className={`tg-tag ${s.tag === "Sport" ? "is-sport" : ""}`}>{s.tag}</span>
               <strong>{s.title}</strong>
