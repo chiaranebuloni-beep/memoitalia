@@ -17,6 +17,7 @@ type Slide = {
   bg: string;
   ink: string;
   photo?: boolean;
+  backdrop?: string;
 };
 
 // Solo l'integratore: confezione, foto in campo e caratteristiche.
@@ -27,8 +28,8 @@ const SLIDES: Slide[] = [
     name: "Vitamine C, D, K",
     line: "Compresse masticabili a base di vitamine C, D e K.",
     img: "/img/products/integratore.webp",
-    bg: "#f39a62",
-    ink: "#0b2e6b",
+    bg: "#d42a3a",
+    ink: "#ffffff",
   },
   {
     id: "campo",
@@ -41,22 +42,14 @@ const SLIDES: Slide[] = [
     photo: true,
   },
   {
-    id: "masticabili",
-    kind: "60 compresse",
-    name: "Masticabili",
-    line: "Compresse da 1000 mg, da masticare.",
-    img: "/img/products/integratore.webp",
-    bg: "#2f6cf0",
-    ink: "#ffffff",
-  },
-  {
     id: "gusto",
     kind: "Gusto",
     name: "Frutti rossi",
-    line: "Un gusto che piace a grandi e piccoli.",
+    line: "Compresse da masticare, con un gusto che piace a grandi e piccoli.",
     img: "/img/products/integratore.webp",
-    bg: "#c7354a",
-    ink: "#fff3e4",
+    bg: "#fde8e6",
+    ink: "#0b2e6b",
+    backdrop: "/img/products/frutti-rossi.webp",
   },
 ];
 
@@ -213,6 +206,7 @@ export default function Range() {
             {SLIDES.map((s, i) => (
               <div className={`rg-slide ${s.photo ? "is-photo" : ""}`} key={s.id} aria-hidden={i !== index}>
                 <div className="rg-stage">
+                  {s.backdrop && <img className="rg-backdrop" src={s.backdrop} alt="" width={1140} height={1200} loading="lazy" draggable={false} />}
                   <img
                     className={`rg-media ${s.photo ? "rg-photo" : "rg-product"}`}
                     src={s.img}

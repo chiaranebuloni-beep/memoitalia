@@ -1634,6 +1634,21 @@ p {
   rotate: 0deg;
   padding: 0;
 }
+/* slide gusto: lo splash di frutti rossi dietro al flacone */
+.rg-backdrop {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: 118%;
+  max-width: none;
+  translate: -50% -52%;
+  pointer-events: none;
+}
+.rg-backdrop + .rg-product {
+  height: 82%;
+  top: 9%;
+}
 /* slide con foto: l'immagine riempie tutta la card */
 .rg-slide.is-photo .rg-stage {
   position: absolute;
