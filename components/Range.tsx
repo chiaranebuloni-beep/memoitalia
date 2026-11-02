@@ -17,7 +17,6 @@ type Slide = {
   bg: string;
   ink: string;
   photo?: boolean;
-  backdrop?: string;
 };
 
 // Solo l'integratore: confezione, foto in campo e caratteristiche.
@@ -46,10 +45,10 @@ const SLIDES: Slide[] = [
     kind: "Gusto",
     name: "Frutti rossi",
     line: "Compresse da masticare, con un gusto che piace a grandi e piccoli.",
-    img: "/img/products/integratore.webp",
-    bg: "#fde8e6",
-    ink: "#0b2e6b",
-    backdrop: "/img/products/frutti-rossi.webp",
+    img: "/img/photos/frutti-rossi-card.webp",
+    bg: "#9c1626",
+    ink: "#ffffff",
+    photo: true,
   },
 ];
 
@@ -167,7 +166,7 @@ export default function Range() {
             <li>Gusto frutti rossi</li>
           </ul>
           <p className="rg-price">
-            Prezzo consigliato <strong>17,90 €</strong>
+            Prezzo <strong>17,90 €</strong>
           </p>
           <a href="#founder" className="btn btn--blue" data-cursor="Iscriviti">
             Entra nella lista Founder <Arrow className="btn-arrow" />
@@ -206,11 +205,10 @@ export default function Range() {
             {SLIDES.map((s, i) => (
               <div className={`rg-slide ${s.photo ? "is-photo" : ""}`} key={s.id} aria-hidden={i !== index}>
                 <div className="rg-stage">
-                  {s.backdrop && <img className="rg-backdrop" src={s.backdrop} alt="" width={1140} height={1200} loading="lazy" draggable={false} />}
                   <img
                     className={`rg-media ${s.photo ? "rg-photo" : "rg-product"}`}
                     src={s.img}
-                    alt={s.photo ? "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis" : "Integratore Mèmo vitamine C, D, K"}
+                    alt={s.id === "gusto" ? "Frutti rossi: lamponi, more e mirtilli" : s.photo ? "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis" : "Integratore Mèmo vitamine C, D, K"}
                     width={s.photo ? 1080 : 544}
                     height={s.photo ? 1350 : 900}
                     loading="lazy"
