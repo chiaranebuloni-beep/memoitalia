@@ -11,12 +11,13 @@ import HeroSignup from "./HeroSignup";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Le quattro barrette in fila diagonale, tutte con la stessa inclinazione.
+// Le quattro barrette dritte, una dietro l'altra: dalla più lontana (in alto, piccola)
+// alla più vicina (in basso, grande), come in una vetrina.
 const BARS = [
-  { src: "/img/products/golosa.webp", name: "Golosa" },
-  { src: "/img/products/cocco.webp", name: "Cocco" },
-  { src: "/img/products/arachide.webp", name: "Arachide" },
   { src: "/img/products/gianduia.webp", name: "Gianduia" },
+  { src: "/img/products/arachide.webp", name: "Arachide" },
+  { src: "/img/products/cocco.webp", name: "Cocco" },
+  { src: "/img/products/golosa.webp", name: "Golosa" },
 ];
 
 export default function Hero() {
@@ -30,7 +31,7 @@ export default function Hero() {
           .from(".hero-swoosh", { scale: 0.5, rotate: -30, opacity: 0, duration: 1.4, ease: "expo.out" }, 0)
           .from(".hero-kicker", { y: 20, opacity: 0, duration: 0.6 }, 0)
           .from(".hero-title .split-char", { yPercent: 115, duration: 0.9, stagger: 0.022 }, 0.05)
-          .from(".hero-bar", { xPercent: 70, opacity: 0, duration: 1.1, stagger: 0.09, ease: "expo.out" }, 0.2)
+          .from(".hero-bar-scroll", { yPercent: 60, opacity: 0, duration: 1, stagger: 0.1, ease: "expo.out" }, 0.2)
           .from(".hero-launch > *", { y: 24, opacity: 0, duration: 0.7, stagger: 0.07 }, 0.4)
           .from(".cd-unit", { y: 40, rotateX: -60, opacity: 0, duration: 0.7, stagger: 0.08, ease: "back.out(1.6)" }, 0.5);
 
@@ -59,7 +60,7 @@ export default function Hero() {
           window.addEventListener("pointermove", onMove);
           gsap
             .timeline({ scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 } })
-            .to(".hero-bar-scroll", { xPercent: (i) => -6 - i * 10, yPercent: (i) => (i - 1.5) * 18, ease: "none" }, 0)
+            .to(".hero-bar-scroll", { yPercent: (i) => -(3 - i) * 45, ease: "none" }, 0)
             .to(".hero-copy", { yPercent: -12, opacity: 0.3, ease: "none" }, 0);
         }
 

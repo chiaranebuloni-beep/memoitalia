@@ -73,9 +73,6 @@ export default function Footer() {
           <a href="#visione">La visione</a>
           <a href="#per-chi">Per chi è</a>
           <a href="#founder">Lista Founder</a>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-            Instagram
-          </a>
         </nav>
         <div className="ft-col ft-col--contact">
           <h3>Contatti</h3>

@@ -266,6 +266,14 @@ p {
   font-size: clamp(48px, 8vw, 110px);
   line-height: 1;
 }
+/* su schermi piccoli il contatore sta sotto il logo, non sopra */
+@media (max-width: 720px) {
+  .pre-count {
+    position: static;
+    margin-top: 6px;
+    font-size: 44px;
+  }
+}
 
 /* ==========================================================================
    Top bar + header
@@ -559,23 +567,34 @@ p {
 .hero-stack {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 0.86;
-  filter: drop-shadow(0 26px 28px rgba(3, 20, 60, 0.3));
+  aspect-ratio: 1 / 0.7;
+}
+/* ombra a terra sotto la barretta davanti */
+.hero-stack::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 2%;
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(3, 20, 60, 0.45), transparent);
+  filter: blur(6px);
+  z-index: 0;
 }
 .hero-bar {
   position: absolute;
-  z-index: calc(4 - var(--i));
-  top: calc(var(--i) * 19%);
-  /* mazzo a specchio: la prima barretta in alto a destra, le altre scendono verso sinistra */
-  left: calc((3 - var(--i)) * 5%);
-  width: 80%;
+  z-index: calc(var(--i) + 1);
+  left: 50%;
+  top: calc(var(--i) * 14.5%);
+  width: calc(64% + var(--i) * 10%);
+  translate: -50% 0;
   pointer-events: none;
 }
 .hero-bar img {
   width: 100%;
   height: auto;
-  rotate: -10deg;
-  filter: drop-shadow(0 2px 3px rgba(3, 20, 60, 0.22));
+  filter: drop-shadow(0 10px 12px rgba(3, 20, 60, 0.28));
 }
 
 /* Lancio: conto alla rovescia + iscrizione veloce */
@@ -2691,6 +2710,127 @@ p {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+
+  /* ---- Rifinitura mobile ---- */
+
+  /* hero più compatta: si arriva prima al conto alla rovescia e al form */
+  .hero {
+    padding: 100px var(--gutter) 40px;
+  }
+  .hero-grid {
+    row-gap: 18px;
+  }
+  .hero-visual {
+    width: 82%;
+    margin-top: 0;
+  }
+  .hero-launch-title {
+    font-size: 11px;
+  }
+  .hero-launch-text {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .hs {
+    margin-top: 14px;
+  }
+  .hs-check {
+    font-size: 12px;
+  }
+  .hero-launch-foot {
+    margin-top: 16px;
+    gap: 10px 20px;
+  }
+
+  /* gusti: barretta più grande, meno vuoto in basso */
+  .fl-panel {
+    padding: 128px var(--gutter) 86px;
+    gap: 14px;
+  }
+  /* barretta più contenuta e meno inclinata: non scende mai sul nome del gusto */
+  .fl-bar {
+    width: 84%;
+    margin-bottom: 56px;
+  }
+  .fl-bar img {
+    rotate: -5deg;
+  }
+  .fl-tagline {
+    font-size: 15px;
+  }
+  .fl-buy {
+    margin-top: 18px;
+  }
+  .fl-buy .btn {
+    flex: 1;
+    padding: 14px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* visione: frasi più leggibili */
+  .mf-statement {
+    font-size: 26px;
+  }
+  .mf-line {
+    font-size: 5.7vw;
+  }
+  .mf-final {
+    font-size: 9vw;
+  }
+  .mf-grid {
+    margin-top: 56px;
+    gap: 40px;
+  }
+  .mf-note {
+    font-size: 16px;
+  }
+
+  /* vantaggi: griglia 2x3 compatta invece di 6 schede lunghe */
+  .bn-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .bn-card {
+    min-height: 0;
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+  .bn-big {
+    font-size: 11vw;
+  }
+  .bn-small {
+    font-size: 4.6vw;
+  }
+  .bn-card p {
+    padding-top: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .bn-head {
+    margin-bottom: 28px;
+  }
+
+  /* sezioni un po' meno alte */
+  .manifesto,
+  .benefits,
+  .founder,
+  .range,
+  .target {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .fb-lead,
+  .rg-copy p,
+  .tg-copy p {
+    font-size: 16px;
+  }
+  .fb-visual {
+    min-height: 240px;
+  }
+  .rg-card {
+    height: 440px;
   }
 }
 
