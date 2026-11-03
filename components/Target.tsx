@@ -12,8 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 const SHOTS = [
   { img: "sport-campo-gianduia", tag: "Sport", title: "In campo", text: "Tra un set e l'altro." },
   { img: "sport-borsa-gianduia", tag: "Sport", title: "In borsa", text: "Accanto alla borraccia, sempre." },
+  { img: "calcio-gianduia", tag: "Sport", title: "Dopo l'allenamento", text: "Il premio dopo la fatica." },
   { img: "sport-tribuna-integratore-sm", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
-  { img: "tennis-cocco", tag: "Sport", title: "Dopo l'allenamento", text: "Il premio dopo la fatica." },
+  { img: "portiere-integratore", tag: "Sport", title: "In porta", text: "Vitamine C, D e K, in presa sicura." },
   { img: "amici-gianduia", tag: "Ogni età", title: "Con gli amici", text: "Ovunque si vada." },
   { img: "mamma-figlio", tag: "Ogni età", title: "In famiglia", text: "La merenda che mette d'accordo tutti." },
   { img: "nonna-merenda", tag: "Ogni età", title: "A ogni età", text: "Chi ha detto che i grandi non fanno merenda?" },
@@ -133,7 +134,7 @@ export default function Target() {
       >
         {SHOTS.map((s, i) => (
           <figure className="tg-card" key={s.img}>
-            <img src={`/img/photos/${s.img}.webp`} alt={`${s.title}: ${s.text}`} width={1080} height={1350} loading={i < 4 ? "eager" : "lazy"} draggable={false} />
+            <img src={`/img/photos/${s.img}.webp`} alt={`${s.title}: ${s.text}`} width={1080} height={1350} loading={i < 5 ? "eager" : "lazy"} draggable={false} />
             <figcaption>
               <span className={`tg-tag ${s.tag === "Sport" ? "is-sport" : ""}`}>{s.tag}</span>
               <strong>{s.title}</strong>
