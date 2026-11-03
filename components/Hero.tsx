@@ -115,7 +115,7 @@ export default function Hero() {
           <p className="hero-launch-title">Lo shop apre tra</p>
           <Countdown />
           <p className="hero-launch-text">
-            Entra nella lista Founder: <strong>prezzo riservato</strong> e <strong>box con tutti e 4 i gusti</strong>. Il giorno del lancio ti scriviamo noi.
+            Entra nella lista Founder: <strong>prezzo riservato</strong> e <strong>box con tutti e 4 i gusti</strong>.
           </p>
           <HeroSignup />
           <div className="hero-launch-foot">

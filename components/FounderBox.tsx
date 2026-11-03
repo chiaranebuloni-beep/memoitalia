@@ -105,7 +105,7 @@ export default function FounderBox() {
             Assaggiali tutti, <span className="fb-title-hl">prima di tutti.</span>
           </h2>
           <p className="fb-lead">
-            Davanti a un gusto nuovo la domanda è sempre la stessa: <em>«mi piacerà?»</em>. Iscriviti alla lista Founder: avrai un <strong>prezzo riservato</strong> e il <strong>box degustazione</strong> con tutti e 4 i gusti. Il giorno del lancio ti scriviamo noi.
+            Davanti a un gusto nuovo la domanda è sempre la stessa: <em>«mi piacerà?»</em>. Iscriviti alla lista Founder: avrai un <strong>prezzo riservato</strong> e il <strong>box degustazione</strong> con tutti e 4 i gusti.
           </p>
 
           {status.kind === "ok" ? (
