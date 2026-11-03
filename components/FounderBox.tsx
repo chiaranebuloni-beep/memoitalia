@@ -11,10 +11,10 @@ gsap.registerPlugin(ScrollTrigger);
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
 const FAN = [
-  { src: "/img/products/golosa.webp", r: -34 },
-  { src: "/img/products/cocco.webp", r: -16 },
-  { src: "/img/products/arachide.webp", r: 2 },
-  { src: "/img/products/gianduia.webp", r: 20 },
+  { src: "/img/products/golosa-ombra.webp", r: -34 },
+  { src: "/img/products/cocco-ombra.webp", r: -16 },
+  { src: "/img/products/arachide-ombra.webp", r: 2 },
+  { src: "/img/products/gianduia-ombra.webp", r: 20 },
 ];
 
 export default function FounderBox() {
@@ -26,10 +26,11 @@ export default function FounderBox() {
     () => {
       // Posizione finale "a ventaglio" delle quattro barrette.
       gsap.set(".fb-fan-bar", {
-        transformOrigin: "18% 80%",
+        // valori riferiti all'immagine con il margine per l'ombra (6% della larghezza per lato)
+        transformOrigin: "21.4% 71.8%",
         rotate: (i) => FAN[i].r,
-        xPercent: (i) => (i - 1.5) * 5,
-        yPercent: (i) => (i - 1.5) * 22,
+        xPercent: (i) => (i - 1.5) * 4.46,
+        yPercent: (i) => (i - 1.5) * 16,
       });
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -160,8 +161,8 @@ export default function FounderBox() {
                 className="fb-fan-bar"
                 src={b.src}
                 alt=""
-                width={820}
-                height={262}
+                width={916}
+                height={349}
                 style={{ zIndex: i }}
               />
             ))}

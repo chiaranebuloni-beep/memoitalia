@@ -1715,19 +1715,22 @@ p {
   display: grid;
   place-items: center;
 }
-/* un'unica ombra morbida sotto tutto il ventaglio: niente ombre scure che si sovrappongono */
 .fb-fan {
   position: relative;
   width: min(100%, 540px);
   aspect-ratio: 820 / 262;
 }
-/* ogni barretta ha la sua ombra (non il contenitore: su iPhone diventerebbe un riquadro grigio) */
-.fb-fan-bar {
+/* L'ombra è già dentro l'immagine (*-ombra.webp): con filter: drop-shadow Safari disegna
+   un riquadro di colore diverso attorno al ventaglio. L'immagine ha un margine del 6% per lato. */
+.fb-fan-bar,
+.sh-fan-bar {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  left: 0;
+  width: 112%;
+  max-width: none;
   height: auto;
-  filter: drop-shadow(0 10px 10px rgba(3, 20, 60, 0.16)) drop-shadow(0 2px 3px rgba(3, 20, 60, 0.16));
+  margin: -6% 0 0 -6%;
 }
 .fb-box-label {
   position: absolute;
@@ -3431,12 +3434,7 @@ p {
   aspect-ratio: 820 / 262;
 }
 .sh-fan-bar {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: auto;
-  transform-origin: 30% 50%;
-  filter: drop-shadow(0 10px 10px rgba(3, 20, 60, 0.16)) drop-shadow(0 2px 3px rgba(3, 20, 60, 0.16));
+  transform-origin: 32.1% 50%;
 }
 
 /* fascia lista Founder */

@@ -338,7 +338,7 @@ export default function Shop({ products }: { products: Product[] }) {
           <div className="sh-box-visual" aria-hidden>
             <div className="sh-fan">
               {bars.map((p, i) => (
-                <img key={p.id} className="sh-fan-bar" src={p.image} alt="" width={820} height={262} style={{ transform: `rotate(${FAN_ANGLES[i]}deg)`, zIndex: i }} />
+                <img key={p.id} className="sh-fan-bar" src={`/img/products/${p.id}-ombra.webp`} alt="" width={916} height={349} style={{ transform: `rotate(${FAN_ANGLES[i]}deg)`, zIndex: i }} />
               ))}
             </div>
           </div>
