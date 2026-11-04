@@ -87,7 +87,7 @@ export default function FounderBox() {
       }
       setStatus({
         kind: "ok",
-        message: data.alreadyIn ? "Sei già nella lista Founder: ci sentiamo al lancio!" : "Benvenuto tra i Founder! Ti scriviamo noi il giorno del lancio.",
+        message: data.alreadyIn ? "Sei già nella lista Founder!" : "Benvenuto tra i Founder!",
       });
       celebrate();
     } catch {

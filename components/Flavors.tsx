@@ -185,6 +185,9 @@ export default function Flavors({ products }: { products: Product[] }) {
               <li>Senza edulcoranti</li>
               <li>Senza glutine</li>
             </ul>
+            <a className="fl-info" href={`/shop#info-${p.id}`} tabIndex={active === i ? 0 : -1}>
+              Ingredienti e valori nutrizionali <Arrow className="btn-arrow" />
+            </a>
             <div className="fl-buy">
               <span className="fl-price">{formatPrice(p.priceCents)}</span>
               <button className={`btn btn--accent ${added === p.id ? "is-added" : ""}`} onClick={() => onAdd(p)} tabIndex={active === i ? 0 : -1} data-cursor="Aggiungi">
