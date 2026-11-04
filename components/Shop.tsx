@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Flip } from "gsap/Flip";
@@ -8,7 +8,6 @@ import { useGSAP } from "@gsap/react";
 import { formatPrice, type Product, type ProductId } from "@/lib/catalog";
 import { launchDateLabel } from "@/lib/launch";
 import { useCart } from "./CartProvider";
-import ProductInfo from "./ProductInfo";
 import { Arrow, SplitChars, Star, Swoosh } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger, Flip);
@@ -23,23 +22,6 @@ export default function Shop({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<Filter>("tutto");
   const [qty, setQty] = useState<Record<string, number>>({});
   const [added, setAdded] = useState<string | null>(null);
-  const [info, setInfo] = useState<ProductId | null>(null);
-  const closeInfo = useCallback(() => {
-    setInfo(null);
-    // toglie "#info-…" dall'indirizzo, così lo stesso link funziona anche una seconda volta
-    if (location.hash.startsWith("#info-")) history.replaceState(null, "", location.pathname + location.search);
-  }, []);
-
-  // "/shop#info-golosa" apre direttamente il pannello di quel prodotto (link dalla home)
-  useEffect(() => {
-    const fromHash = () => {
-      const id = location.hash.startsWith("#info-") ? location.hash.slice(6) : "";
-      if (products.some((p) => p.id === id)) setInfo(id as ProductId);
-    };
-    fromHash();
-    window.addEventListener("hashchange", fromHash);
-    return () => window.removeEventListener("hashchange", fromHash);
-  }, [products]);
   const flipState = useRef<Flip.FlipState | null>(null);
   const peekTl = useRef<gsap.core.Timeline | null>(null);
 
@@ -311,10 +293,6 @@ export default function Shop({ products }: { products: Product[] }) {
                     </>
                   )}
                 </ul>
-                <button className="sh-info-link" onClick={() => setInfo(p.id)} data-cursor="Leggi">
-                  Ingredienti e valori nutrizionali
-                  <Arrow className="btn-arrow" />
-                </button>
                 <div className="sh-buy">
                   <span className="sh-price">{formatPrice(p.priceCents)}</span>
                   <div className="sh-qty" aria-label={`Quantità ${p.name}`}>
@@ -340,8 +318,6 @@ export default function Shop({ products }: { products: Product[] }) {
           );
         })}
       </section>
-
-      <ProductInfo product={products.find((p) => p.id === info) ?? null} onClose={closeInfo} />
 
       {/* Box con tutti i gusti */}
       <section className="sh-box">
@@ -375,7 +351,7 @@ export default function Shop({ products }: { products: Product[] }) {
           <h2>
             Prezzo riservato <span>per i Founder.</span>
           </h2>
-          <p>Entra nella lista e assaggia Mèmo prima di tutti.</p>
+          <p>Entra nella lista: il giorno del lancio ti scriviamo noi, prima di tutti.</p>
           <a href="/#founder" className="btn btn--white btn--lg" data-cursor="Iscriviti">
             Entra nella lista <Arrow className="btn-arrow" />
           </a>

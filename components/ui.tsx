@@ -46,13 +46,3 @@ export function Arrow({ className }: { className?: string }) {
     </svg>
   );
 }
-
-// Segnaposto per i contenuti che il cliente deve ancora fornire.
-export function Pending({ block, children }: { block?: boolean; children?: React.ReactNode }) {
-  return (
-    <span className={`pending ${block ? "pending--block" : ""}`}>
-      <span className="pending-dot" aria-hidden />
-      {children ?? "In attesa dei dati del cliente"}
-    </span>
-  );
-}

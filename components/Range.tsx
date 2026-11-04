@@ -18,8 +18,6 @@ type Slide = {
   bg: string;
   ink: string;
   photo?: boolean;
-  // punto della foto da tenere al centro quando la card la ritaglia
-  focus?: string;
 };
 
 // Solo l'integratore: confezione, foto in campo e caratteristiche.
@@ -32,17 +30,6 @@ const SLIDES: Slide[] = [
     img: "/img/products/integratore.webp",
     bg: "#0b4ea2",
     ink: "#ffffff",
-  },
-  {
-    id: "famiglia",
-    kind: "Per tutta la famiglia",
-    name: "Grandi e piccoli",
-    line: "Sul tavolo di casa, per tutta la famiglia.",
-    img: "/img/photos/famiglia-integratore.webp",
-    bg: "#0b4ea2",
-    ink: "#ffffff",
-    photo: true,
-    focus: "50% 38%",
   },
   {
     id: "campo",
@@ -65,13 +52,6 @@ const SLIDES: Slide[] = [
     photo: true,
   },
 ];
-
-const ALT: Record<string, string> = {
-  vitamine: "Integratore Mèmo vitamine C, D, K",
-  famiglia: "Una famiglia sorridente attorno al flacone dell'integratore Mèmo",
-  campo: "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis",
-  gusto: "Frutti rossi: lamponi, more e mirtilli",
-};
 
 const AUTOPLAY_MS = 4200;
 
@@ -244,10 +224,9 @@ export default function Range() {
                   <img
                     className={`rg-media ${s.photo ? "rg-photo" : "rg-product"}`}
                     src={s.img}
-                    alt={ALT[s.id]}
+                    alt={s.id === "gusto" ? "Frutti rossi: lamponi, more e mirtilli" : s.photo ? "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis" : "Integratore Mèmo vitamine C, D, K"}
                     width={s.photo ? 1080 : 544}
                     height={s.photo ? 1350 : 900}
-                    style={s.focus ? { objectPosition: s.focus } : undefined}
                     loading="lazy"
                     draggable={false}
                   />

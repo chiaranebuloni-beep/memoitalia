@@ -47,26 +47,3 @@ export async function addFounder(input: Omit<FounderSignup, "id" | "createdAt">)
   await writeJson("founders.json", list);
   return { signup, created: true };
 }
-
-export type ContactMessage = {
-  id: string;
-  kind: "privato" | "rivenditore";
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  business?: string;
-  city?: string;
-  message: string;
-  createdAt: string;
-};
-
-export async function addContact(input: Omit<ContactMessage, "id" | "createdAt">) {
-  // Come per la lista Founder: su Vercel serve prima un archivio (o un invio email) vero.
-  if (process.env.VERCEL) throw new Error("Archivio messaggi non configurato su Vercel");
-  const list = await readJson<ContactMessage[]>("contacts.json", []);
-  const msg: ContactMessage = { ...input, id: crypto.randomUUID(), createdAt: new Date().toISOString() };
-  list.push(msg);
-  await writeJson("contacts.json", list);
-  return msg;
-}

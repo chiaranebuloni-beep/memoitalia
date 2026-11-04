@@ -26,7 +26,7 @@ export default function HeroSignup() {
       }
       setStatus({
         kind: "ok",
-        message: data.alreadyIn ? "Sei già tra i Founder!" : "Sei dentro! Benvenuto tra i Founder.",
+        message: data.alreadyIn ? "Sei già tra i Founder: ci sentiamo al lancio!" : "Sei dentro! Ti scriviamo il giorno del lancio.",
       });
     } catch {
       setStatus({ kind: "error", message: "Connessione assente, riprova tra un attimo." });

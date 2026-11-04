@@ -5,13 +5,8 @@ import { gsap } from "gsap";
 import { useCart } from "./CartProvider";
 import { Star } from "./ui";
 
-// La lista Founder ha già il suo pulsante a destra, quindi non sta nel menu.
-const NAV = [
-  { href: "/shop", label: "Shop" },
-  { href: "/chi-siamo", label: "Chi siamo" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contatti", label: "Contatti" },
-];
+// Nel menu solo lo shop: la lista Founder ha già il suo pulsante a destra.
+const NAV = [{ href: "/shop", label: "Shop" }];
 
 export default function Header() {
   const { count, setOpen, bump } = useCart();
