@@ -1,42 +1,75 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Flip } from "gsap/Flip";
 import { useGSAP } from "@gsap/react";
 import { formatPrice, type Product, type ProductId } from "@/lib/catalog";
 import { launchDateLabel } from "@/lib/launch";
 import { useCart } from "./CartProvider";
+import ProductInfo from "./ProductInfo";
 import { Arrow, SplitChars, Star, Swoosh } from "./ui";
 
-gsap.registerPlugin(ScrollTrigger, Flip);
+gsap.registerPlugin(ScrollTrigger);
 
-type Filter = "tutto" | "barretta" | "integratore";
+export type ShopCategory = "barretta" | "integratore";
+
+// Titolo e testo di ogni pagina dello shop.
+const COPY = {
+  tutto: {
+    title: ["Fai scorta", "di buono."],
+    lead: "Quattro gusti senza edulcoranti, in box da 12 barrette, e l'integratore con vitamine D3, K2 e C. Scegli i tuoi preferiti e prepara il carrello.",
+  },
+  barretta: {
+    title: ["Scegli", "il gusto."],
+    lead: "Quattro gusti senza edulcoranti, in box da 12 barrette. Non sai quale scegliere? Con il box Experience li provi tutti.",
+  },
+  integratore: {
+    title: ["La buona", "abitudine."],
+    lead: "Vitamine D3, K2 e C in compresse masticabili al gusto frutti rossi, pensate apposta anche per i più piccoli*.",
+  },
+};
 
 const FAN_ANGLES = [-24, -9, 6, 21];
 
 // prezzo a barretta, mostrato sotto il prezzo del box
 const perBar = (p: Product) => formatPrice(Math.round(p.priceCents / (p.packSize ?? 1)));
 
-export default function Shop({ products }: { products: Product[] }) {
+export default function Shop({ products, category }: { products: Product[]; category?: ShopCategory }) {
   const root = useRef<HTMLDivElement>(null);
   const { add } = useCart();
-  const [filter, setFilter] = useState<Filter>("tutto");
   const [qty, setQty] = useState<Record<string, number>>({});
   const [added, setAdded] = useState<string | null>(null);
-  const flipState = useRef<Flip.FlipState | null>(null);
+  const [info, setInfo] = useState<ProductId | null>(null);
+  const closeInfo = useCallback(() => {
+    setInfo(null);
+    // toglie "#info-…" dall'indirizzo, così lo stesso link funziona anche una seconda volta
+    if (location.hash.startsWith("#info-")) history.replaceState(null, "", location.pathname + location.search);
+  }, []);
+
+  // "/shop#info-golosa" apre direttamente il pannello di quel prodotto (link dalla home)
+  useEffect(() => {
+    const fromHash = () => {
+      const id = location.hash.startsWith("#info-") ? location.hash.slice(6) : "";
+      if (products.some((p) => p.id === id)) setInfo(id as ProductId);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    return () => window.removeEventListener("hashchange", fromHash);
+  }, [products]);
   const peekTl = useRef<gsap.core.Timeline | null>(null);
 
   const bars = products.filter((p) => p.kind === "barretta");
   // Il box Experience è un prodotto a sé: 3 barrette per ognuno dei 4 gusti.
   const mixBox = products.find((p) => p.kind === "box");
-  const items = products.filter((p) => p.kind !== "box");
-  const visible = (p: Product) => filter === "tutto" || p.kind === filter;
-  const FILTERS: { id: Filter; label: string; count: number }[] = [
-    { id: "tutto", label: "Tutto", count: items.length },
-    { id: "barretta", label: "Barrette", count: bars.length },
-    { id: "integratore", label: "Integratore", count: items.length - bars.length },
+  const allItems = products.filter((p) => p.kind !== "box");
+  const items = category ? allItems.filter((p) => p.kind === category) : allItems;
+  const copy = COPY[category ?? "tutto"];
+  const onlySupplement = category === "integratore";
+  const PAGES = [
+    { href: "/shop", id: undefined, label: "Tutto", count: allItems.length },
+    { href: "/shop/barrette", id: "barretta", label: "Barrette", count: bars.length },
+    { href: "/shop/integratore", id: "integratore", label: "Integratore", count: allItems.length - bars.length },
   ];
 
   const { contextSafe } = useGSAP(
@@ -66,6 +99,7 @@ export default function Shop({ products }: { products: Product[] }) {
         });
 
         // L'elefantino spunta dal bordo, si guarda intorno e torna giù, a intervalli.
+        if (root.current?.querySelector(".sh-peek")) {
         gsap.set(".sh-peek", { yPercent: 105 });
         peekTl.current = gsap
           .timeline({ repeat: -1, repeatDelay: 2.6, paused: true, delay: 0.6 })
@@ -80,9 +114,10 @@ export default function Shop({ products }: { products: Product[] }) {
           end: "bottom 20%",
           onToggle: (self) => (self.isActive ? peekTl.current?.play() : peekTl.current?.pause()),
         });
+        }
 
         // Il ventaglio del box si apre quando arriva sullo schermo.
-        gsap.from(".sh-fan-bar", {
+        if (root.current?.querySelector(".sh-fan-bar")) gsap.from(".sh-fan-bar", {
           rotate: 0,
           y: 40,
           duration: 1.1,
@@ -110,29 +145,6 @@ export default function Shop({ products }: { products: Product[] }) {
       },
     });
   });
-
-  // Cambio filtro: le card restanti scivolano nella nuova posizione.
-  const changeFilter = (f: Filter) => {
-    if (f === filter) return;
-    // le card non ancora scoperte devono comparire subito, altrimenti resterebbero nascoste
-    gsap.set(".sh-card", { clearProps: "clipPath" });
-    flipState.current = Flip.getState(".sh-card");
-    setFilter(f);
-  };
-
-  useLayoutEffect(() => {
-    const state = flipState.current;
-    if (!state) return;
-    flipState.current = null;
-    Flip.from(state, {
-      duration: 0.6,
-      ease: "power3.inOut",
-      absolute: true,
-      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.5, delay: 0.15 }),
-      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.94, duration: 0.3 }),
-      onComplete: () => ScrollTrigger.refresh(),
-    });
-  }, [filter]);
 
   // La foto del prodotto vola fino all'icona del carrello.
   const flyToCart = (from: HTMLElement | null) => {
@@ -200,14 +212,14 @@ export default function Shop({ products }: { products: Product[] }) {
           <div className="sh-hero-copy">
             <h1 className="sh-title">
               <span className="sh-title-line">
-                <SplitChars text="Fai scorta" />
+                <SplitChars text={copy.title[0]} />
               </span>
               <span className="sh-title-line sh-title-hl">
-                <SplitChars text="di buono." />
+                <SplitChars text={copy.title[1]} />
               </span>
             </h1>
             <p className="sh-lead sh-hero-anim">
-              Quattro gusti senza edulcoranti, in box da 12 barrette, e l&apos;integratore con vitamine D3, K2 e C. Scegli i tuoi preferiti e prepara il carrello.
+              {copy.lead}
             </p>
             <p className="sh-launch sh-hero-anim">
               <span className="sh-launch-dot" aria-hidden />
@@ -215,9 +227,11 @@ export default function Shop({ products }: { products: Product[] }) {
             </p>
           </div>
           <div className="sh-hero-visual" aria-hidden>
-            {bars.map((p, i) => (
-              <img key={p.id} className="sh-hero-bar" src={p.image} alt="" width={820} height={262} style={{ "--i": i } as React.CSSProperties} />
-            ))}
+            {onlySupplement
+              ? items.map((p) => <img key={p.id} className="sh-hero-bar is-bottle" src={p.image} alt="" width={544} height={900} />)
+              : bars.map((p, i) => (
+                  <img key={p.id} className="sh-hero-bar" src={p.image} alt="" width={820} height={262} style={{ "--i": i } as React.CSSProperties} />
+                ))}
           </div>
         </div>
       </section>
@@ -225,18 +239,21 @@ export default function Shop({ products }: { products: Product[] }) {
       {/* Filtri */}
       <div className="sh-toolbar">
         <div className="container sh-toolbar-inner">
-          <div className="sh-filters" role="group" aria-label="Filtra i prodotti">
-            {FILTERS.map((f) => (
-              <button key={f.id} className={filter === f.id ? "is-active" : ""} aria-pressed={filter === f.id} onClick={() => changeFilter(f.id)}>
+          <nav className="sh-filters" aria-label="Categorie dello shop">
+            {PAGES.map((f) => (
+              <a key={f.href} href={f.href} className={category === f.id ? "is-active" : ""} aria-current={category === f.id ? "page" : undefined}>
                 {f.label} <span>{f.count}</span>
-              </button>
+              </a>
             ))}
-          </div>
-          <ul className="sh-ticks">
-            <li><Star className="tag-star" /> Senza glutine</li>
-            <li><Star className="tag-star" /> Senza lattosio</li>
-            <li><Star className="tag-star" /> Senza edulcoranti</li>
-          </ul>
+          </nav>
+          {/* valgono per le barrette: l'integratore contiene un edulcorante */}
+          {!onlySupplement && (
+            <ul className="sh-ticks">
+              <li><Star className="tag-star" /> Senza glutine</li>
+              <li><Star className="tag-star" /> Senza lattosio</li>
+              <li><Star className="tag-star" /> Senza edulcoranti</li>
+            </ul>
+          )}
         </div>
       </div>
 
@@ -249,7 +266,7 @@ export default function Shop({ products }: { products: Product[] }) {
             <article
               key={p.id}
               id={p.id}
-              className={`sh-card sh-card--${p.kind} ${visible(p) ? "" : "is-hidden"}`}
+              className={`sh-card sh-card--${p.kind}`}
               style={{ background: p.theme.bg, color: p.theme.ink, "--accent": p.theme.accent } as React.CSSProperties}
             >
               <div className="sh-visual">
@@ -300,6 +317,10 @@ export default function Shop({ products }: { products: Product[] }) {
                     </>
                   )}
                 </ul>
+                <button className="sh-info-link" onClick={() => setInfo(p.id)} data-cursor="Leggi">
+                  {wide ? "Le vitamine, gli ingredienti e il modo d'uso" : "Ingredienti e valori nutrizionali"}
+                  <Arrow className="btn-arrow" />
+                </button>
                 <div className="sh-buy">
                   <span className="sh-price">
                     {formatPrice(p.priceCents)}
@@ -313,16 +334,17 @@ export default function Shop({ products }: { products: Product[] }) {
                   <button
                     className={`btn btn--accent sh-add ${added === p.id ? "is-added" : ""}`}
                     onClick={(e) => onAdd(p, e)}
+                    disabled={p.inStock === false}
                     data-cursor="Aggiungi"
                   >
-                    {added === p.id ? "Aggiunto!" : "Aggiungi"}
+                    {p.inStock === false ? "Esaurito" : added === p.id ? "Aggiunto!" : "Aggiungi"}
                   </button>
                 </div>
                 {wide && (
                   <p className="sh-legal">
                     *Per l&apos;uso al di sotto dei 12 anni, si consiglia di consultare il medico.
                     <br />
-                    Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
+                    Gli integratori alimentari non vanno intesi quali sostituti di una dieta variata, equilibrata e uno stile di vita sano.
                   </p>
                 )}
               </div>
@@ -331,8 +353,10 @@ export default function Shop({ products }: { products: Product[] }) {
         })}
       </section>
 
+      <ProductInfo product={products.find((p) => p.id === info) ?? null} onClose={closeInfo} />
+
       {/* Box con tutti i gusti */}
-      <section className="sh-box">
+      {!onlySupplement && <section className="sh-box">
         <div className="container sh-box-grid">
           <div className="sh-box-copy">
             <span className="eyebrow eyebrow--blue">Non sai quale scegliere?</span>
@@ -347,8 +371,8 @@ export default function Shop({ products }: { products: Product[] }) {
                   <small className="sh-price-unit">{perBar(mixBox)} a barretta</small>
                 </span>
               )}
-              <button className={`btn btn--blue btn--lg ${added === "box" ? "is-added" : ""}`} onClick={onAddBox} data-cursor="Aggiungi">
-                {added === "box" ? "Aggiunto!" : "Aggiungi il box Experience"} <Arrow className="btn-arrow" />
+              <button className={`btn btn--blue btn--lg ${added === "box" ? "is-added" : ""}`} onClick={onAddBox} disabled={mixBox?.inStock === false} data-cursor="Aggiungi">
+                {mixBox?.inStock === false ? "Esaurito" : added === "box" ? "Aggiunto!" : "Aggiungi il box Experience"} <Arrow className="btn-arrow" />
               </button>
             </div>
           </div>
@@ -360,7 +384,7 @@ export default function Shop({ products }: { products: Product[] }) {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Avvisami al lancio */}
       <section className="sh-founder">

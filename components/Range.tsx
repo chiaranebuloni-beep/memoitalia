@@ -203,14 +203,14 @@ export default function Range() {
             >
               {added ? "Aggiunto!" : "Aggiungi al carrello"}
             </button>
-            <a href="/shop#integratore" className="rg-shop" data-cursor="Shop">
+            <a href="/shop/integratore" className="rg-shop" data-cursor="Shop">
               Vai allo shop <Arrow className="btn-arrow" />
             </a>
           </div>
           <p className="rg-legal">
             *Per l&apos;uso al di sotto dei 12 anni, si consiglia di consultare il medico.
             <br />
-            Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
+            Gli integratori alimentari non vanno intesi quali sostituti di una dieta variata, equilibrata e uno stile di vita sano.
           </p>
         </div>
 

@@ -63,11 +63,11 @@ export default function Footer() {
         <nav className="ft-col" aria-label="Shop">
           <h3>Shop</h3>
           <a href="/shop">Tutti i prodotti</a>
-          <a href="/shop#golosa">Golosa</a>
-          <a href="/shop#cocco">Cocco</a>
-          <a href="/shop#arachide">Arachide</a>
-          <a href="/shop#gianduia">Gianduia</a>
-          <a href="/shop#integratore">Integratore</a>
+          <a href="/shop/barrette#golosa">Golosa</a>
+          <a href="/shop/barrette#cocco">Cocco</a>
+          <a href="/shop/barrette#arachide">Arachide</a>
+          <a href="/shop/barrette#gianduia">Gianduia</a>
+          <a href="/shop/integratore">Integratore</a>
         </nav>
         <nav className="ft-col" aria-label="Mèmo">
           <h3>Mèmo</h3>

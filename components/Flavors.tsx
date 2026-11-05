@@ -14,7 +14,7 @@ export default function Flavors({ products }: { products: Product[] }) {
   const [active, setActive] = useState(0);
   const stRef = useRef<ScrollTrigger | null>(null);
   // salto diretto a un gusto dai bottoni: durante il salto l'aggancio automatico è sospeso
-  const jumpRef = useRef({ start: () => {}, end: (_i: number) => {} });
+  const jumpRef = useRef({ start: () => {}, end: () => {} });
 
   useGSAP(
     () => {
@@ -34,14 +34,18 @@ export default function Flavors({ products }: { products: Product[] }) {
           gsap.set(p.querySelector(".fl-giant"), { xPercent: 25, autoAlpha: 0 });
         });
 
-        // Gusto su cui ci si è fermati: ogni gesto di scroll porta solo al gusto accanto.
-        let idx = 0;
         let jumping = false;
         const step = 1 / (n - 1);
-        // quanto bisogna scorrere prima di cambiare gusto: di più col dito, così un tocco leggero
-        // o uno scroll accidentale riporta al gusto attuale invece di passare al successivo
+        // quanto bisogna scorrere (in frazione del passaggio) prima di cambiare gusto: di più col dito,
+        // così un tocco leggero o uno scroll accidentale riporta al gusto attuale
         const touch = window.matchMedia("(pointer: coarse)").matches;
-        const threshold = step * (touch ? 0.3 : 0.2);
+        const threshold = touch ? 0.3 : 0.2;
+        // stato dell'aggancio (vedi settle più sotto)
+        let dir = 1;
+        let snapping = false;
+        let fingerDown = false;
+        let timer = 0;
+        let safety = 0;
 
         const tl = gsap.timeline({
           defaults: { ease: "sine.inOut" },
@@ -51,34 +55,62 @@ export default function Flavors({ products }: { products: Product[] }) {
             end: () => `+=${window.innerHeight * (n - 1) * 1.1}`,
             pin: true,
             scrub: 0.5,
-            // basta un colpo di rotellina: lo scroll va da solo al gusto successivo (o precedente),
-            // con barretta e testi già al loro posto
-            snap: {
-              snapTo: (v: number) => {
-                if (jumping) return v;
-                const d = v - idx * step;
-                if (Math.abs(d) < threshold) return idx * step;
-                return Math.max(0, Math.min(n - 1, idx + Math.sign(d))) * step;
-              },
-              duration: { min: 0.6, max: 0.9 },
-              ease: "power2.inOut",
-              delay: touch ? 0.18 : 0.1,
-              inertia: false,
-              onComplete: (self) => {
-                idx = Math.round(self.progress * (n - 1));
-              },
+            // quando lo scroll si ferma, la pagina si aggancia da sola al gusto più vicino nella direzione di scorrimento
+            onUpdate: (self) => {
+              setActive(Math.round(self.progress * (n - 1)));
+              if (!snapping) dir = self.direction;
+              schedule();
             },
-            onEnter: () => (idx = 0),
-            onEnterBack: () => (idx = n - 1),
-            onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
           },
         });
         stRef.current = tl.scrollTrigger ?? null;
+
+        // Aggancio fatto da noi tramite lo scroll morbido (Lenis), non dallo snap di GSAP:
+        // lo snap di GSAP spostava la pagina per conto suo mentre Lenis inseguiva un'altra posizione,
+        // e a volte la barretta restava ferma a metà o tornava indietro.
+        // Quando lo scroll si ferma, si va sempre a uno dei due gusti tra cui ti trovi, nella direzione in cui scorrevi.
+        const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+        const settle = () => {
+          const st = tl.scrollTrigger;
+          if (!st || jumping || snapping || fingerDown || !st.isActive) return;
+          const pos = st.progress / step;
+          const base = Math.floor(pos + 1e-6);
+          const frac = pos - base;
+          const target = Math.max(0, Math.min(n - 1, dir > 0 ? (frac > threshold ? base + 1 : base) : frac < 1 - threshold ? base : base + 1));
+          const y = st.start + (st.end - st.start) * target * step;
+          if (Math.abs(y - st.scroll()) < 2) return;
+          snapping = true;
+          const done = () => {
+            window.clearTimeout(safety);
+            snapping = false;
+          };
+          // se lo scroll viene interrotto (nuovo gesto), si sblocca comunque e ricontrolla la posizione
+          safety = window.setTimeout(() => {
+            snapping = false;
+            schedule();
+          }, 900);
+          if (window.__lenis) window.__lenis.scrollTo(y, { duration: 0.65, easing: easeInOut, onComplete: done });
+          else window.scrollTo({ top: y, behavior: "smooth" });
+        };
+        function schedule() {
+          if (snapping) return;
+          window.clearTimeout(timer);
+          timer = window.setTimeout(settle, touch ? 220 : 160);
+        }
+        const onTouchStart = () => {
+          fingerDown = true;
+          window.clearTimeout(timer);
+        };
+        const onTouchEnd = () => {
+          fingerDown = false;
+          schedule();
+        };
+        window.addEventListener("touchstart", onTouchStart, { passive: true });
+        window.addEventListener("touchend", onTouchEnd, { passive: true });
+        window.addEventListener("touchcancel", onTouchEnd, { passive: true });
         jumpRef.current = {
           start: () => (jumping = true),
-          end: (i: number) => {
-            if (!jumping) return;
-            idx = i;
+          end: () => {
             jumping = false;
           },
         };
@@ -113,6 +145,11 @@ export default function Flavors({ products }: { products: Product[] }) {
         });
 
         return () => {
+          window.clearTimeout(timer);
+          window.clearTimeout(safety);
+          window.removeEventListener("touchstart", onTouchStart);
+          window.removeEventListener("touchend", onTouchEnd);
+          window.removeEventListener("touchcancel", onTouchEnd);
           stRef.current = null;
         };
       });
@@ -126,7 +163,7 @@ export default function Flavors({ products }: { products: Product[] }) {
     const y = st.start + (st.end - st.start) * (i / (products.length - 1));
     jumpRef.current.start();
     // il blocco si toglie sempre, anche se il salto viene interrotto da un altro scroll
-    window.setTimeout(() => jumpRef.current.end(i), 1300);
+    window.setTimeout(() => jumpRef.current.end(), 1300);
     if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.2 });
     else window.scrollTo({ top: y, behavior: "smooth" });
   };
@@ -176,9 +213,12 @@ export default function Flavors({ products }: { products: Product[] }) {
               <li>Senza edulcoranti</li>
               <li>Senza glutine</li>
             </ul>
+            <a className="fl-info" href={`/shop/barrette#info-${p.id}`} tabIndex={active === i ? 0 : -1}>
+              Ingredienti e valori nutrizionali <Arrow className="btn-arrow" />
+            </a>
             {/* in home niente prezzi: si acquista dallo shop */}
             <div className="fl-buy">
-              <a className="btn btn--accent" href={`/shop#${p.id}`} tabIndex={active === i ? 0 : -1} data-cursor="Shop">
+              <a className="btn btn--accent" href={`/shop/barrette#${p.id}`} tabIndex={active === i ? 0 : -1} data-cursor="Shop">
                 Scopri nello shop <Arrow className="btn-arrow" />
               </a>
             </div>

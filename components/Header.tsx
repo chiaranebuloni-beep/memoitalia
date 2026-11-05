@@ -5,8 +5,17 @@ import { gsap } from "gsap";
 import { useCart } from "./CartProvider";
 import { Star } from "./ui";
 
-// Nel menu solo lo shop: "Avvisami al lancio" ha già il suo pulsante a destra.
-const NAV = [{ href: "/shop", label: "Shop" }];
+// "Avvisami al lancio" ha già il suo pulsante a destra, quindi non sta nel menu.
+const NAV: { href: string; label: string; sub?: { href: string; label: string }[] }[] = [
+  {
+    href: "/shop",
+    label: "Shop",
+    sub: [
+      { href: "/shop/barrette", label: "Barrette" },
+      { href: "/shop/integratore", label: "Integratore" },
+    ],
+  },
+];
 
 export default function Header() {
   const { count, setOpen, bump } = useCart();
@@ -50,11 +59,24 @@ export default function Header() {
 
         <nav className={`header-nav ${menu ? "is-open" : ""}`} aria-label="Principale">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} onClick={() => setMenu(false)} className="header-link">
-              <span className="hl-mask">
-                <span data-text={n.label}>{n.label}</span>
-              </span>
-            </a>
+            <div className="nav-item" key={n.href}>
+              <a href={n.href} onClick={() => setMenu(false)} className="header-link">
+                <span className="hl-mask">
+                  <span data-text={n.label}>{n.label}</span>
+                </span>
+              </a>
+              {n.sub && (
+                <div className="nav-sub">
+                  <div className="nav-sub-inner">
+                    {n.sub.map((s) => (
+                      <a key={s.href} href={s.href} onClick={() => setMenu(false)}>
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
