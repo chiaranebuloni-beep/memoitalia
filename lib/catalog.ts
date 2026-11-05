@@ -111,7 +111,7 @@ export const products: Product[] = [
     tagline: "Vitamine D3, K2 e C, compresse masticabili",
     ingredients: "60 compresse",
     description:
-      "Tre vitamine con funzioni complementari in un'unica compressa masticabile al gusto frutti rossi, pensata apposta anche per i più piccoli, dai 3 anni in su. Per integrare l'alimentazione di tutti i giorni.",
+      "Tre vitamine con funzioni complementari in un'unica compressa masticabile al gusto frutti rossi, pensata apposta anche per i più piccoli*, dai 3 anni in su. Per integrare l'alimentazione di tutti i giorni.",
     priceCents: 1790,
     image: "/img/products/integratore.webp",
     theme: { bg: "#0b4ea2", ink: "#ffffff", accent: "#eaa65f" },

@@ -37,7 +37,7 @@ const SLIDES: Slide[] = [
     id: "famiglia",
     kind: "Per tutta la famiglia",
     name: "Grandi e piccoli",
-    line: "Masticabile, pensato apposta anche per i più piccoli.",
+    line: "Masticabile, pensato apposta anche per i più piccoli*.",
     img: "/img/photos/famiglia-integratore.webp",
     bg: "#0b4ea2",
     ink: "#ffffff",
@@ -181,7 +181,7 @@ export default function Range() {
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi. Pensato apposta anche per i più piccoli, dai 3 anni in su, da tenere in borsa, sulla scrivania o in tribuna.
+            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi. Pensato apposta anche per i più piccoli*, dai 3 anni in su, da tenere in borsa, sulla scrivania o in tribuna.
           </p>
           <ul className="rg-facts">
             <li>Vitamine D3, K2, C</li>
@@ -208,6 +208,8 @@ export default function Range() {
             </a>
           </div>
           <p className="rg-legal">
+            *Per l&apos;uso al di sotto dei 12 anni, si consiglia di consultare il medico.
+            <br />
             Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
           </p>
         </div>

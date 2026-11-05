@@ -320,6 +320,8 @@ export default function Shop({ products }: { products: Product[] }) {
                 </div>
                 {wide && (
                   <p className="sh-legal">
+                    *Per l&apos;uso al di sotto dei 12 anni, si consiglia di consultare il medico.
+                    <br />
                     Gli integratori non vanno intesi come sostituti di una dieta varia ed equilibrata e di uno stile di vita sano.
                   </p>
                 )}
