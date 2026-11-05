@@ -773,6 +773,10 @@ p {
   margin: 0;
   accent-color: var(--sand);
 }
+/* la prima riga di testo sta a metà della casella, anche se il testo va a capo */
+.hs-check span {
+  padding-top: calc((22px - 1.4em) / 2);
+}
 .hs-error {
   font-size: 14px;
   font-weight: 700;
@@ -911,6 +915,11 @@ p {
   line-height: 1.05;
   text-transform: uppercase;
   white-space: nowrap;
+}
+/* Bomega ha le maiuscole alte nella riga: le riporta al centro della banda */
+.mq-text {
+  position: relative;
+  top: 0.14em;
 }
 .mq-star {
   width: 0.6em;
@@ -1683,6 +1692,9 @@ p {
   height: 22px;
   margin: 0;
   accent-color: var(--sand);
+}
+.check span {
+  padding-top: calc((22px - 1.45em) / 2);
 }
 .fb-form .btn {
   justify-self: start;

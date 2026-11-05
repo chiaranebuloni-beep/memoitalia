@@ -16,7 +16,7 @@ function Row({ items, className }: { items: string[]; className: string }) {
     <>
       {items.map((t) => (
         <span className="mq-item" key={t}>
-          {t}
+          <span className="mq-text">{t}</span>
           <Star className="mq-star" />
         </span>
       ))}
