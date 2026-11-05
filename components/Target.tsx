@@ -140,7 +140,7 @@ export default function Target() {
           <figure className="tg-card" key={s.img}>
             <img src={`/img/photos/${s.img}.webp`} alt={`${s.title}: ${s.text}`} width={1080} height={1350} loading={i < 5 ? "eager" : "lazy"} draggable={false} />
             <figcaption>
-              <span className={`tg-tag ${s.tag === "Sport" ? "is-sport" : ""}`}>{s.tag}</span>
+              <span className={`tg-tag ${s.tag === "Sport" ? "is-sport" : s.tag === "Ogni giorno" ? "is-daily" : ""}`}>{s.tag}</span>
               <strong>{s.title}</strong>
               <span className="tg-line">{s.text}</span>
             </figcaption>

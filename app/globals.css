@@ -1496,6 +1496,10 @@ p {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+.tg-tag.is-daily {
+  background: var(--electric);
+  color: var(--white);
+}
 .tg-tag.is-sport {
   background: var(--sand);
   color: var(--choco);
