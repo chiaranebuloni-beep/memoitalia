@@ -10,7 +10,7 @@ import ShopCartBar from "@/components/ShopCartBar";
 export const metadata: Metadata = {
   title: "Shop · Mèmo",
   description:
-    "Le barrette Mèmo Golosa, Cocco, Arachide e Gianduia e l'integratore con vitamine C, D e K. Senza edulcoranti, senza glutine e senza lattosio.",
+    "Le barrette Mèmo Golosa, Cocco, Arachide e Gianduia e l'integratore con vitamine D3, K2 e C. Senza edulcoranti, senza glutine e senza lattosio.",
 };
 
 export default function ShopPage() {

@@ -201,7 +201,7 @@ export default function Shop({ products }: { products: Product[] }) {
               </span>
             </h1>
             <p className="sh-lead sh-hero-anim">
-              Quattro barrette senza edulcoranti e l&apos;integratore con vitamine C, D e K. Scegli i tuoi preferiti e prepara il carrello.
+              Quattro barrette senza edulcoranti e l&apos;integratore con vitamine D3, K2 e C. Scegli i tuoi preferiti e prepara il carrello.
             </p>
             <p className="sh-launch sh-hero-anim">
               <span className="sh-launch-dot" aria-hidden />
@@ -264,7 +264,7 @@ export default function Shop({ products }: { products: Product[] }) {
                   <img
                     className="sh-product-img"
                     src={p.image}
-                    alt={wide ? "Flacone dell'integratore Mèmo, vitamine C, D e K" : `Barretta Mèmo ${p.name}`}
+                    alt={wide ? "Flacone dell'integratore Mèmo, vitamine D3, K2 e C" : `Barretta Mèmo ${p.name}`}
                     width={wide ? 544 : 820}
                     height={wide ? 900 : 262}
                   />
@@ -282,7 +282,7 @@ export default function Shop({ products }: { products: Product[] }) {
                 <ul className="sh-chips">
                   {wide ? (
                     <>
-                      <li>Vitamine C, D, K</li>
+                      <li>Vitamine D3, K2, C</li>
                       <li>{p.ingredients}</li>
                       <li>Gusto frutti rossi</li>
                     </>

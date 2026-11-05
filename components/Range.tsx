@@ -27,8 +27,8 @@ const SLIDES: Slide[] = [
   {
     id: "vitamine",
     kind: "Integratore alimentare",
-    name: "Vitamine C, D, K",
-    line: "Compresse a base di vitamine C, D e K.",
+    name: "Vitamine D3, K2, C",
+    line: "Compresse masticabili a base di vitamine D3, K2 e C.",
     img: "/img/products/integratore.webp",
     bg: "#0b4ea2",
     ink: "#ffffff",
@@ -37,7 +37,7 @@ const SLIDES: Slide[] = [
     id: "famiglia",
     kind: "Per tutta la famiglia",
     name: "Grandi e piccoli",
-    line: "Sul tavolo di casa, per tutta la famiglia.",
+    line: "Masticabile, pensato apposta anche per i più piccoli.",
     img: "/img/photos/famiglia-integratore.webp",
     bg: "#0b4ea2",
     ink: "#ffffff",
@@ -67,7 +67,7 @@ const SLIDES: Slide[] = [
 ];
 
 const ALT: Record<string, string> = {
-  vitamine: "Integratore Mèmo vitamine C, D, K",
+  vitamine: "Integratore Mèmo vitamine D3, K2 e C",
   famiglia: "Una famiglia sorridente attorno al flacone dell'integratore Mèmo",
   campo: "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis",
   gusto: "Frutti rossi: lamponi, more e mirtilli",
@@ -181,11 +181,11 @@ export default function Range() {
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse a base di vitamine C, D e K, gusto frutti rossi. Pensato per grandi e piccoli, da tenere in borsa, sulla scrivania o in tribuna.
+            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi. Pensato apposta anche per i più piccoli, dai 3 anni in su, da tenere in borsa, sulla scrivania o in tribuna.
           </p>
           <ul className="rg-facts">
-            <li>Vitamine C, D, K</li>
-            <li>60 compresse</li>
+            <li>Vitamine D3, K2, C</li>
+            <li>60 compresse masticabili</li>
             <li>Gusto frutti rossi</li>
           </ul>
           <p className="rg-price">

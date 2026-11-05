@@ -80,10 +80,10 @@ export const products: Product[] = [
     kind: "integratore",
     sku: "MEMO-INT-VIT",
     name: "Integratore",
-    tagline: "Vitamine C, D e K, gusto frutti rossi",
+    tagline: "Vitamine D3, K2 e C, compresse masticabili",
     ingredients: "60 compresse",
     description:
-      "La buona abitudine di tutti i giorni: vitamine C, D e K in una compressa al gusto frutti rossi. Per grandi e piccoli, da tenere in borsa o in tribuna.",
+      "Tre vitamine con funzioni complementari in un'unica compressa masticabile al gusto frutti rossi, pensata apposta anche per i più piccoli, dai 3 anni in su. Per integrare l'alimentazione di tutti i giorni.",
     priceCents: 1790,
     image: "/img/products/integratore.webp",
     theme: { bg: "#0b4ea2", ink: "#ffffff", accent: "#eaa65f" },
