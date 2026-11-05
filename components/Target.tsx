@@ -8,15 +8,18 @@ import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Prima lo sport, poi tutte le età.
+// Lo sport si alterna alla vita di tutti i giorni: Mèmo non è solo per chi fa sport.
 const SHOTS = [
   { img: "sport-campo-gianduia", tag: "Sport", title: "In campo", text: "Tra un set e l'altro." },
-  { img: "sport-borsa-gianduia", tag: "Sport", title: "In borsa", text: "Accanto alla borraccia, sempre." },
+  { img: "auto-gianduia", tag: "Ogni giorno", title: "In viaggio", text: "Il buono che ti porti dietro." },
   { img: "padel-cocco", tag: "Sport", title: "A padel", text: "Il cambio campo più buono." },
+  { img: "ufficio-gianduia", tag: "Ogni giorno", title: "In ufficio", text: "Tra una riunione e l'altra." },
   { img: "calcio-gianduia", tag: "Sport", title: "Dopo l'allenamento", text: "Il premio dopo la fatica." },
-  { img: "sport-tribuna-integratore-sm", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
-  { img: "portiere-integratore", tag: "Sport", title: "In porta", text: "Vitamine D3, K2 e C, in presa sicura." },
+  { img: "papa-figlio-integratore", tag: "Ogni età", title: "Grandi e piccoli", text: "Le vitamine Mèmo, per tutta la famiglia." },
+  { img: "sport-borsa-gianduia", tag: "Sport", title: "In borsa", text: "Accanto alla borraccia, sempre." },
   { img: "amici-gianduia", tag: "Ogni età", title: "Con gli amici", text: "Ovunque si vada." },
+  { img: "sport-tribuna-integratore-sm", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
+  { img: "tasca-cocco", tag: "Ogni giorno", title: "In tasca", text: "Piccola, pronta quando serve." },
   { img: "mamma-figlio", tag: "Ogni età", title: "In famiglia", text: "La merenda che mette d'accordo tutti." },
   { img: "nonna-merenda", tag: "Ogni età", title: "A ogni età", text: "Chi ha detto che i grandi non fanno merenda?" },
 ];
