@@ -87,7 +87,7 @@ export default function FounderBox() {
       }
       setStatus({
         kind: "ok",
-        message: data.alreadyIn ? "Sei già nella lista Founder: ci sentiamo al lancio!" : "Benvenuto tra i Founder! Ti scriviamo noi il giorno del lancio.",
+        message: data.alreadyIn ? "Sei già iscritto!" : "Ti avvisiamo appena apre lo shop.",
       });
       celebrate();
     } catch {
@@ -100,12 +100,12 @@ export default function FounderBox() {
       <Swoosh className="fb-bg-swoosh" />
       <div className="container fb-grid">
         <div className="fb-copy">
-          <span className="eyebrow eyebrow--light">Lista Founder</span>
+          <span className="eyebrow eyebrow--light">Avvisami al lancio</span>
           <h2 className="fb-title">
-            Assaggiali tutti, <span className="fb-title-hl">prima di tutti.</span>
+            Non perderti <span className="fb-title-hl">il lancio.</span>
           </h2>
           <p className="fb-lead">
-            Davanti a un gusto nuovo la domanda è sempre la stessa: <em>«mi piacerà?»</em>. Iscriviti alla lista Founder: avrai un <strong>prezzo riservato</strong> e il <strong>box degustazione</strong> con tutti e 4 i gusti.
+            Lo shop di Mèmo apre a breve. Lascia nome ed email: <strong>ti avvisiamo appena puoi ordinare</strong> le barrette e l'integratore.
           </p>
 
           {status.kind === "ok" ? (
@@ -132,7 +132,7 @@ export default function FounderBox() {
               {phone.trim() && (
                 <label className="check">
                   <input type="checkbox" name="whatsapp" />
-                  <span>Acconsento a ricevere su WhatsApp l'accesso riservato al lancio e comunicazioni Mèmo.</span>
+                  <span>Acconsento a ricevere su WhatsApp l'avviso del lancio e comunicazioni Mèmo.</span>
                 </label>
               )}
               <label className="check">
@@ -142,7 +142,7 @@ export default function FounderBox() {
                 </span>
               </label>
               <button className="btn btn--white btn--lg" disabled={status.kind === "sending"} data-cursor="Dai!">
-                {status.kind === "sending" ? "Un attimo…" : "Voglio essere Founder"} <Arrow className="btn-arrow" />
+                {status.kind === "sending" ? "Un attimo…" : "Avvisami al lancio"} <Arrow className="btn-arrow" />
               </button>
               {status.kind === "error" && (
                 <p className="fb-error" role="alert">
@@ -167,9 +167,9 @@ export default function FounderBox() {
               />
             ))}
             <span className="fb-box-label">
-              Box
+              4
               <br />
-              4 gusti
+              gusti
             </span>
           </div>
           <div className="fb-burst" aria-hidden>

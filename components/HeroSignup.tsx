@@ -5,7 +5,7 @@ import { Arrow } from "./ui";
 
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
-// Iscrizione veloce alla lista Founder direttamente dalla hero: solo email e consenso.
+// Iscrizione veloce ad "Avvisami al lancio" direttamente dalla hero: solo email e consenso.
 export default function HeroSignup() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
@@ -26,7 +26,7 @@ export default function HeroSignup() {
       }
       setStatus({
         kind: "ok",
-        message: data.alreadyIn ? "Sei già tra i Founder: ci sentiamo al lancio!" : "Sei dentro! Ti scriviamo il giorno del lancio.",
+        message: data.alreadyIn ? "Sei già iscritto!" : "Fatto! Ti avvisiamo appena apre lo shop.",
       });
     } catch {
       setStatus({ kind: "error", message: "Connessione assente, riprova tra un attimo." });
@@ -49,7 +49,7 @@ export default function HeroSignup() {
         </label>
         <input id="hs-email" name="email" type="email" autoComplete="email" required placeholder="La tua email" />
         <button className="btn btn--white" disabled={status.kind === "sending"} data-cursor="Dai!">
-          {status.kind === "sending" ? "Un attimo…" : "Diventa Founder"} <Arrow className="btn-arrow" />
+          {status.kind === "sending" ? "Un attimo…" : "Avvisami"} <Arrow className="btn-arrow" />
         </button>
       </div>
       <label className="hs-check">

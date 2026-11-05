@@ -362,15 +362,15 @@ export default function Shop({ products }: { products: Product[] }) {
         </div>
       </section>
 
-      {/* Lista Founder */}
+      {/* Avvisami al lancio */}
       <section className="sh-founder">
         <div className="container sh-founder-inner">
           <h2>
-            Prezzo riservato <span>per i Founder.</span>
+            Lo shop apre <span>a breve.</span>
           </h2>
-          <p>Entra nella lista: il giorno del lancio ti scriviamo noi, prima di tutti.</p>
+          <p>Lascia la tua email e ti avvisiamo appena puoi ordinare.</p>
           <a href="/#founder" className="btn btn--white btn--lg" data-cursor="Iscriviti">
-            Entra nella lista <Arrow className="btn-arrow" />
+            Avvisami al lancio <Arrow className="btn-arrow" />
           </a>
         </div>
       </section>

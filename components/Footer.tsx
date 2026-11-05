@@ -73,7 +73,7 @@ export default function Footer() {
           <h3>Mèmo</h3>
           <a href="/#visione">La visione</a>
           <a href="/#per-chi">Per chi è</a>
-          <a href="/#founder">Lista Founder</a>
+          <a href="/#founder">Avvisami al lancio</a>
         </nav>
         <div className="ft-col ft-col--contact">
           <h3>Contatti</h3>

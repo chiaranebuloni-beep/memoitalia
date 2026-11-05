@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { useCart } from "./CartProvider";
 import { Star } from "./ui";
 
-// Nel menu solo lo shop: la lista Founder ha già il suo pulsante a destra.
+// Nel menu solo lo shop: "Avvisami al lancio" ha già il suo pulsante a destra.
 const NAV = [{ href: "/shop", label: "Shop" }];
 
 export default function Header() {
@@ -34,7 +34,7 @@ export default function Header() {
         <div className="topbar-track">
           {Array.from({ length: 2 }).map((_, k) => (
             <div className="topbar-group" key={k} aria-hidden={k > 0}>
-              <span>Lista Founder aperta: prezzo riservato + box con tutti e 4 i gusti</span>
+              <span>Lo shop apre a breve: lascia la tua email e ti avvisiamo al lancio</span>
               <Star className="topbar-star" />
               <span>Spedizioni in tutta Italia</span>
               <Star className="topbar-star" />
@@ -60,7 +60,7 @@ export default function Header() {
 
         <div className="header-actions">
           <a href="/#founder" className="btn btn--blue btn--sm header-cta" data-cursor="Iscriviti">
-            Lista Founder
+            Avvisami al lancio
           </a>
           <button className="cart-btn" onClick={() => setOpen(true)} aria-label={`Apri il carrello, ${count} articoli`} data-cursor="Carrello">
             <svg viewBox="0 0 24 24" aria-hidden>

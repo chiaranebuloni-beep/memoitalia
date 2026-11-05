@@ -70,7 +70,7 @@ export default function CartDrawer() {
                 Checkout in arrivo
               </button>
               <p className="drawer-note">
-                Lo shop apre a breve. <a href="/#founder" onClick={() => setOpen(false)}>Entra nella lista Founder</a> per il prezzo riservato.
+                Lo shop apre a breve. <a href="/#founder" onClick={() => setOpen(false)}>Lascia la tua email</a> e ti avvisiamo al lancio.
               </p>
             </div>
           </>

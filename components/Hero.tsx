@@ -84,7 +84,7 @@ export default function Hero() {
 
       <div className="hero-grid">
         <div className="hero-copy hero-head">
-          <span className="hero-kicker"><span className="hk-more">Lista Founder aperta · </span>Lo shop apre il {launchDateLabel}</span>
+          <span className="hero-kicker">Lo shop apre il {launchDateLabel}</span>
           <h1 className="hero-title">
             <span className="hero-line">
               <SplitChars text="Il buono" />
@@ -115,7 +115,7 @@ export default function Hero() {
           <p className="hero-launch-title">Lo shop apre tra</p>
           <Countdown />
           <p className="hero-launch-text">
-            Entra nella lista Founder: <strong>prezzo riservato</strong> e <strong>box con tutti e 4 i gusti</strong>.
+            Lascia la tua email: <strong>ti avvisiamo appena apre lo shop</strong>.
           </p>
           <HeroSignup />
           <div className="hero-launch-foot">
