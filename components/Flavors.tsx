@@ -4,8 +4,7 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { formatPrice, type Product } from "@/lib/catalog";
-import { useCart } from "./CartProvider";
+import type { Product } from "@/lib/catalog";
 import { Arrow, Swoosh } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,8 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Flavors({ products }: { products: Product[] }) {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
-  const [added, setAdded] = useState<string | null>(null);
-  const { add } = useCart();
   const stRef = useRef<ScrollTrigger | null>(null);
   // salto diretto a un gusto dai bottoni: durante il salto l'aggancio automatico è sospeso
   const jumpRef = useRef({ start: () => {}, end: (_i: number) => {} });
@@ -134,12 +131,6 @@ export default function Flavors({ products }: { products: Product[] }) {
     else window.scrollTo({ top: y, behavior: "smooth" });
   };
 
-  const onAdd = (p: Product) => {
-    add(p.id);
-    setAdded(p.id);
-    window.setTimeout(() => setAdded((a) => (a === p.id ? null : a)), 1600);
-  };
-
   return (
     <section
       className="flavors"
@@ -185,11 +176,11 @@ export default function Flavors({ products }: { products: Product[] }) {
               <li>Senza edulcoranti</li>
               <li>Senza glutine</li>
             </ul>
+            {/* in home niente prezzi: si acquista dallo shop */}
             <div className="fl-buy">
-              <span className="fl-price">{formatPrice(p.priceCents)}</span>
-              <button className={`btn btn--accent ${added === p.id ? "is-added" : ""}`} onClick={() => onAdd(p)} tabIndex={active === i ? 0 : -1} data-cursor="Aggiungi">
-                {added === p.id ? "Aggiunta!" : "Aggiungi al carrello"}
-              </button>
+              <a className="btn btn--accent" href={`/shop#${p.id}`} tabIndex={active === i ? 0 : -1} data-cursor="Shop">
+                Scopri nello shop <Arrow className="btn-arrow" />
+              </a>
             </div>
           </div>
         </article>

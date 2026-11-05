@@ -17,7 +17,8 @@ type CartCtx = {
 };
 
 const Ctx = createContext<CartCtx | null>(null);
-const KEY = "memo-cart-v1";
+// v2: le barrette sono in box da 12, i carrelli salvati prima contavano barrette singole
+const KEY = "memo-cart-v2";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<Line[]>([]);

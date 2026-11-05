@@ -3772,3 +3772,13 @@ p {
     font-size: 13px;
   }
 }
+
+.sh-price-unit {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  opacity: 0.75;
+}

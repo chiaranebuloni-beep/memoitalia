@@ -47,12 +47,15 @@ export default function CartDrawer() {
                     </div>
                     <div className="drawer-info">
                       <strong>Mèmo {p.name}</strong>
-                      <span>{formatPrice(p.priceCents)} cad.</span>
+                      <span>
+                        {p.packSize ? (p.kind === "box" ? `${p.packSize} barrette, 3 per gusto · ` : `Box da ${p.packSize} barrette · `) : ""}
+                        {formatPrice(p.priceCents)}
+                      </span>
                     </div>
                     <div className="qty">
-                      <button onClick={() => setQty(l.id, l.qty - 1)} aria-label={`Togli una ${p.name}`}>−</button>
+                      <button onClick={() => setQty(l.id, l.qty - 1)} aria-label={`Togli ${p.packSize ? "un box" : "uno"}: ${p.name}`}>−</button>
                       <span>{l.qty}</span>
-                      <button onClick={() => setQty(l.id, l.qty + 1)} aria-label={`Aggiungi una ${p.name}`}>+</button>
+                      <button onClick={() => setQty(l.id, l.qty + 1)} aria-label={`Aggiungi ${p.packSize ? "un box" : "uno"}: ${p.name}`}>+</button>
                     </div>
                   </li>
                 );

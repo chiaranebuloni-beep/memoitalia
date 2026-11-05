@@ -16,6 +16,9 @@ type Filter = "tutto" | "barretta" | "integratore";
 
 const FAN_ANGLES = [-24, -9, 6, 21];
 
+// prezzo a barretta, mostrato sotto il prezzo del box
+const perBar = (p: Product) => formatPrice(Math.round(p.priceCents / (p.packSize ?? 1)));
+
 export default function Shop({ products }: { products: Product[] }) {
   const root = useRef<HTMLDivElement>(null);
   const { add } = useCart();
@@ -26,12 +29,14 @@ export default function Shop({ products }: { products: Product[] }) {
   const peekTl = useRef<gsap.core.Timeline | null>(null);
 
   const bars = products.filter((p) => p.kind === "barretta");
-  const boxCents = bars.reduce((s, p) => s + p.priceCents, 0);
+  // Il box Experience è un prodotto a sé: 3 barrette per ognuno dei 4 gusti.
+  const mixBox = products.find((p) => p.kind === "box");
+  const items = products.filter((p) => p.kind !== "box");
   const visible = (p: Product) => filter === "tutto" || p.kind === filter;
   const FILTERS: { id: Filter; label: string; count: number }[] = [
-    { id: "tutto", label: "Tutto", count: products.length },
+    { id: "tutto", label: "Tutto", count: items.length },
     { id: "barretta", label: "Barrette", count: bars.length },
-    { id: "integratore", label: "Integratore", count: products.length - bars.length },
+    { id: "integratore", label: "Integratore", count: items.length - bars.length },
   ];
 
   const { contextSafe } = useGSAP(
@@ -173,7 +178,8 @@ export default function Shop({ products }: { products: Product[] }) {
   };
 
   const onAddBox = (e: React.MouseEvent<HTMLElement>) => {
-    bars.forEach((p) => add(p.id as ProductId, 1));
+    if (!mixBox) return;
+    add(mixBox.id);
     flyToCart(e.currentTarget.closest(".sh-box")?.querySelector<HTMLElement>(".sh-fan") ?? null);
     setAdded("box");
     window.setTimeout(() => setAdded((a) => (a === "box" ? null : a)), 1600);
@@ -201,7 +207,7 @@ export default function Shop({ products }: { products: Product[] }) {
               </span>
             </h1>
             <p className="sh-lead sh-hero-anim">
-              Quattro barrette senza edulcoranti e l&apos;integratore con vitamine D3, K2 e C. Scegli i tuoi preferiti e prepara il carrello.
+              Quattro gusti senza edulcoranti, in box da 12 barrette, e l&apos;integratore con vitamine D3, K2 e C. Scegli i tuoi preferiti e prepara il carrello.
             </p>
             <p className="sh-launch sh-hero-anim">
               <span className="sh-launch-dot" aria-hidden />
@@ -236,7 +242,7 @@ export default function Shop({ products }: { products: Product[] }) {
 
       {/* Prodotti */}
       <section className="container sh-grid" aria-label="Prodotti">
-        {products.map((p) => {
+        {items.map((p) => {
           const n = qty[p.id] ?? 1;
           const wide = p.kind === "integratore";
           return (
@@ -273,7 +279,7 @@ export default function Shop({ products }: { products: Product[] }) {
 
               <div className="sh-info">
                 <div className="sh-meta">
-                  <span className="sh-kind">{wide ? "Integratore" : "Barretta"}</span>
+                  <span className="sh-kind">{wide ? "Integratore" : `Box da ${p.packSize} barrette`}</span>
                   {p.badge && <span className="sh-badge">{p.badge}</span>}
                 </div>
                 <h2 className="sh-name">{p.name}</h2>
@@ -288,17 +294,21 @@ export default function Shop({ products }: { products: Product[] }) {
                     </>
                   ) : (
                     <>
+                      <li>{p.packSize} × 40 g</li>
                       <li>{p.ingredients}</li>
                       <li>Senza edulcoranti</li>
                     </>
                   )}
                 </ul>
                 <div className="sh-buy">
-                  <span className="sh-price">{formatPrice(p.priceCents)}</span>
+                  <span className="sh-price">
+                    {formatPrice(p.priceCents)}
+                    {p.packSize && <small className="sh-price-unit">{perBar(p)} a barretta</small>}
+                  </span>
                   <div className="sh-qty" aria-label={`Quantità ${p.name}`}>
-                    <button onClick={() => changeQty(p.id, -1)} disabled={n <= 1} aria-label="Una in meno">−</button>
+                    <button onClick={() => changeQty(p.id, -1)} disabled={n <= 1} aria-label={wide ? "Uno in meno" : "Un box in meno"}>−</button>
                     <span aria-live="polite">{n}</span>
-                    <button onClick={() => changeQty(p.id, 1)} aria-label="Una in più">+</button>
+                    <button onClick={() => changeQty(p.id, 1)} aria-label={wide ? "Uno in più" : "Un box in più"}>+</button>
                   </div>
                   <button
                     className={`btn btn--accent sh-add ${added === p.id ? "is-added" : ""}`}
@@ -325,13 +335,18 @@ export default function Shop({ products }: { products: Product[] }) {
           <div className="sh-box-copy">
             <span className="eyebrow eyebrow--blue">Non sai quale scegliere?</span>
             <h2 className="sh-box-title">
-              Prendile tutte <span>e quattro.</span>
+              Prendile <span>tutte.</span>
             </h2>
-            <p>Una barretta per gusto: Golosa, Cocco, Arachide e Gianduia. Il modo più veloce per trovare la tua preferita.</p>
+            <p>Il box Experience: tre barrette per ogni gusto, Golosa, Cocco, Arachide e Gianduia. Dodici in tutto, per trovare la tua preferita.</p>
             <div className="sh-box-buy">
-              <span className="sh-price">{formatPrice(boxCents)}</span>
+              {mixBox && (
+                <span className="sh-price">
+                  {formatPrice(mixBox.priceCents)}
+                  <small className="sh-price-unit">{perBar(mixBox)} a barretta</small>
+                </span>
+              )}
               <button className={`btn btn--blue btn--lg ${added === "box" ? "is-added" : ""}`} onClick={onAddBox} data-cursor="Aggiungi">
-                {added === "box" ? "Aggiunte!" : "Aggiungi le 4 barrette"} <Arrow className="btn-arrow" />
+                {added === "box" ? "Aggiunto!" : "Aggiungi il box Experience"} <Arrow className="btn-arrow" />
               </button>
             </div>
           </div>
