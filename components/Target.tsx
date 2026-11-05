@@ -20,6 +20,7 @@ const SHOTS = [
   { img: "amici-gianduia", tag: "Ogni età", title: "Con gli amici", text: "Ovunque si vada." },
   { img: "sport-tribuna-integratore-sm", tag: "Sport", title: "Prima del match", text: "Le vitamine Mèmo, a portata di mano." },
   { img: "tasca-cocco", tag: "Ogni giorno", title: "In tasca", text: "Piccola, pronta quando serve." },
+  { img: "bambini-integratore", tag: "Ogni età", title: "All'aria aperta", text: "Compresse masticabili, gusto frutti rossi." },
   { img: "mamma-figlio", tag: "Ogni età", title: "In famiglia", text: "La merenda che mette d'accordo tutti." },
   { img: "nonna-merenda", tag: "Ogni età", title: "A ogni età", text: "Chi ha detto che i grandi non fanno merenda?" },
 ];
