@@ -1801,7 +1801,6 @@ p {
   width: 100%;
   height: auto;
   rotate: -5deg;
-  filter: drop-shadow(0 22px 22px rgba(3, 20, 60, 0.28)) drop-shadow(0 4px 6px rgba(3, 20, 60, 0.16));
 }
 /* bollino rotondo con la scritta in cerchio (stesso stile di .mf-sticker) */
 .fb-sticker {
@@ -5244,8 +5243,13 @@ p {
     top: 18px;
     right: 18px;
   }
+  /* su mobile la grafica sta sopra al testo, con la sua proporzione (Safari con height:100% la allargava sotto al testo) */
   .cs-collab {
-    grid-template-columns: 1fr;
+    display: block;
+  }
+  .cs-collab-art {
+    height: auto;
+    aspect-ratio: 1240 / 1051;
   }
   .ft-col > a.ft-mini {
     font-size: 14px;
