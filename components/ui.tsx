@@ -1,9 +1,9 @@
 // Piccoli elementi grafici condivisi tra le sezioni.
 
-export function Swoosh({ className, title }: { className?: string; title?: string }) {
+export function Swoosh({ className, title, style }: { className?: string; title?: string; style?: React.CSSProperties }) {
   // L'onda dell'accento sulla È del logo, usata come segno grafico.
   return (
-    <svg className={className} viewBox="0 0 200 120" aria-hidden={title ? undefined : true} role={title ? "img" : undefined}>
+    <svg className={className} style={style} viewBox="0 0 200 120" aria-hidden={title ? undefined : true} role={title ? "img" : undefined}>
       {title && <title>{title}</title>}
       <path
         fill="currentColor"

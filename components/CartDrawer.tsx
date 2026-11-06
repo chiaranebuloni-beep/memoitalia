@@ -42,8 +42,8 @@ export default function CartDrawer() {
                 if (!p) return null;
                 return (
                   <li key={l.id} className="drawer-line">
-                    <div className={`drawer-thumb drawer-thumb--${p.kind}`} style={{ background: p.theme.bg }}>
-                      <img src={p.image} alt="" width={160} height={52} />
+                    <div className={`drawer-thumb drawer-thumb--${p.boxImage ? "box-photo" : p.kind}`} style={{ background: p.theme.bg }}>
+                      <img src={p.boxImage ?? p.image} alt="" width={160} height={p.boxImage ? 130 : 52} />
                     </div>
                     <div className="drawer-info">
                       <strong>Mèmo {p.name}</strong>

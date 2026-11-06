@@ -10,12 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
-const FAN = [
-  { src: "/img/products/golosa-ombra.webp", r: -34 },
-  { src: "/img/products/cocco-ombra.webp", r: -16 },
-  { src: "/img/products/arachide-ombra.webp", r: 2 },
-  { src: "/img/products/gianduia-ombra.webp", r: 20 },
-];
+// Al posto del ventaglio di barrette c'è la box Experience, con bollino ed elefantino.
 
 export default function FounderBox() {
   const root = useRef<HTMLElement>(null);
@@ -24,19 +19,17 @@ export default function FounderBox() {
 
   const { contextSafe } = useGSAP(
     () => {
-      // Posizione finale "a ventaglio" delle quattro barrette.
-      gsap.set(".fb-fan-bar", {
-        // valori riferiti all'immagine con il margine per l'ombra (6% della larghezza per lato)
-        transformOrigin: "21.4% 71.8%",
-        rotate: (i) => FAN[i].r,
-        xPercent: (i) => (i - 1.5) * 4.46,
-        yPercent: (i) => (i - 1.5) * 16,
-      });
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ scrollTrigger: { trigger: ".fb-fan", start: "top 85%", end: "center 45%", scrub: 0.8 } });
-        tl.from(".fb-fan-bar", { rotate: 0, xPercent: 0, yPercent: 0, stagger: 0.04, ease: "power2.out" }, 0)
-          .from(".fb-box-label", { scale: 0, rotate: -30, ease: "back.out(2)" }, 0.4);
+        const tl = gsap.timeline({ scrollTrigger: { trigger: ".fb-boxwrap", start: "top 85%", end: "center 45%", scrub: 0.8 } });
+        tl.from(".fb-box", { y: 70, rotate: -12, scale: 0.85, ease: "power2.out" }, 0)
+          .from(".fb-sticker", { scale: 0, ease: "back.out(2)" }, 0.4);
+        // il bollino gira mentre si scorre, come quello della foto in alto
+        gsap.to(".fb-sticker svg", {
+          rotate: 360,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: 1 },
+        });
         gsap.from(".fb-copy > *", {
           y: 50,
           opacity: 0,
@@ -154,30 +147,29 @@ export default function FounderBox() {
         </div>
 
         <div className="fb-visual">
-          <div className="fb-fan" aria-hidden>
-            {FAN.map((b, i) => (
-              <img
-                key={b.src}
-                className="fb-fan-bar"
-                src={b.src}
-                alt=""
-                width={916}
-                height={349}
-                style={{ zIndex: i }}
-              />
-            ))}
-            <span className="fb-box-label">
-              4
-              <br />
-              gusti
-            </span>
+          <div className="fb-boxwrap" aria-hidden>
+            <img className="fb-box" src="/img/products/box-misto.webp" alt="" width={900} height={730} loading="lazy" />
+            {/* bollino come quello "Dolce per natura": scritta in cerchio e monogramma al centro */}
+            <div className="fb-sticker">
+              <svg viewBox="0 0 200 200">
+                <defs>
+                  <path id="fb-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+                </defs>
+                <text>
+                  {/* frase ripetuta due volte: riempie tutto il giro, come "Dolce per natura" */}
+                  <textPath href="#fb-circle">PROVA LA BOX COI 4 GUSTI ✦ PROVA LA BOX COI 4 GUSTI ✦ </textPath>
+                </text>
+              </svg>
+              <img src="/img/brand/monogram.png" alt="" width={90} height={90} />
+            </div>
+            {/* l'elefantino sta davanti alla box, sull'angolo in basso */}
+            <img className="fb-mascot" src="/img/brand/mascot.webp" alt="" width={420} height={452} loading="lazy" />
           </div>
           <div className="fb-burst" aria-hidden>
             {Array.from({ length: 12 }).map((_, i) => (
               <Swoosh key={i} />
             ))}
           </div>
-          <img className="fb-mascot" src="/img/brand/mascot.webp" alt="La mascotte Mèmo festeggia" width={420} height={452} loading="lazy" />
         </div>
       </div>
     </section>

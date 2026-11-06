@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     // Senza un archivio scrivibile (es. Vercel senza database) non perdiamo dati in silenzio.
     console.error("founder signup: store unavailable", err);
     return NextResponse.json(
-      { error: "Le iscrizioni aprono a brevissimo: riprova tra qualche giorno!" },
+      { error: "Ci siamo quasi! Le iscrizioni si attivano a breve: intanto seguici su Instagram, @memoitalia.it." },
       { status: 503 }
     );
   }

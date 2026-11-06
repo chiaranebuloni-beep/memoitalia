@@ -1791,6 +1791,56 @@ p {
   height: auto;
   margin: -6% 0 0 -6%;
 }
+/* box Experience al posto del ventaglio di barrette */
+.fb-boxwrap {
+  position: relative;
+  width: min(100%, 470px);
+  aspect-ratio: 900 / 730;
+}
+.fb-box {
+  width: 100%;
+  height: auto;
+  rotate: -5deg;
+  filter: drop-shadow(0 22px 22px rgba(3, 20, 60, 0.28)) drop-shadow(0 4px 6px rgba(3, 20, 60, 0.16));
+}
+/* bollino rotondo con la scritta in cerchio (stesso stile di .mf-sticker) */
+.fb-sticker {
+  position: absolute;
+  z-index: 10;
+  top: -18%;
+  right: -6%;
+  display: grid;
+  place-items: center;
+  width: clamp(120px, 12vw, 168px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sand);
+  color: var(--choco);
+  rotate: 10deg;
+  box-shadow: 0 16px 40px rgba(58, 29, 18, 0.25);
+}
+.fb-sticker svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.fb-sticker text {
+  fill: currentColor;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 1.8px;
+}
+.fb-sticker img {
+  width: 44%;
+  height: auto;
+}
+/* elefantino davanti alla box, sull'angolo in basso a destra */
+.fb-boxwrap .fb-mascot {
+  right: 4%;
+  bottom: -18%;
+  width: 38%;
+}
 .fb-box-label {
   position: absolute;
   z-index: 10;
@@ -2428,6 +2478,10 @@ p {
   height: auto;
   rotate: -8deg;
 }
+.drawer-thumb--box-photo img {
+  width: 76%;
+  rotate: 0deg;
+}
 .drawer-thumb--integratore img {
   width: auto;
   height: 54px;
@@ -2871,6 +2925,20 @@ p {
     width: 84px;
     font-size: 16px;
   }
+  .fb-boxwrap {
+    width: 72%;
+    margin-right: 14%;
+  }
+  .fb-sticker {
+    top: -22%;
+    right: -12%;
+    width: 108px;
+  }
+  .fb-boxwrap .fb-mascot {
+    right: 0;
+    bottom: -18%;
+    width: 38%;
+  }
   .fb-mascot {
     width: 26vw;
     right: 0;
@@ -3147,6 +3215,21 @@ p {
   z-index: calc(var(--i) + 1);
   filter: drop-shadow(0 8px 8px rgba(3, 20, 60, 0.2)) drop-shadow(0 1px 2px rgba(3, 20, 60, 0.14));
 }
+/* pila di box: ogni box sale dell'altezza dei fianchi (19,5% della foto) e si appoggia su quella sotto */
+.sh-hero-visual:has(.sh-hero-box) {
+  aspect-ratio: 1 / 0.9;
+}
+.sh-hero-box {
+  --h: 55.9%;
+  position: absolute;
+  left: calc(19% + var(--dx));
+  top: calc(100% - var(--h) - var(--i) * var(--h) * 0.195);
+  width: 62%;
+  height: auto;
+  rotate: var(--rot);
+  z-index: calc(var(--i) + 1);
+  filter: drop-shadow(0 10px 12px rgba(3, 20, 60, 0.22)) drop-shadow(0 2px 3px rgba(3, 20, 60, 0.14));
+}
 .sh-hero-bar.is-bottle {
   left: 30%;
   top: 0;
@@ -3280,6 +3363,41 @@ p {
 .sh-card:hover .sh-product-img {
   scale: 1.06;
   rotate: -3deg;
+}
+/* onda colorata dietro alla box (come le barrette in home) */
+.sh-box-swoosh {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: 82%;
+  height: auto;
+  opacity: 0.9;
+  translate: -50% -52%;
+  rotate: 8deg;
+  pointer-events: none;
+  transition: rotate 0.6s var(--ease-out), scale 0.6s var(--ease-out);
+}
+.sh-card:hover .sh-box-swoosh {
+  rotate: 4deg;
+  scale: 1.04;
+}
+/* foto della box: è già in prospettiva, va solo un po' più piccola e meno ruotata */
+.sh-product-img.is-box {
+  position: relative;
+  z-index: 1;
+  width: 64%;
+  margin-inline: auto;
+  display: block;
+  rotate: -3deg;
+}
+.sh-card:hover .sh-product-img.is-box {
+  rotate: 0deg;
+}
+@media (max-width: 720px) {
+  .sh-product-img.is-box {
+    width: 70%;
+  }
 }
 .sh-info {
   display: flex;
@@ -3531,6 +3649,23 @@ p {
   position: relative;
   width: min(100%, 520px);
   aspect-ratio: 820 / 262;
+}
+.sh-box-photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 560px);
+}
+.sh-box-photo .sh-box-swoosh {
+  width: 100%;
+}
+.sh-box-img {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 500px);
+  height: auto;
+  rotate: -4deg;
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.16)) drop-shadow(0 4px 5px rgba(0, 0, 0, 0.12));
 }
 .sh-fan-bar {
   transform-origin: 32.1% 50%;

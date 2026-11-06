@@ -31,6 +31,18 @@ const COPY = {
 };
 
 const FAN_ANGLES = [-24, -9, 6, 21];
+// Pila di box in testa allo shop: ordine dal basso e piccoli spostamenti per un'aria non troppo perfetta.
+const STACK_ORDER = ["gianduia", "arachide", "cocco", "golosa"];
+const STACK_SHIFT = [0, 4, -3, 3, -1];
+const STACK_TILT = [0, 1.5, -1, 1, -0.5];
+// Colore dell'onda dietro a ogni box: uno diverso per gusto, che stacchi dal fondo della scheda.
+const SWOOSH: Record<string, string> = {
+  golosa: "#eaa65f",
+  cocco: "#3d7be0",
+  arachide: "#ffd29a",
+  gianduia: "#e8846a",
+  misto: "#5ab4e5",
+};
 
 // prezzo a barretta, mostrato sotto il prezzo del box
 const perBar = (p: Product) => formatPrice(Math.round(p.priceCents / (p.packSize ?? 1)));
@@ -62,6 +74,8 @@ export default function Shop({ products, category }: { products: Product[]; cate
   const bars = products.filter((p) => p.kind === "barretta");
   // Il box Experience è un prodotto a sé: 3 barrette per ognuno dei 4 gusti.
   const mixBox = products.find((p) => p.kind === "box");
+  // Pila in testa allo shop: i quattro gusti dal basso, la box Experience in cima.
+  const stack = [...STACK_ORDER.map((id) => products.find((p) => p.id === id)), mixBox].filter((p): p is (typeof products)[number] => Boolean(p?.boxImage));
   const allItems = products.filter((p) => p.kind !== "box");
   const items = category ? allItems.filter((p) => p.kind === category) : allItems;
   const copy = COPY[category ?? "tutto"];
@@ -80,7 +94,21 @@ export default function Shop({ products, category }: { products: Product[]; cate
           .timeline({ defaults: { ease: "power4.out" } })
           .from(".sh-hero .split-char", { yPercent: 115, duration: 0.9, stagger: 0.025 }, 0.1)
           .from(".sh-hero-anim", { y: 24, opacity: 0, duration: 0.7, stagger: 0.08 }, 0.35)
-          .from(".sh-hero-bar", { xPercent: 60, rotate: 20, opacity: 0, duration: 1.1, stagger: 0.08, ease: "expo.out" }, 0.2);
+          .from(".sh-hero-bar", { xPercent: 60, rotate: 20, opacity: 0, duration: 1.1, stagger: 0.08, ease: "expo.out" }, 0.2)
+          // le box piombano dall'alto storte e sparpagliate, rimbalzano e si sistemano nella pila
+          .from(
+            ".sh-hero-box",
+            {
+              yPercent: () => gsap.utils.random(-320, -220),
+              xPercent: () => gsap.utils.random(-45, 45),
+              rotate: () => gsap.utils.random(-50, 50),
+              opacity: 0,
+              duration: 0.95,
+              stagger: { each: 0.09, from: "start" },
+              ease: "bounce.out",
+            },
+            0.15
+          );
 
         gsap.to(".sh-hero-swoosh", { rotate: 6, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
 
@@ -123,6 +151,15 @@ export default function Shop({ products, category }: { products: Product[]; cate
           duration: 1.1,
           stagger: 0.07,
           ease: "back.out(1.5)",
+          scrollTrigger: { trigger: ".sh-box", start: "top 75%", once: true },
+        });
+        // La foto del box Experience entra dal basso, leggermente ruotata.
+        if (root.current?.querySelector(".sh-box-img")) gsap.from(".sh-box-img", {
+          y: 50,
+          rotate: -6,
+          opacity: 0,
+          duration: 1,
+          ease: "back.out(1.4)",
           scrollTrigger: { trigger: ".sh-box", start: "top 75%", once: true },
         });
       });
@@ -192,7 +229,7 @@ export default function Shop({ products, category }: { products: Product[]; cate
   const onAddBox = (e: React.MouseEvent<HTMLElement>) => {
     if (!mixBox) return;
     add(mixBox.id);
-    flyToCart(e.currentTarget.closest(".sh-box")?.querySelector<HTMLElement>(".sh-fan") ?? null);
+    flyToCart(e.currentTarget.closest(".sh-box")?.querySelector<HTMLElement>(".sh-box-img, .sh-fan") ?? null);
     setAdded("box");
     window.setTimeout(() => setAdded((a) => (a === "box" ? null : a)), 1600);
   };
@@ -229,8 +266,17 @@ export default function Shop({ products, category }: { products: Product[]; cate
           <div className="sh-hero-visual" aria-hidden>
             {onlySupplement
               ? items.map((p) => <img key={p.id} className="sh-hero-bar is-bottle" src={p.image} alt="" width={544} height={900} />)
-              : bars.map((p, i) => (
-                  <img key={p.id} className="sh-hero-bar" src={p.image} alt="" width={820} height={262} style={{ "--i": i } as React.CSSProperties} />
+              : stack.map((p, i) => (
+                  // pila di box: si parte dal basso, ognuna appoggiata sulla precedente
+                  <img
+                    key={p.id}
+                    className="sh-hero-box"
+                    src={p.boxImage}
+                    alt=""
+                    width={900}
+                    height={730}
+                    style={{ "--i": i, "--dx": `${STACK_SHIFT[i] ?? 0}%`, "--rot": `${STACK_TILT[i] ?? 0}deg` } as React.CSSProperties}
+                  />
                 ))}
           </div>
         </div>
@@ -284,12 +330,13 @@ export default function Shop({ products, category }: { products: Product[]; cate
                   />
                 )}
                 <div className="sh-float">
+                  {p.boxImage && <Swoosh className="sh-box-swoosh" style={{ color: SWOOSH[p.id] }} />}
                   <img
-                    className="sh-product-img"
-                    src={p.image}
-                    alt={wide ? "Flacone dell'integratore Mèmo, vitamine D3, K2 e C" : `Barretta Mèmo ${p.name}`}
-                    width={wide ? 544 : 820}
-                    height={wide ? 900 : 262}
+                    className={`sh-product-img ${p.boxImage ? "is-box" : ""}`}
+                    src={p.boxImage ?? p.image}
+                    alt={wide ? "Flacone dell'integratore Mèmo, vitamine D3, K2 e C" : p.boxImage ? `Box da 12 barrette Mèmo ${p.name}` : `Barretta Mèmo ${p.name}`}
+                    width={wide ? 544 : p.boxImage ? 900 : 820}
+                    height={wide ? 900 : p.boxImage ? 730 : 262}
                   />
                 </div>
               </div>
@@ -377,11 +424,18 @@ export default function Shop({ products, category }: { products: Product[]; cate
             </div>
           </div>
           <div className="sh-box-visual" aria-hidden>
-            <div className="sh-fan">
-              {bars.map((p, i) => (
-                <img key={p.id} className="sh-fan-bar" src={`/img/products/${p.id}-ombra.webp`} alt="" width={916} height={349} style={{ transform: `rotate(${FAN_ANGLES[i]}deg)`, zIndex: i }} />
-              ))}
-            </div>
+            {mixBox?.boxImage ? (
+              <div className="sh-box-photo">
+                <Swoosh className="sh-box-swoosh" style={{ color: SWOOSH[mixBox.id] }} />
+                <img className="sh-box-img" src={mixBox.boxImage} alt="" width={900} height={730} loading="lazy" />
+              </div>
+            ) : (
+              <div className="sh-fan">
+                {bars.map((p, i) => (
+                  <img key={p.id} className="sh-fan-bar" src={`/img/products/${p.id}-ombra.webp`} alt="" width={916} height={349} style={{ transform: `rotate(${FAN_ANGLES[i]}deg)`, zIndex: i }} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>}

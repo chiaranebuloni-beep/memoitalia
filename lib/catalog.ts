@@ -16,6 +16,8 @@ export type Product = {
   description: string;
   priceCents: number;
   image: string;
+  // foto della confezione che si compra (box da 12); la barretta resta in home e nei dettagli
+  boxImage?: string;
   theme: {
     bg: string;
     ink: string;
@@ -58,6 +60,7 @@ export const products: Product[] = [
     priceCents: BOX_CENTS,
     packSize: PACK_SIZE,
     image: "/img/products/golosa.webp",
+    boxImage: "/img/products/box-golosa.webp",
     theme: { bg: "#3a1d12", ink: "#fff3e4", accent: "#f2b66d" },
     badge: "La più golosa",
   },
@@ -73,6 +76,7 @@ export const products: Product[] = [
     priceCents: BOX_CENTS,
     packSize: PACK_SIZE,
     image: "/img/products/cocco.webp",
+    boxImage: "/img/products/box-cocco.webp",
     theme: { bg: "#f6efe4", ink: "#3a1d12", accent: "#0b4ea2" },
   },
   {
@@ -87,6 +91,7 @@ export const products: Product[] = [
     priceCents: BOX_CENTS,
     packSize: PACK_SIZE,
     image: "/img/products/arachide.webp",
+    boxImage: "/img/products/box-arachide.webp",
     theme: { bg: "#b4532a", ink: "#fff3e4", accent: "#ffd29a" },
   },
   {
@@ -101,6 +106,7 @@ export const products: Product[] = [
     priceCents: BOX_CENTS,
     packSize: PACK_SIZE,
     image: "/img/products/gianduia.webp",
+    boxImage: "/img/products/box-gianduia.webp",
     theme: { bg: "#76291b", ink: "#fff3e4", accent: "#f7b98b" },
   },
   {
@@ -130,6 +136,7 @@ products.push({
   priceCents: BOX_CENTS,
   packSize: PACK_SIZE,
   image: "/img/products/golosa.webp",
+  boxImage: "/img/products/box-misto.webp",
   theme: { bg: "#e9eefb", ink: "#0b4ea2", accent: "#eaa65f" },
 });
 
