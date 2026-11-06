@@ -4070,10 +4070,21 @@ p {
   transform-origin: 50% 100%;
   pointer-events: none;
 }
+/* elefantino al telefono (Contatti): seduto sul bordo blu/beige, con sedere e piedi appoggiati sulla linea */
+.pg-hero-art--sit {
+  width: clamp(190px, 21vw, 330px);
+  translate: 0 2%;
+}
 @media (max-width: 720px) {
   .pg-hero-art {
     right: 12px;
     width: 46vw;
+  }
+  .pg-hero-art--sit {
+    width: 36vw;
+  }
+  .pg-hero-wrap:has(.pg-hero-art--sit) .pg-hero {
+    padding-bottom: calc(38vw + 24px);
   }
   /* su telefono il testo resta sopra l'illustrazione */
   .pg-hero.pg-hero--art {

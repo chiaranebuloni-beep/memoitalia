@@ -26,7 +26,11 @@ export default function ContattiPage() {
       <Cursor />
       <Header />
       <main className="page">
-        <PageHero lines={["Parliamone", "insieme."]} lead="Una domanda su Mèmo, una proposta per la tua attività o la voglia di sapere dove trovarci: siamo qui.">
+        <PageHero
+          lines={["Parliamone", "insieme."]}
+          lead="Una domanda su Mèmo, una proposta per la tua attività o la voglia di sapere dove trovarci: siamo qui."
+          art={<img className="pg-hero-art pg-hero-art--sit" src="/img/brand/elefante-telefono.webp" alt="" aria-hidden width={800} height={842} />}
+        >
           <nav className="pg-jump" aria-label="Sezioni della pagina">
             <a href="#scrivici">Scrivici</a>
             <a href="#rivenditori">Rivenditori e GDO</a>
