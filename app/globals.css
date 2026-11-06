@@ -3953,9 +3953,28 @@ p {
     align-content: safe center;
     padding-top: 168px;
   }
-  /* l'onda colorata dietro la barretta su schermo piccolo sembrava una macchia d'ombra */
+  /* l'onda colorata ("baffo") dietro la barretta resta anche su telefono, piena come su desktop */
   .fl-bar-swoosh {
-    display: none;
+    width: 74%;
+    opacity: 0.85;
+  }
+  /* le etichette stanno su una riga sola, così c'è posto per la descrizione */
+  .fl-chips {
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .fl-chips li {
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  /* la descrizione del gusto c'è anche su telefono, più piccola */
+  .fl-desc {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.4;
   }
   .fl-bar img {
     filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.14));
@@ -3971,7 +3990,6 @@ p {
     width: 72%;
     margin-bottom: 30px;
   }
-  .fl-badge,
   .fl-chips {
     display: none;
   }
