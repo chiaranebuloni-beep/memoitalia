@@ -148,7 +148,7 @@ export default function FounderBox() {
 
         <div className="fb-visual">
           <div className="fb-boxwrap" aria-hidden>
-            <img className="fb-box" src="/img/products/box-misto.webp" alt="" width={900} height={730} loading="lazy" />
+            <img className="fb-box" src="/img/products/box-misto-ombra.webp" alt="" width={1008} height={818} loading="lazy" />
             {/* bollino come quello "Dolce per natura": scritta in cerchio e monogramma al centro */}
             <div className="fb-sticker">
               <svg viewBox="0 0 200 200">

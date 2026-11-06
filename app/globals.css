@@ -1797,9 +1797,13 @@ p {
   width: min(100%, 470px);
   aspect-ratio: 900 / 730;
 }
+/* ombra già dentro l'immagine (box-misto-ombra.webp, 6% di margine per lato): niente filter, che Safari disegna male */
 .fb-box {
-  width: 100%;
+  display: block;
+  width: 112%;
+  max-width: none;
   height: auto;
+  margin: -6% 0 0 -6%;
   rotate: -5deg;
 }
 /* bollino rotondo con la scritta in cerchio (stesso stile di .mf-sticker) */
