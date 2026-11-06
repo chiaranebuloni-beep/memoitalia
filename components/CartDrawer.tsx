@@ -53,9 +53,9 @@ export default function CartDrawer() {
                       </span>
                     </div>
                     <div className="qty">
-                      <button onClick={() => setQty(l.id, l.qty - 1)} aria-label={`Togli ${p.packSize ? "un box" : "uno"}: ${p.name}`}>−</button>
+                      <button onClick={() => setQty(l.id, l.qty - 1)} aria-label={`Togli ${p.packSize ? "una box" : "uno"}: ${p.name}`}>−</button>
                       <span>{l.qty}</span>
-                      <button onClick={() => setQty(l.id, l.qty + 1)} aria-label={`Aggiungi ${p.packSize ? "un box" : "uno"}: ${p.name}`}>+</button>
+                      <button onClick={() => setQty(l.id, l.qty + 1)} aria-label={`Aggiungi ${p.packSize ? "una box" : "uno"}: ${p.name}`}>+</button>
                     </div>
                   </li>
                 );

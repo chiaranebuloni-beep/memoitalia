@@ -15,6 +15,9 @@ const NAV: { href: string; label: string; sub?: { href: string; label: string }[
       { href: "/shop/integratore", label: "Integratore" },
     ],
   },
+  { href: "/chi-siamo", label: "Chi siamo" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/contatti", label: "Contatti" },
 ];
 
 export default function Header() {

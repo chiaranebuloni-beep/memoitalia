@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://memoitalia.vercel.app"),
   title: "Mèmo · Il buono memorabile",
   description: DESCRIPTION,
-  icons: { icon: "/img/brand/monogram.png" },
   openGraph: {
     type: "website",
     locale: "it_IT",

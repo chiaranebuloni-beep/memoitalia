@@ -22,7 +22,7 @@ const COPY = {
   },
   barretta: {
     title: ["Scegli", "il gusto."],
-    lead: "Quattro gusti senza edulcoranti, in box da 12 barrette. Non sai quale scegliere? Con il box Experience li provi tutti.",
+    lead: "Quattro gusti senza edulcoranti, in box da 12 barrette. Non sai quale scegliere? Con la box Experience li provi tutti.",
   },
   integratore: {
     title: ["La buona", "abitudine."],
@@ -44,7 +44,7 @@ const SWOOSH: Record<string, string> = {
   misto: "#5ab4e5",
 };
 
-// prezzo a barretta, mostrato sotto il prezzo del box
+// prezzo a barretta, mostrato sotto il prezzo della box
 const perBar = (p: Product) => formatPrice(Math.round(p.priceCents / (p.packSize ?? 1)));
 
 export default function Shop({ products, category }: { products: Product[]; category?: ShopCategory }) {
@@ -72,7 +72,7 @@ export default function Shop({ products, category }: { products: Product[]; cate
   const peekTl = useRef<gsap.core.Timeline | null>(null);
 
   const bars = products.filter((p) => p.kind === "barretta");
-  // Il box Experience è un prodotto a sé: 3 barrette per ognuno dei 4 gusti.
+  // La box Experience è un prodotto a sé: 3 barrette per ognuno dei 4 gusti.
   const mixBox = products.find((p) => p.kind === "box");
   // Pila in testa allo shop: i quattro gusti dal basso, la box Experience in cima.
   const stack = [...STACK_ORDER.map((id) => products.find((p) => p.id === id)), mixBox].filter((p): p is (typeof products)[number] => Boolean(p?.boxImage));
@@ -95,17 +95,16 @@ export default function Shop({ products, category }: { products: Product[]; cate
           .from(".sh-hero .split-char", { yPercent: 115, duration: 0.9, stagger: 0.025 }, 0.1)
           .from(".sh-hero-anim", { y: 24, opacity: 0, duration: 0.7, stagger: 0.08 }, 0.35)
           .from(".sh-hero-bar", { xPercent: 60, rotate: 20, opacity: 0, duration: 1.1, stagger: 0.08, ease: "expo.out" }, 0.2)
-          // le box piombano dall'alto storte e sparpagliate, rimbalzano e si sistemano nella pila
+          // le box scendono dall'alto una alla volta, appena storte, e si posano nella pila
           .from(
             ".sh-hero-box",
             {
-              yPercent: () => gsap.utils.random(-320, -220),
-              xPercent: () => gsap.utils.random(-45, 45),
-              rotate: () => gsap.utils.random(-50, 50),
+              yPercent: -160,
+              rotate: (i: number) => (i % 2 ? 8 : -8),
               opacity: 0,
-              duration: 0.95,
-              stagger: { each: 0.09, from: "start" },
-              ease: "bounce.out",
+              duration: 1.2,
+              stagger: { each: 0.18, from: "start" },
+              ease: "power3.out",
             },
             0.15
           );
@@ -144,7 +143,7 @@ export default function Shop({ products, category }: { products: Product[]; cate
         });
         }
 
-        // Il ventaglio del box si apre quando arriva sullo schermo.
+        // Il ventaglio della box si apre quando arriva sullo schermo.
         if (root.current?.querySelector(".sh-fan-bar")) gsap.from(".sh-fan-bar", {
           rotate: 0,
           y: 40,
@@ -153,7 +152,7 @@ export default function Shop({ products, category }: { products: Product[]; cate
           ease: "back.out(1.5)",
           scrollTrigger: { trigger: ".sh-box", start: "top 75%", once: true },
         });
-        // La foto del box Experience entra dal basso, leggermente ruotata.
+        // La foto della box Experience entra dal basso, leggermente ruotata.
         if (root.current?.querySelector(".sh-box-img")) gsap.from(".sh-box-img", {
           y: 50,
           rotate: -6,
@@ -374,9 +373,9 @@ export default function Shop({ products, category }: { products: Product[]; cate
                     {p.packSize && <small className="sh-price-unit">{perBar(p)} a barretta</small>}
                   </span>
                   <div className="sh-qty" aria-label={`Quantità ${p.name}`}>
-                    <button onClick={() => changeQty(p.id, -1)} disabled={n <= 1} aria-label={wide ? "Uno in meno" : "Un box in meno"}>−</button>
+                    <button onClick={() => changeQty(p.id, -1)} disabled={n <= 1} aria-label={wide ? "Uno in meno" : "Una box in meno"}>−</button>
                     <span aria-live="polite">{n}</span>
-                    <button onClick={() => changeQty(p.id, 1)} aria-label={wide ? "Uno in più" : "Un box in più"}>+</button>
+                    <button onClick={() => changeQty(p.id, 1)} aria-label={wide ? "Uno in più" : "Una box in più"}>+</button>
                   </div>
                   <button
                     className={`btn btn--accent sh-add ${added === p.id ? "is-added" : ""}`}
@@ -408,9 +407,9 @@ export default function Shop({ products, category }: { products: Product[]; cate
           <div className="sh-box-copy">
             <span className="eyebrow eyebrow--blue">Non sai quale scegliere?</span>
             <h2 className="sh-box-title">
-              Prendile <span>tutte.</span>
+              Provale <span>tutte.</span>
             </h2>
-            <p>Il box Experience: tre barrette per ogni gusto, Golosa, Cocco, Arachide e Gianduia. Dodici in tutto, per trovare la tua preferita.</p>
+            <p>La box Experience: tre barrette per ogni gusto, Golosa, Cocco, Arachide e Gianduia. Dodici in tutto, per trovare la tua preferita.</p>
             <div className="sh-box-buy">
               {mixBox && (
                 <span className="sh-price">
@@ -419,7 +418,7 @@ export default function Shop({ products, category }: { products: Product[]; cate
                 </span>
               )}
               <button className={`btn btn--blue btn--lg ${added === "box" ? "is-added" : ""}`} onClick={onAddBox} disabled={mixBox?.inStock === false} data-cursor="Aggiungi">
-                {mixBox?.inStock === false ? "Esaurito" : added === "box" ? "Aggiunto!" : "Aggiungi il box Experience"} <Arrow className="btn-arrow" />
+                {mixBox?.inStock === false ? "Esaurito" : added === "box" ? "Aggiunto!" : "Aggiungi la box Experience"} <Arrow className="btn-arrow" />
               </button>
             </div>
           </div>

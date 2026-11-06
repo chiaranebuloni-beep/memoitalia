@@ -3473,7 +3473,7 @@ p {
   font-size: clamp(32px, 2.8vw, 42px);
   line-height: 1;
 }
-/* sotto il prezzo del box: quanto costa ogni barretta */
+/* sotto il prezzo della box: quanto costa ogni barretta */
 .sh-price-unit,
 .fl-price-unit {
   display: block;
@@ -4871,6 +4871,38 @@ p {
 .ct-store-pin svg {
   width: 22px;
   height: 22px;
+}
+
+/* Dove trovarci, in attesa dei punti vendita: un solo riquadro "in arrivo", stesso stile delle schede negozio */
+.ct-soon {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  margin-top: 36px;
+  padding: clamp(24px, 3.4vw, 44px);
+  border-radius: 24px;
+  background: var(--blue);
+  color: var(--white);
+}
+.ct-soon .ct-store-pin {
+  background: var(--sand);
+  color: var(--choco);
+}
+.ct-soon h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.ct-soon h3 span {
+  color: var(--sand);
+}
+.ct-soon p {
+  max-width: 620px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* modulo contatti (sfondo chiaro) */

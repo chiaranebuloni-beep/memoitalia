@@ -71,8 +71,8 @@ export default function Footer() {
         </nav>
         <nav className="ft-col" aria-label="Mèmo">
           <h3>Mèmo</h3>
-          <a href="/#visione">La visione</a>
-          <a href="/#per-chi">Per chi è</a>
+          <a href="/chi-siamo">Chi siamo</a>
+          <a href="/faq">Domande frequenti</a>
           <a href="/#founder">Avvisami al lancio</a>
         </nav>
         <div className="ft-col ft-col--contact">
@@ -85,7 +85,9 @@ export default function Footer() {
             <br />
             Cavriago (RE)
           </p>
-          <p className="ft-note">Rivenditori e GDO? Scrivici, ti rispondiamo noi.</p>
+          <a className="ft-mini" href="/contatti">Scrivici</a>
+          <a className="ft-mini" href="/contatti#rivenditori">Rivenditori e GDO</a>
+          <a className="ft-mini" href="/contatti#dove-trovarci">Dove trovarci</a>
         </div>
       </div>
 
