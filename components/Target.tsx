@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Lo sport si alterna alla vita di tutti i giorni: Mèmo non è solo per chi fa sport.
 const SHOTS = [
-  { img: "sport-campo-gianduia", tag: "Sport", title: "In campo", text: "Tra un set e l'altro." },
+  { img: "sport-campo-arachide", tag: "Sport", title: "In campo", text: "Tra un set e l'altro." },
   { img: "auto-gianduia", tag: "Ogni giorno", title: "In viaggio", text: "Il buono che ti porti dietro." },
   { img: "padel-cocco", tag: "Sport", title: "A padel", text: "Il cambio campo più buono." },
   { img: "ufficio-gianduia", tag: "Ogni giorno", title: "In ufficio", text: "Tra una riunione e l'altra." },

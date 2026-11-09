@@ -22,7 +22,7 @@ type Slide = {
   focus?: string;
 };
 
-// Solo l'integratore: confezione, foto in campo e caratteristiche.
+// Solo l'integratore: confezione, famiglia e gusto.
 const SLIDES: Slide[] = [
   {
     id: "vitamine",
@@ -45,16 +45,6 @@ const SLIDES: Slide[] = [
     focus: "50% 38%",
   },
   {
-    id: "campo",
-    kind: "Sempre con te",
-    name: "In borsa, in tribuna",
-    line: "Piccolo, pratico, da portare ovunque.",
-    img: "/img/photos/sport-tribuna-integratore.webp",
-    bg: "#0b4ea2",
-    ink: "#ffffff",
-    photo: true,
-  },
-  {
     id: "gusto",
     kind: "Gusto",
     name: "Frutti rossi",
@@ -69,7 +59,6 @@ const SLIDES: Slide[] = [
 const ALT: Record<string, string> = {
   vitamine: "Integratore Mèmo vitamine D3, K2 e C",
   famiglia: "Una famiglia sorridente attorno al flacone dell'integratore Mèmo",
-  campo: "Il flacone dell'integratore Mèmo sulle tribune di un campo da tennis",
   gusto: "Frutti rossi: lamponi, more e mirtilli",
 };
 
@@ -181,7 +170,7 @@ export default function Range() {
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi. Pensato apposta anche per i più piccoli*, dai 3 anni in su, da tenere in borsa, sulla scrivania o in tribuna.
+            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi, per tutta la famiglia: anche per i più piccoli*, dai 3 anni in su. La <strong>vitamina D</strong> contribuisce al mantenimento di ossa e denti normali e alla normale funzione del sistema immunitario; la <strong>vitamina C</strong> contribuisce alla normale funzione del sistema immunitario.
           </p>
           <ul className="rg-facts">
             <li>Vitamine D3, K2, C</li>

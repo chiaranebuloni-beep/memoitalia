@@ -95,7 +95,7 @@ export default function Manifesto() {
               Pensata per la vita reale
             </div>
             <p className="mf-note">
-              Carboidrati, proteine, grassi e fibre in equilibrio. Qualità senza estremismi: niente paura degli zuccheri, niente logica del prodotto perfetto.
+              Carboidrati, proteine, grassi e fibre in equilibrio. Qualità senza estremismi, niente logica del prodotto perfetto.
             </p>
           </div>
 

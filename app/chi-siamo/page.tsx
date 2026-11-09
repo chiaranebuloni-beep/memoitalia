@@ -52,7 +52,7 @@ const COLLABS = [
     name: "Cigarini e Costa Football Academy",
     tag: "Calcio · Reggio Emilia",
     art: "/img/collab/memo-x-ccfa.webp",
-    text: "L'academy di tecnica calcistica fondata da Luca Cigarini e Andrea Costa, ex giocatori della Reggiana, per ragazzi e adulti.",
+    text: "L'academy di tecnica calcistica fondata da Luca Cigarini e Andrea Costa, ex giocatori di serie A, per ragazzi e adulti.",
     more: "Insieme abbiamo creato un'etichetta speciale sulle box, con un QR code per uno sconto dedicato del 10%: Mèmo × Cigarini & Costa, la barretta in 4 gusti golosi, energetica per natura.",
   },
 ];
