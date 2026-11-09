@@ -170,7 +170,7 @@ export default function Range() {
             <span>una buona abitudine.</span>
           </h2>
           <p>
-            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi, per tutta la famiglia: anche per i più piccoli*, dai 3 anni in su. La <strong>vitamina D</strong> contribuisce al mantenimento di ossa e denti normali e alla normale funzione del sistema immunitario; la <strong>vitamina C</strong> contribuisce alla normale funzione del sistema immunitario.
+            Accanto alle barrette c'è l'<strong>integratore Mèmo</strong>: 60 compresse masticabili a base di vitamine D3, K2 e C, gusto frutti rossi, per tutta la famiglia: anche per i più piccoli*, dai 3 anni in su. La <strong>vitamina D</strong> è fondamentale per la salute di tutta la famiglia e la <strong>vitamina C</strong> contribuisce a fortificare il sistema immunitario.
           </p>
           <ul className="rg-facts">
             <li>Vitamine D3, K2, C</li>
