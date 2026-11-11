@@ -178,7 +178,7 @@ export default function Range() {
             <li>Gusto frutti rossi</li>
           </ul>
           <p className="rg-price">
-            Prezzo <strong>17,90 €</strong>
+            Prezzo <strong>19,90 €</strong>
           </p>
           <div className="rg-actions">
             <button

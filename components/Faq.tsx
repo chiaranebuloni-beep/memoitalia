@@ -54,7 +54,7 @@ const GROUPS: Group[] = [
       { q: "Dove spedite?", a: "In tutta Italia." },
       {
         q: "Posso comprare una barretta singola?",
-        a: "Online no: le barrette si acquistano in box da 12. Puoi scegliere la box di un solo gusto oppure la box Experience, con 3 barrette per ognuno dei 4 gusti. Ogni box costa 30 €, cioè 2,50 € a barretta.",
+        a: "Online no: le barrette si acquistano in box da 12. Puoi scegliere la box di un solo gusto oppure la box Experience, con 3 barrette per ognuno dei 4 gusti. Ogni box costa 32,40 €, cioè 2,70 € a barretta.",
       },
       { q: "Quanto costa la spedizione e quanto ci mette?", a: <Pending /> },
       { q: "Come posso pagare?", a: <Pending /> },
