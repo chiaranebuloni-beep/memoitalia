@@ -15,7 +15,6 @@ type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 export default function FounderBox() {
   const root = useRef<HTMLElement>(null);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
-  const [phone, setPhone] = useState("");
 
   const { contextSafe } = useGSAP(
     () => {
@@ -69,7 +68,7 @@ export default function FounderBox() {
           name: fd.get("name"),
           email: fd.get("email"),
           phone: fd.get("phone"),
-          whatsappConsent: fd.get("whatsapp") === "on",
+          source: "lancio",
           privacy: fd.get("privacy") === "on",
         }),
       });
@@ -98,7 +97,7 @@ export default function FounderBox() {
             Non perderti <span className="fb-title-hl">il lancio.</span>
           </h2>
           <p className="fb-lead">
-            Lo shop di Mèmo apre a breve. Lascia nome ed email: <strong>ti avvisiamo appena puoi ordinare</strong> le barrette e l'integratore.
+            Lo shop di Mèmo apre a breve. Lascia nome, email e cellulare: <strong>ti avvisiamo appena puoi ordinare</strong> le barrette e l'integratore.
           </p>
 
           {status.kind === "ok" ? (
@@ -118,16 +117,11 @@ export default function FounderBox() {
                   <input name="email" type="email" autoComplete="email" required placeholder="nome@email.it" />
                 </label>
               </div>
+              {/* Cellulare richiesto (12/11/2026); niente più WhatsApp né consenso separato */}
               <label className="field">
-                <span>WhatsApp (facoltativo)</span>
-                <input name="phone" type="tel" autoComplete="tel" placeholder="+39 333 123 4567" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <span>Cellulare</span>
+                <input name="phone" type="tel" autoComplete="tel" inputMode="tel" required placeholder="+39 333 123 4567" />
               </label>
-              {phone.trim() && (
-                <label className="check">
-                  <input type="checkbox" name="whatsapp" />
-                  <span>Acconsento a ricevere su WhatsApp l'avviso del lancio e comunicazioni Mèmo.</span>
-                </label>
-              )}
               <label className="check">
                 <input type="checkbox" name="privacy" required />
                 <span>

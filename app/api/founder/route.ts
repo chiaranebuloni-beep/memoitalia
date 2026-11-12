@@ -20,16 +20,16 @@ export async function POST(req: Request) {
   const name = String(body.name ?? "").trim().slice(0, 80);
   const email = String(body.email ?? "").trim().toLowerCase().slice(0, 160);
   const phone = String(body.phone ?? "").trim();
-  const whatsappConsent = body.whatsappConsent === true;
   const privacy = body.privacy === true;
 
   // Il nome serve nel form completo; dall'iscrizione veloce della hero arriva solo l'email.
   if (!name && body.source !== "hero") return NextResponse.json({ error: "Come ti chiami?" }, { status: 422 });
   if (!EMAIL_RE.test(email)) return NextResponse.json({ error: "Controlla l'email." }, { status: 422 });
+  // Dal 12/11/2026 il modulo "Avvisami al lancio" chiede il cellulare, senza consenso WhatsApp a parte
+  if (!phone && body.source === "lancio")
+    return NextResponse.json({ error: "Lasciaci il tuo numero di cellulare." }, { status: 422 });
   if (phone && !PHONE_RE.test(phone))
-    return NextResponse.json({ error: "Il numero WhatsApp non sembra corretto." }, { status: 422 });
-  if (phone && !whatsappConsent)
-    return NextResponse.json({ error: "Serve il consenso per scriverti su WhatsApp." }, { status: 422 });
+    return NextResponse.json({ error: "Il numero di cellulare non sembra corretto." }, { status: 422 });
   if (!privacy) return NextResponse.json({ error: "Serve l'accettazione dell'informativa privacy." }, { status: 422 });
 
   let created: boolean;
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       name,
       email,
       phone: phone || undefined,
-      whatsappConsent: Boolean(phone) && whatsappConsent,
+      whatsappConsent: false,
       marketingConsent: privacy,
     }));
   } catch (err) {

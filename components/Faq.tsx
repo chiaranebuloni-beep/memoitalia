@@ -74,7 +74,7 @@ const GROUPS: Group[] = [
     id: "founder",
     title: "Avvisami al lancio",
     items: [
-      { q: "Come funziona \"Avvisami al lancio\"?", a: "Lasci la tua email (e, se vuoi, il numero WhatsApp) e ti scriviamo appena apre lo shop." },
+      { q: "Come funziona \"Avvisami al lancio\"?", a: "Lasci nome, email e numero di cellulare e ti avvisiamo appena apre lo shop." },
       { q: "Iscriversi costa qualcosa?", a: "No, è gratuito e non ti obbliga ad acquistare." },
       { q: "Come mi cancello dalla lista?", a: <>Scrivici a <a href="mailto:info@memoitalia.it">info@memoitalia.it</a> e ti togliamo subito.</> },
     ],
