@@ -8,6 +8,12 @@ import Cursor from "@/components/Cursor";
 import { Star } from "@/components/ui";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/social";
 
+// Primi punti vendita (dal cliente, 12/11/2026), ancora "in arrivo"
+const STORES = [
+  { name: "Conad", city: "Cavriago (RE)" },
+  { name: "Ninja Club", city: "Cavriago (RE)" },
+];
+
 export const metadata: Metadata = {
   title: "Contatti · Mèmo",
   description: "Scrivi a Mèmo, diventa rivenditore o scopri dove trovare le barrette Mèmo.",
@@ -109,7 +115,7 @@ export default function ContattiPage() {
             </h2>
             <p className="ct-stores-lead">Presto le barrette Mèmo saranno anche nei negozi.</p>
           </div>
-          {/* Coming soon: quando arriva l'elenco dei punti vendita, qui tornano le schede dei negozi */}
+          {/* Coming soon con i primi punti vendita (12/11/2026): quando aprono, tolto "In arrivo" diventano schede negozio */}
           <div className="ct-soon pg-reveal">
             <span className="ct-store-pin" aria-hidden>
               <svg viewBox="0 0 24 24">
@@ -119,7 +125,16 @@ export default function ContattiPage() {
             <h3>
               I primi punti vendita <span>stanno arrivando.</span>
             </h3>
-            <p>Stiamo scegliendo negozi, bar e palestre dove trovare Mèmo. Appena sono pronti, li trovi elencati qui.</p>
+            <p>Presto trovi Mèmo anche qui:</p>
+            <ul className="ct-soon-list">
+              {STORES.map((s) => (
+                <li key={s.name}>
+                  <strong>{s.name}</strong>
+                  <span className="ct-soon-city">{s.city}</span>
+                  <span className="ct-soon-tag">In arrivo</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>

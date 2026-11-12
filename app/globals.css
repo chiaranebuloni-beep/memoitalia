@@ -4936,6 +4936,52 @@ p {
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
 }
+/* i primi negozi, ancora in arrivo: schede chiare dentro il riquadro blu */
+.ct-soon-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 760px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ct-soon-list li {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--cream);
+  color: var(--blue);
+}
+.ct-soon-list strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.ct-soon-city {
+  font-size: 15px;
+}
+.ct-soon-tag {
+  margin-top: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sand);
+  color: var(--choco);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+@media (max-width: 560px) {
+  .ct-soon-list {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* modulo contatti (sfondo chiaro) */
 .cf {
