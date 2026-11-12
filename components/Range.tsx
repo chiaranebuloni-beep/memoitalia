@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useCart } from "./CartProvider";
+import { SHOP_OPEN } from "@/lib/shop";
 import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -180,6 +181,7 @@ export default function Range() {
           <p className="rg-price">
             Prezzo <strong>19,90 €</strong>
           </p>
+          {SHOP_OPEN && (
           <div className="rg-actions">
             <button
               className={`btn btn--blue ${added ? "is-added" : ""}`}
@@ -196,6 +198,7 @@ export default function Range() {
               Vai allo shop <Arrow className="btn-arrow" />
             </a>
           </div>
+          )}
           <p className="rg-legal">
             *Per l&apos;uso al di sotto dei 12 anni, si consiglia di consultare il medico.
             <br />

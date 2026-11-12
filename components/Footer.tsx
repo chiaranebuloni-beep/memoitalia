@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/social";
+import { SHOP_OPEN } from "@/lib/shop";
 import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,15 +61,26 @@ export default function Footer() {
       </div>
 
       <div className="container ft-nav">
-        <nav className="ft-col" aria-label="Shop">
-          <h3>Shop</h3>
-          <a href="/shop">Tutti i prodotti</a>
-          <a href="/shop/barrette#golosa">Golosa</a>
-          <a href="/shop/barrette#cocco">Cocco</a>
-          <a href="/shop/barrette#arachide">Arachide</a>
-          <a href="/shop/barrette#gianduia">Gianduia</a>
-          <a href="/shop/integratore">Integratore</a>
-        </nav>
+        {SHOP_OPEN ? (
+          <nav className="ft-col" aria-label="Shop">
+            <h3>Shop</h3>
+            <a href="/shop">Tutti i prodotti</a>
+            <a href="/shop/barrette#golosa">Golosa</a>
+            <a href="/shop/barrette#cocco">Cocco</a>
+            <a href="/shop/barrette#arachide">Arachide</a>
+            <a href="/shop/barrette#gianduia">Gianduia</a>
+            <a href="/shop/integratore">Integratore</a>
+          </nav>
+        ) : (
+          <nav className="ft-col" aria-label="Prodotti">
+            <h3>Prodotti</h3>
+            <a href="/#gusti">Golosa</a>
+            <a href="/#gusti">Cocco</a>
+            <a href="/#gusti">Arachide</a>
+            <a href="/#gusti">Gianduia</a>
+            <a href="/#integratore">Integratore</a>
+          </nav>
+        )}
         <nav className="ft-col" aria-label="Mèmo">
           <h3>Mèmo</h3>
           <a href="/chi-siamo">Chi siamo</a>

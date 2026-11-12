@@ -1,17 +1,42 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { SHOP_OPEN } from "./lib/shop";
 
-// Sul dominio del cliente (memoitalia.it) per ora si vede solo la home:
-// ogni altra pagina rimanda alla home. Su memoitalia.vercel.app e in locale resta tutto il sito.
-// Per aprire tutto il sito anche sul dominio basta togliere questo file.
-const HOME_ONLY_HOSTS = new Set(["memoitalia.it", "www.memoitalia.it"]);
+// Cosa si vede sul dominio del cliente (memoitalia.it e www):
+//   "tutto"        → tutto il sito (dal 12/11/2026), shop compreso solo se SHOP_OPEN (lib/shop.ts)
+//   "home"         → solo la home; ogni altra pagina rimanda alla home
+//   "costruzione"  → la pagina "Sito in costruzione" (app/in-costruzione, oggi solo in locale); ogni altra pagina rimanda lì
+// Su memoitalia.vercel.app e in locale resta sempre tutto il sito.
+// Per cambiare: modifica questa riga e pubblica.
+const DOMAIN_MODE = "tutto" as "tutto" | "home" | "costruzione";
+
+const DOMAIN_HOSTS = new Set(["memoitalia.it", "www.memoitalia.it"]);
+// Pagine dello shop: con lo shop chiuso rimandano alla home, su ogni indirizzo
+const SHOP_PATHS = /^\/(shop|checkout|ordine)(\/|$)/;
 
 export function proxy(request: NextRequest) {
   const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase();
-  if (!HOME_ONLY_HOSTS.has(host) || request.nextUrl.pathname === "/") return NextResponse.next();
-  const home = request.nextUrl.clone();
-  home.pathname = "/";
-  home.search = "";
-  return NextResponse.redirect(home, 307);
+  const { pathname } = request.nextUrl;
+  const toHome = () => {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    url.search = "";
+    return NextResponse.redirect(url, 307);
+  };
+
+  if (!SHOP_OPEN && SHOP_PATHS.test(pathname)) return toHome();
+  if (!DOMAIN_HOSTS.has(host) || DOMAIN_MODE === "tutto") return NextResponse.next();
+
+  if (DOMAIN_MODE === "costruzione") {
+    // l'indirizzo resta memoitalia.it, ma si vede la pagina in costruzione
+    if (pathname === "/") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/in-costruzione";
+      return NextResponse.rewrite(url);
+    }
+    return toHome();
+  }
+
+  return pathname === "/" ? NextResponse.next() : toHome();
 }
 
 // Solo le pagine: file statici, immagini, font, icone e API (es. il modulo "Avvisami al lancio") passano senza controllo.

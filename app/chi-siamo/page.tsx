@@ -7,6 +7,7 @@ import Cursor from "@/components/Cursor";
 import NameQuote from "@/components/NameQuote";
 import { Arrow } from "@/components/ui";
 import { MENOZZI_IG_HANDLE, MENOZZI_IG_URL, MENOZZI_SITE_URL } from "@/lib/social";
+import { SHOP_OPEN } from "@/lib/shop";
 
 export const metadata: Metadata = {
   title: "Chi siamo · Mèmo",
@@ -184,9 +185,15 @@ export default function ChiSiamoPage() {
               Il modo migliore per conoscerci? <span>Assaggiarci.</span>
             </h2>
             <div className="pg-cta-actions">
-              <a href="/shop" className="btn btn--white btn--lg" data-cursor="Shop">
-                Vai allo shop <Arrow className="btn-arrow" />
-              </a>
+              {SHOP_OPEN ? (
+                <a href="/shop" className="btn btn--white btn--lg" data-cursor="Shop">
+                  Vai allo shop <Arrow className="btn-arrow" />
+                </a>
+              ) : (
+                <a href="/#founder" className="btn btn--white btn--lg" data-cursor="Iscriviti">
+                  Avvisami al lancio <Arrow className="btn-arrow" />
+                </a>
+              )}
             </div>
           </div>
         </section>

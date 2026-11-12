@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addFounder } from "@/lib/store";
+import { backendEnabled, forwardToBackend } from "@/lib/backend";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^\+?[0-9\s]{8,16}$/;
@@ -10,6 +11,10 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Richiesta non valida." }, { status: 400 });
+  }
+
+  if (backendEnabled) {
+    return forwardToBackend("/subscribers/", req, body, "Ci siamo quasi! Le iscrizioni si attivano a breve: intanto seguici su Instagram, @memoitalia.it.");
   }
 
   const name = String(body.name ?? "").trim().slice(0, 80);

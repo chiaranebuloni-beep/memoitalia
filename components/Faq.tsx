@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { launchDateLabel } from "@/lib/launch";
+import { SHOP_OPEN } from "@/lib/shop";
 import { Pending } from "./ui";
 
 type Item = { q: string; a: React.ReactNode };
@@ -22,7 +23,15 @@ const GROUPS: Group[] = [
           <>
             Dipende dal gusto. <strong>Golosa</strong>: soia, mandorle e nocciole (può contenere tracce di latte e altra frutta a guscio). <strong>Gianduia</strong>: mandorle e nocciole (tracce di soia e altra frutta a guscio).{" "}
             <strong>Cocco</strong>: mandorle (tracce di altra frutta a guscio). <strong>Arachide</strong>: arachidi (tracce di latte, soia e frutta a guscio). Ingredienti completi e valori nutrizionali sono nella scheda di ogni barretta,
-            nello <a href="/shop/barrette#info-golosa">shop</a>.
+            {SHOP_OPEN ? (
+              <>
+                nello <a href="/shop/barrette#info-golosa">shop</a>.
+              </>
+            ) : (
+              <>
+                in home, nella <a href="/#gusti">sezione dei gusti</a>.
+              </>
+            )}
           </>
         ),
       },

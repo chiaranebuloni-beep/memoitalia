@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import type { Product } from "@/lib/catalog";
+import { SHOP_OPEN } from "@/lib/shop";
+import ProductInfo from "./ProductInfo";
 import { Arrow, Swoosh } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +14,9 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Flavors({ products }: { products: Product[] }) {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  // con lo shop chiuso ingredienti e valori si aprono qui, nel pannello laterale
+  const [info, setInfo] = useState<Product | null>(null);
+  const closeInfo = useCallback(() => setInfo(null), []);
   const stRef = useRef<ScrollTrigger | null>(null);
   // salto diretto a un gusto dai bottoni: durante il salto l'aggancio automatico è sospeso
   const jumpRef = useRef({ start: () => {}, end: () => {} });
@@ -169,6 +174,7 @@ export default function Flavors({ products }: { products: Product[] }) {
   };
 
   return (
+    <>
     <section
       className="flavors"
       id="gusti"
@@ -181,9 +187,11 @@ export default function Flavors({ products }: { products: Product[] }) {
           I gusti<span className="fl-head-more"> · 4 barrette, una sola identità</span>
         </span>
         <span className="fl-head-right">
-          <a href="/shop" className="fl-shop" data-cursor="Shop">
-            Vai allo shop <Arrow className="btn-arrow" />
-          </a>
+          {SHOP_OPEN && (
+            <a href="/shop" className="fl-shop" data-cursor="Shop">
+              Vai allo shop <Arrow className="btn-arrow" />
+            </a>
+          )}
           <span className="fl-counter">
             <b>{String(active + 1).padStart(2, "0")}</b> / {String(products.length).padStart(2, "0")}
           </span>
@@ -213,15 +221,23 @@ export default function Flavors({ products }: { products: Product[] }) {
               <li>Senza edulcoranti</li>
               <li>Senza glutine</li>
             </ul>
-            <a className="fl-info" href={`/shop/barrette#info-${p.id}`} tabIndex={active === i ? 0 : -1}>
-              Ingredienti e valori nutrizionali <Arrow className="btn-arrow" />
-            </a>
-            {/* in home niente prezzi: si acquista dallo shop */}
-            <div className="fl-buy">
-              <a className="btn btn--accent" href={`/shop/barrette#${p.id}`} tabIndex={active === i ? 0 : -1} data-cursor="Shop">
-                Scopri nello shop <Arrow className="btn-arrow" />
+            {SHOP_OPEN ? (
+              <a className="fl-info" href={`/shop/barrette#info-${p.id}`} tabIndex={active === i ? 0 : -1}>
+                Ingredienti e valori nutrizionali <Arrow className="btn-arrow" />
               </a>
-            </div>
+            ) : (
+              <button type="button" className="fl-info" onClick={() => setInfo(p)} tabIndex={active === i ? 0 : -1}>
+                Ingredienti e valori nutrizionali <Arrow className="btn-arrow" />
+              </button>
+            )}
+            {/* in home niente prezzi: si acquista dallo shop */}
+            {SHOP_OPEN && (
+              <div className="fl-buy">
+                <a className="btn btn--accent" href={`/shop/barrette#${p.id}`} tabIndex={active === i ? 0 : -1} data-cursor="Shop">
+                  Scopri nello shop <Arrow className="btn-arrow" />
+                </a>
+              </div>
+            )}
           </div>
         </article>
       ))}
@@ -234,5 +250,7 @@ export default function Flavors({ products }: { products: Product[] }) {
         ))}
       </nav>
     </section>
+    {!SHOP_OPEN && <ProductInfo product={info} onClose={closeInfo} />}
+    </>
   );
 }

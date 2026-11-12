@@ -23,7 +23,7 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   // indirizzo pubblico: serve per gli URL assoluti dell'immagine di anteprima (app/opengraph-image.jpg)
-  metadataBase: new URL("https://memoitalia.vercel.app"),
+  metadataBase: new URL("https://memoitalia.it"),
   title: "Mèmo · Il buono memorabile",
   description: DESCRIPTION,
   openGraph: {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addContact } from "@/lib/store";
+import { backendEnabled, forwardToBackend } from "@/lib/backend";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const clean = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
@@ -11,6 +12,10 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Richiesta non valida." }, { status: 400 });
+  }
+
+  if (backendEnabled) {
+    return forwardToBackend("/contact/", req, body, "Il modulo non è ancora attivo: scrivici a info@memoitalia.it.");
   }
 
   const kind = body.kind === "rivenditore" ? "rivenditore" : "privato";
