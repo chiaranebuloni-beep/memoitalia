@@ -26,8 +26,8 @@ export default function Home() {
         <Manifesto />
         <Target />
         <Benefits />
-        <FounderBox />
         <Range />
+        <FounderBox />
       </main>
       <Footer />
       <CartDrawer />
