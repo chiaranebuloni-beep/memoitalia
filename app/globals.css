@@ -821,9 +821,32 @@ p {
   padding-top: calc((22px - 1.4em) / 2);
 }
 .hs-error {
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--sand);
+  color: var(--choco);
   font-size: 14px;
   font-weight: 700;
-  color: #ffd29a;
+  line-height: 1.35;
+  animation: hs-error-in 0.35s var(--ease-out);
+}
+@keyframes hs-error-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-error {
+    animation: none;
+  }
+}
+.hs-row.is-missing {
+  box-shadow: inset 0 0 0 2px var(--sand);
+}
+.hs-check.is-missing input {
+  outline: 3px solid var(--sand);
+  outline-offset: 2px;
 }
 .hs-done {
   max-width: 540px;

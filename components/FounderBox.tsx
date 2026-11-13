@@ -9,7 +9,7 @@ import { PRIVACY_URL } from "@/lib/legal";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
+type Status = { kind: "idle" | "sending" | "ok" | "error"; title?: string; message?: string };
 
 // Al posto del ventaglio di barrette c'è la box Experience, con bollino ed elefantino.
 
@@ -80,7 +80,8 @@ export default function FounderBox() {
       }
       setStatus({
         kind: "ok",
-        message: data.alreadyIn ? "Sei già iscritto!" : "Ti avvisiamo appena apre lo shop.",
+        title: data.alreadyIn ? "Ci sei già!" : "Congratulazioni!",
+        message: data.alreadyIn ? "Sei già in squadra: a breve riceverai tutti gli aggiornamenti di Mèmo." : "Sei in squadra: a breve riceverai tutti gli aggiornamenti di Mèmo.",
       });
       celebrate();
     } catch {
@@ -103,7 +104,7 @@ export default function FounderBox() {
 
           {status.kind === "ok" ? (
             <div className="fb-success" role="status">
-              <strong>Fatto!</strong>
+              <strong>{status.title}</strong>
               <p>{status.message}</p>
             </div>
           ) : (
