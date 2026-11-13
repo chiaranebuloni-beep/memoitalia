@@ -178,9 +178,12 @@ export default function Range() {
             <li>60 compresse masticabili</li>
             <li>Gusto frutti rossi</li>
           </ul>
-          <p className="rg-price">
-            Prezzo <strong>19,90 €</strong>
-          </p>
+          {/* prezzo nascosto finché lo shop è chiuso (richiesta del 13/11/2026): torna da solo con SHOP_OPEN */}
+          {SHOP_OPEN && (
+            <p className="rg-price">
+              Prezzo <strong>19,90 €</strong>
+            </p>
+          )}
           {SHOP_OPEN && (
           <div className="rg-actions">
             <button
