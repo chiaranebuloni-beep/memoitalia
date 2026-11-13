@@ -2354,13 +2354,24 @@ p {
 }
 .ft-legal-links {
   display: flex;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: 4px 18px;
 }
-.ft-legal a {
+.ft-legal a,
+.ft-legal-btn {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
 }
-.ft-legal a:hover {
+/* "Preferenze cookie" è un pulsante (apre il pannello di iubenda) ma deve sembrare un link */
+.ft-legal-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+.ft-legal a:hover,
+.ft-legal-btn:hover {
   color: var(--white);
 }
 .ft-up {
@@ -3930,7 +3941,8 @@ p {
   .ft-legal > span:first-child {
     flex-basis: 100%;
   }
-  .ft-legal a {
+  .ft-legal a,
+  .ft-legal-btn {
     display: inline-flex;
     align-items: center;
     min-height: 34px;

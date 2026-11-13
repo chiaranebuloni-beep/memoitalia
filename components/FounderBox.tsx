@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Swoosh, Arrow } from "./ui";
+import { PRIVACY_URL } from "@/lib/legal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -125,7 +126,7 @@ export default function FounderBox() {
               <label className="check">
                 <input type="checkbox" name="privacy" required />
                 <span>
-                  Ho letto l'<a href="#privacy">informativa privacy</a> e voglio ricevere novità da Mèmo.
+                  Ho letto l'<a href={PRIVACY_URL} target="_blank" rel="noopener">informativa privacy</a> e voglio ricevere novità da Mèmo.
                 </span>
               </label>
               <button className="btn btn--white btn--lg" disabled={status.kind === "sending"} data-cursor="Dai!">

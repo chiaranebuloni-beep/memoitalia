@@ -18,7 +18,12 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
+    const lenis = new Lenis({
+      lerp: 0.1,
+      wheelMultiplier: 1,
+      // dentro al banner e al pannello dei cookie di iubenda la rotellina deve far scorrere loro, non la pagina
+      prevent: (node) => !!node.closest?.("#iubenda-cs-banner, #iubenda-iframe"),
+    });
     window.__lenis = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);

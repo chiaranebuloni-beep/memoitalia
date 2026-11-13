@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/social";
 import { SHOP_OPEN } from "@/lib/shop";
+import { COOKIE_URL, PRIVACY_URL, TERMS_URL, openCookiePreferences } from "@/lib/legal";
 import { Arrow } from "./ui";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -105,10 +106,13 @@ export default function Footer() {
 
       <div className="container ft-legal">
         <span>© {year} MÈMO ITALIA SRLS · P.IVA 03151990359</span>
-        <span id="privacy" className="ft-legal-links">
-          <a href="#privacy">Privacy</a>
-          <a href="#cookie">Cookie</a>
-          <a href="#termini">Termini di vendita</a>
+        <span className="ft-legal-links">
+          <a href={PRIVACY_URL} target="_blank" rel="noopener">Privacy</a>
+          <a href={COOKIE_URL} target="_blank" rel="noopener">Cookie</a>
+          <button type="button" className="ft-legal-btn" onClick={openCookiePreferences}>
+            Preferenze cookie
+          </button>
+          <a href={TERMS_URL} target="_blank" rel="noopener">Termini di vendita</a>
         </span>
         <a href="#top" className="ft-up">
           Torna su <Arrow className="ft-up-arrow" />

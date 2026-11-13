@@ -4,6 +4,8 @@ import { Archivo } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/CartProvider";
 import SmoothScroll from "@/components/SmoothScroll";
+import Script from "next/script";
+import { IUBENDA_BANNER_SRC } from "@/lib/legal";
 
 const bomega = localFont({
   src: "../public/fonts/Bomega.woff2",
@@ -44,6 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it" className={`${bomega.variable} ${archivo.variable}`}>
       <body>
+        {/* banner dei cookie di iubenda. Si carica dopo React: caricato prima, modifica la pagina
+            (attributi data-cmp-info) e React segnala un errore. Gli strumenti che tracciano
+            (Analytics, Pixel) vanno accesi solo dopo il consenso, non bloccati da questo script. */}
+        <Script src={IUBENDA_BANNER_SRC} strategy="afterInteractive" />
         <CartProvider>
           <SmoothScroll />
           {children}

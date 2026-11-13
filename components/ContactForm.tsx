@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Arrow } from "./ui";
+import { PRIVACY_URL } from "@/lib/legal";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "ok" } | { kind: "error"; message: string };
 
@@ -99,7 +100,7 @@ export default function ContactForm({ kind }: { kind: "privato" | "rivenditore" 
       <label className="cf-check">
         <input type="checkbox" name="privacy" required />
         <span>
-          Ho letto l&apos;<a href="#privacy">informativa privacy</a> e acconsento al trattamento dei dati per ricevere una risposta.
+          Ho letto l&apos;<a href={PRIVACY_URL} target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per ricevere una risposta.
         </span>
       </label>
       <button className="btn btn--blue btn--lg" disabled={status.kind === "sending"} data-cursor="Invia">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Arrow } from "./ui";
+import { PRIVACY_URL } from "@/lib/legal";
 
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
@@ -55,7 +56,7 @@ export default function HeroSignup() {
       <label className="hs-check">
         <input type="checkbox" name="privacy" required />
         <span>
-          Accetto l'<a href="#privacy">informativa privacy</a> e voglio ricevere novità da Mèmo.
+          Accetto l'<a href={PRIVACY_URL} target="_blank" rel="noopener">informativa privacy</a> e voglio ricevere novità da Mèmo.
         </span>
       </label>
       {status.kind === "error" && (
