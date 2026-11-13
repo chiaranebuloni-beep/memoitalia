@@ -2429,6 +2429,10 @@ p {
   font-size: 32px;
   color: var(--blue);
 }
+/* pannello ingredienti: nome del prodotto in maiuscolo come gli altri titoli (13/11) */
+.pi .drawer-head h2 {
+  text-transform: uppercase;
+}
 .drawer-close {
   width: 44px;
   height: 44px;
