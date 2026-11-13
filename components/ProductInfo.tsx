@@ -16,6 +16,18 @@ function Ingredients({ text }: { text: string }) {
 
 const list = (items: string[]) => items.join(", ");
 
+// "1731 kJ / 413 kcal": le due unità restano intere e, sul telefono, vanno una sotto l'altra
+function value(text: string) {
+  const parts = text.split(" / ");
+  if (parts.length < 2) return <span className="pi-nowrap">{text}</span>;
+  return parts.map((p, i) => (
+    <span className="pi-energy" key={i}>
+      {p}
+      {i < parts.length - 1 ? " /" : ""}{" "}
+    </span>
+  ));
+}
+
 // Pannello laterale con le informazioni di etichetta di un prodotto, da leggere prima dell'acquisto.
 export default function ProductInfo({ product, onClose }: { product: Product | null; onClose: () => void }) {
   const open = !!product;
@@ -125,16 +137,18 @@ export default function ProductInfo({ product, onClose }: { product: Product | n
                   <thead>
                     <tr>
                       <th scope="col"> </th>
-                      <th scope="col">Per 100 g</th>
-                      <th scope="col">Per barretta ({label?.weight ?? "—"})</th>
+                      <th scope="col" className="pi-nowrap">Per 100 g</th>
+                      <th scope="col">
+                        Per barretta <span className="pi-nowrap">({label?.weight ?? "—"})</span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {label?.nutrition.map((n) => (
                       <tr key={n.label} className={n.sub ? "is-sub" : ""}>
                         <th scope="row">{n.label}</th>
-                        <td>{n.per100}</td>
-                        <td>{n.perBar}</td>
+                        <td>{value(n.per100)}</td>
+                        <td>{value(n.perBar)}</td>
                       </tr>
                     ))}
                   </tbody>

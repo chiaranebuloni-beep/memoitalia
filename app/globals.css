@@ -1988,9 +1988,9 @@ p {
 }
 .rg-copy .rg-legal {
   max-width: 460px;
-  font-size: 12px;
-  line-height: 1.45;
-  color: rgba(17, 26, 51, 0.55);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(17, 26, 51, 0.68);
 }
 .rg-card {
   position: relative;
@@ -2996,7 +2996,7 @@ p {
     margin-top: 14px;
   }
   .hs-check {
-    font-size: 12px;
+    font-size: 13px;
   }
   .hero-launch-foot {
     margin-top: 16px;
@@ -5236,12 +5236,29 @@ p {
   text-align: left;
 }
 .pi-table thead th {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   color: rgba(17, 26, 51, 0.6);
 }
 .pi-table tbody th {
   font-weight: 700;
+}
+/* valori e intestazioni non vanno a capo a metà ("40 g", "413 kcal"):
+   l'energia, se non ci sta, va su due righe pulite (kJ sopra, kcal sotto) */
+.pi-nowrap {
+  white-space: nowrap;
+}
+.pi-energy {
+  display: inline-block;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .pi-table thead th:not(:first-child) {
+    width: 30%;
+  }
+  .pi-energy {
+    display: block;
+  }
 }
 /* "di cui …" allineato a sinistra come le altre voci: si lega alla riga sopra
    togliendo la linea di separazione e con un testo più tenue */
